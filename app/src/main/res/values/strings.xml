@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">FootballApp</string>
+    <string name="reg_button">зарегистрироваться</string>
+    <string name="login_button">войти</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Главная</string>
+    <string name="title_tournament">Турниры</string>
+    <string name="title_club">Клубы</string>
+    <string name="title_players">Игроки</string>
+    <string name="title_user">Профиль</string>
+    <string name="title_ads">Объявления</string>
+    <string name="title_activity_personal">PersonalActivity</string>
+    <string name="tournamentStatusFinish">Завершен</string>
+    <string name="tournamentTitle">Кубок Бурятии по мини-футболу. Первый этап. Золотая лига</string>
+    <string name="tournamentDate">27.01.2018-28.02.2018</string>
+    <string name="tournamentCommandNum">Количество команд:</string>
+    <string name="tournamentInfoCalendar">Календарь</string>
+    <string name="tournamentInfoCalendarDesc">Календарь игр. Все матчи данной лиги</string>
+    <string name="tournamentInfoTable">Таблица</string>
+    <string name="tournamentInfoTableDesc">Рейтинг команд, участвующих в лиге</string>
+    <string name="tournamentInfoTimetable">Расписание</string>
+    <string name="tournamentInfoPlayers">Игроки</string>
+    <string name="tournamentInfoPlayersDesc">Рейтинг игроков, принимающих участие в лиге</string>
+    <string name="tournamentInfoCommand">Команды</string>
+    <string name="tournamentInfoCommandDesc">Список всех команд, отсортированный по жеребьевке</string>
+    <string name="newsSomeTitle">В мире футбола чето там изменилось. Вау. Как неожиданно. Так интересно</string>
+    <string name="newsSomeDate">27.01.18</string>
+    <string name="advertisingOk">OK</string>
+    <string name="advertisingTitle">Спонсор</string>
+    <string name="advertisingText">Партнер АЛФ РБ</string>
+    <string name="tournamentFilter">Фильтр</string>
+    <string name="tournamentFilterStatus">Статус</string>
+    <string name="tournamentFilterAge">Возраст</string>
+    <string name="tournamentFilterAge1">от</string>
+    <string name="tournamentFilterAge2">до</string>
+    <string name="tournamentFilterCommandNum">Количество команд</string>
+    <string name="newsSomeText">Таким образом новая модель организационной деятельности обеспечивает широкому кругу (специалистов) участие в формировании форм развития. Разнообразный и богатый опыт начало повседневной работы по формированию позиции представляет собой интересный эксперимент проверки модели развития. Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей деятельности в значительной степени обуславливает создание позиций, занимаемых участниками в отношении поставленных задач. Таким образом дальнейшее развитие различных форм деятельности обеспечивает широкому кругу (специалистов) участие в формировании системы обучения кадров, соответствует насущным потребностям. Задача организации, в особенности же новая модель организационной деятельности способствует подготовки и реализации форм развития.</string>
+    <string name="showAllNews">Показать все новости</string>
+    <string name="showAllAds">Показать все объявления</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="tournamentTabInfo">финал</string>
+    <string name="tournamentTime">13:30</string>
+    <string name="tournamentStadium">с/з ВСГУТУ</string>
+    <string name="tournamentCommandTitle1">Лара</string>
+    <string name="tournamentCommandTitle2">Спартак</string>
+    <string name="commandPlayer">Игрок</string>
+    <string name="commandAbbreviation1">И - Количество проведенных мячей</string>
+    <string name="commandAbbreviation2">М - Количество забитых мячей</string>
+    <string name="commandAbbreviation3">ЖК - Количество действующих желтых карточек</string>
+    <string name="commandAbbreviation4">КК - Количество действующих красных карточек</string>
+    <string name="commandAbbreviation5">Д - Количество действующих дисквалификаций на будущие матчи</string>
+    <string name="fishText">По своей сути рыбатекст является альтернативой традиционному lorem ipsum, который вызывает у некторых людей недоумение при попытках прочитать рыбу текст. В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст неповторимый колорит советских времен.</string>
+    <string name="title_activity_command_info">CommandInfoActivity</string>
+    <string name="commandInfoMembers">Члены клуба:</string>
+    <string name="allAdsShown">ВСЕ ОБЪЯВЛЕНИЯ ПРОСМОТРЕНЫ</string>
+    <string name="allNewsShown">ВСЕ НОВОСТИ ПРОСМОТРЕНЫ</string>
+    <string name="allTournamentsShown">ВСЕ ТУРНИРЫ ПРОСМОТРЕНЫ</string>
+    <string name="allClubsShown">ВСЕ КЛУБЫ ПРОСМОТРЕНЫ</string>
+    <string name="allPlayersShown">ВСЕ ИГРОКИ ПОКАЗАНЫ</string>
+    <string name="allNewsButton">Все новости</string>
+    <string name="search">Поиск по игрокам...</string>
+    <string-array name="spinnerItem">
+        <item>по проведенным мячам</item>
+        <item>по забитым мячам</item>
+        <item>по забитым мячам</item>
+        <item>по количеству ЖК</item>
+        <item>по количеству КК</item>
+        <item>по количеству дисквалификаций</item>
+    </string-array>
+    <string name="abbreviation">Сокращения:</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>

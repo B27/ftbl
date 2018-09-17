@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="55dp"
+    android:background="@color/colorLightGray2">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/white_back"
+        android:fitsSystemWindows="true"
+        android:padding="8dp">
+
+
+
+        <RelativeLayout
+
+            android:id="@+id/playerCV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite">
+
+                    <ImageView
+                        android:id="@+id/playerImage"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_member" />
+
+                    <TextView
+                        android:id="@+id/playerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="102dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/manrope_semibold"
+                        android:text="@string/commandPlayer"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/playerDOB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignStart="@+id/playerName"
+                        android:layout_marginTop="55dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/newsSomeDate"
+                        android:textColor="@color/colorLightGrayForText" />
+
+                    <TextView
+                        android:id="@+id/playerInfoTournaments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/playerImage"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/manrope_semibold"
+                        android:paddingTop="8sp"
+                        android:text="Турниры:"
+                        android:textColor="@color/colorBottomNavigationUnChecked" />
+
+                    <TextView
+                        android:id="@+id/playerInfoTournamentsStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:layout_below="@+id/playerInfoTournaments"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="НЕ УЧАСТВОВАЛ НИ В ОДНОМ"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/playerInfoScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/playerCV"
+            android:paddingTop="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewPlayerTournaments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:scrollbars="vertical"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </RelativeLayout>
+    <!--</LinearLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addPlayerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="25dp"
+        app:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_add" />
+</android.support.design.widget.CoordinatorLayout>
+<!--</RelativeLayout>-->

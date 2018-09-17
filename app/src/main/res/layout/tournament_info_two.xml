@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/tournamentInfoTitle"
+        android:textColor="@color/colorWhite"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="15sp"
+        android:padding="5sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="23dp"
+        android:gravity="center_horizontal"
+        android:text="@string/tournamentTitle" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tournamentInfoTab"
+        app:tabTextAppearance="@style/CustomTabTextSize"
+        app:tabIndicatorColor="@color/colorWhite"
+        app:tabSelectedTextColor="@color/colorWhite"
+        app:tabTextColor="@color/colorTabUnChecked"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tournamentInfoTitle">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tournamentInfoTimetable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tournamentInfoTimetable" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tournamentInfoCommand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tournamentInfoCommand" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tournamentInfoPlayers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tournamentInfoPlayers" />
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/tournamentInfoViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="469dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tournamentInfoTab" />
+</RelativeLayout>

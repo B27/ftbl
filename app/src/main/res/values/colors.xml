@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#37c680</color>
+    <color name="colorPrimaryDark">#004d7a</color>
+    <color name="colorAccent">#37c680</color>
+    <!--<color name="colorAccent">#FF4081</color>-->
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorLightGray">#e5e5e5</color>
+    <color name="colorLightGray2">#EFEFF0</color>
+    <color name="colorLightGrayForText">#63666F</color>
+    <color name="colorDarkGray">#1e1e1e</color>
+    <color name="colorGray">#908E8E</color>
+    <color name="colorTornamentInfoGray">#BBB9B9</color>
+    <color name="colorRegButtonText">#e61a5f</color>
+    <color name="colorNewsBackground">#002840</color>
+    <color name="colorNewsTitle">#010811</color>
+    <color name="colorNewsDate">#276544</color>
+    <color name="colorBottomNavigationUnChecked">#202124</color>
+    <color name="colorBottomNavigationBackground">#fbfbfb</color>
+    <color name="colorDarkBlue">#1b1c2a</color>
+    <color name="colorTabUnChecked">#f5f5f5</color>
+
+    <color name="black_overlay">#66000000</color>
+</resources>
+

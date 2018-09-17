@@ -1,0 +1,157 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorTornamentInfoGray</item> <!-- status bar color-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="searchAutoCompleteTextView">@style/SearchViewStyle</item>-->
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>--><!-- status bar transparent-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+    </style>
+
+    <style name="MyToolbar" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/colorNewsDate</item>
+    </style>
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
+        <item name="android:textColorSecondary">@android:color/darker_gray</item>
+        <!-- Background for the search query section (e.g. EditText) -->
+        <!--<item name="queryBackground">...</item>-->
+        <!-- Background for the actions section (e.g. voice, submit) -->
+        <item name="submitBackground">@color/colorBottomNavigationUnChecked</item>
+        <!-- Close button icon -->
+        <item name="closeIcon">@color/colorBottomNavigationUnChecked</item>
+        <!-- Search button icon -->
+        <item name="searchIcon">@drawable/ic_search2</item>
+        <!-- Go/commit button icon -->
+        <item name="goIcon">@color/colorBottomNavigationUnChecked</item>
+        <!-- Voice search button icon -->
+        <!--<item name="voiceIcon">...</item>-->
+        <!--&lt;!&ndash; Commit icon shown in the query suggestion row &ndash;&gt;-->
+        <!--<item name="commitIcon">...</item>-->
+        <!--&lt;!&ndash; Layout for query suggestion rows &ndash;&gt;-->
+        <!--<item name="suggestionRowLayout">...</item>-->
+    </style>
+
+    <style name="LogIn" parent="AppTheme">
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_width">182dp</item>
+        <item name="android:layout_height">45dp</item>
+    </style>
+
+    <style name="MainPageButton" parent="AppTheme">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textColor">@color/colorNewsBackground</item>
+    </style>
+    <style name="RegButton" parent="AppTheme">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_width">182dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:textColor">@color/colorRegButtonText</item>
+    </style>
+
+    <style name="TournamentInfoGridContent" parent="AppTheme">
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">140dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:background">@color/colorWhite</item>
+    </style>
+
+    <style name="TournamentInfoGridImg" parent="AppTheme">
+        <item name="android:layout_width">62dp</item>
+        <item name="android:layout_height">62dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:paddingTop">7dp</item>
+    </style>
+
+    <style name="TournamentInfoGridTextLayout" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">68dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:background">@color/colorTornamentInfoGray</item>
+    </style>
+
+    <style name="TournamentInfoGridText" parent="AppTheme">
+        <item name="android:textColor">@color/colorDarkGray</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="TournamentInfoGridTextDesc">
+        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textSize">7sp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">97dp</item>
+        <item name="android:layout_height">36dp</item>
+    </style>
+
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
+    </style>
+
+    <style name="TournamentFilterText" parent="AppTheme">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
+        <!--<item name="android:fontFamily">@font/rubik_regular</item>-->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <!--<item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>-->
+        <!--<item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>-->
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="DarkTextColor" parent="AppTheme">
+        <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
+    </style>
+    <style name="CustomTabTextSize" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="SpinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="AbbreviationText" parent="AppTheme">
+        <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="android:padding">5sp</item>
+    </style>
+
+</resources>

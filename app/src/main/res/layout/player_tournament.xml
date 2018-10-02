@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:background="@color/colorWhite">
 
     <TextView
@@ -9,9 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fontFamily="@font/manrope_regular"
-        android:padding="5sp"
+        android:paddingBottom="3dp"
         android:text="@string/tournamentTitle"
         android:textColor="@color/colorBottomNavigationUnChecked"
         android:textSize="13sp" />
+    <View
+        android:id="@+id/playerTournamentLine"
+        android:layout_width="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="1dp"
+        android:background="@color/colorLightGray" />
 
-</RelativeLayout>
+</LinearLayout>

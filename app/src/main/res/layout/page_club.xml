@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="50dp"
     tools:context=".PersonalActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -50,6 +51,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollClubs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -76,15 +78,23 @@
                 android:scrollbars="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
             </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="113dp"
-                android:fontFamily="@font/manrope_regular"
-                android:gravity="center_horizontal|top"
-                android:paddingTop="23dp"
-                android:text="@string/allClubsShown"
-                android:textColor="@color/colorBottomNavigationUnChecked" />
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="113dp"-->
+                <!--android:fontFamily="@font/manrope_regular"-->
+                <!--android:gravity="center_horizontal|top"-->
+                <!--android:paddingTop="23dp"-->
+                <!--android:text="@string/allClubsShown"-->
+                <!--android:textColor="@color/colorBottomNavigationUnChecked" />-->
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/createClubButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="25dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/colorPrimary" />
 </android.support.design.widget.CoordinatorLayout>

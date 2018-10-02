@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AdvertisingFragment extends DialogFragment{
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
+    Logger log = LoggerFactory.getLogger(AdvertisingFragment.class);
     public static AdvertisingFragment newInstance() {
         AdvertisingFragment f = new AdvertisingFragment();
         return f;

@@ -1,9 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".players.activity.PlayerInv">
+    tools:context=".user.activity.NewCommand"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/profileAppbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarClub"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorLightGray2"
+                android:layout_gravity="top"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
-</android.support.constraint.ConstraintLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="18sp"
+                    android:gravity="center_horizontal"
+                    android:visibility="visible">
+
+                    <ImageButton
+                        android:id="@+id/playerInvSave"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_tick" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/manrope_regular"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:text="@string/playerInv"
+                        android:textSize="16sp" />
+
+                    <ImageButton
+                        android:id="@+id/playerInvClose"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_close8" />
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_semibold"
+            android:paddingBottom="8dp"
+            android:paddingStart="13dp"
+            android:paddingTop="8dp"
+            android:text="@string/playerClub"
+            android:textColor="@color/colorBottomNavigationUnChecked"
+            android:textSize="14sp" />
+        <LinearLayout
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:layout_marginBottom="8sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="15sp"
+                android:paddingStart="4sp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="@string/playerInvClub"
+                android:textColor="@color/colorBottomNavigationUnChecked"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="end"
+                android:orientation="horizontal">
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/playerInvSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:theme="@style/SwitchCompatStyle" />
+            </LinearLayout>
+        </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_gravity="end"
+            android:layout_height="8sp"
+            android:background="@color/colorLightGray2" />
+
+        <TextView
+            android:id="@+id/protocolScoreOwnGoals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_semibold"
+            android:paddingBottom="8dp"
+            android:paddingStart="13dp"
+            android:paddingTop="8dp"
+            android:text="@string/playerCommand"
+            android:textColor="@color/colorBottomNavigationUnChecked"
+            android:textSize="14sp" />
+        <LinearLayout
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:layout_marginBottom="8sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_regular"
+                android:paddingTop="8sp"
+                android:paddingStart="4sp"
+                android:gravity="start"
+                android:textColor="@color/colorLightGrayForText"
+                android:textSize="12sp"
+                android:text="@string/playerInvCommand"/>
+            <Spinner
+                android:id="@+id/playerInvSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:background="@drawable/spinner_shape"
+                android:spinnerMode="dialog"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

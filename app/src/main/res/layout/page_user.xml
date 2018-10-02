@@ -1,71 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PersonalActivity"
-    android:background="@color/colorLightGray2">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".PersonalActivity"
+    android:background="@color/colorWhite">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:paddingEnd="5sp"
+        android:paddingStart="5sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="55dp"
         android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="365dp"
-            android:layout_height="306dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            android:background="@color/colorWhite">
+        <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="365dp"-->
+        <!--android:layout_height="306dp"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--app:cardBackgroundColor = "@color/colorWhite">-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="35dp"
+                android:src="@drawable/ic_logo" />
+
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:orientation="vertical">
+                android:fontFamily="@font/manrope_regular"
+                android:paddingStart="4sp"
+                android:gravity="start"
+                android:textColor="@color/colorLightGrayForText"
+                android:textSize="12sp"
+                android:text="@string/loginProfile"/>
+            <EditText
+                android:id="@+id/loginLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MyEditText"
+                android:hint="@string/loginProfile"
+                android:inputType="text"/>
 
-                <ImageView
-                    android:id="@+id/imgLogo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingBottom="5dp"
-                    android:src="@drawable/ic_logo" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_regular"
+                android:paddingStart="4sp"
+                android:gravity="start"
+                android:textColor="@color/colorLightGrayForText"
+                android:textSize="12sp"
+                android:text="@string/passProfile"/>
+            <EditText
+                android:id="@+id/passwordLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MyEditText"
+                android:hint="@string/pass"
+                android:layout_marginBottom="45dp"
+                android:inputType="textPassword"/>
 
-                <EditText
-                    android:id="@+id/login"
-                    style="@style/LogIn"
-                    android:background="@color/colorLightGray"
-                    android:ems="10"
-                    android:inputType="phone"
-                    android:textSize="12sp" />
+            <!---->
+            <!--<EditText-->
+                <!--android:id="@+id/loginLog"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="38dp"-->
+                <!--android:background="@drawable/edittext_back"-->
+                <!--android:ems="10"-->
+                <!--android:fontFamily="@font/manrope_regular"-->
+                <!--android:hint="логин"-->
+                <!--android:inputType="phone"-->
+                <!--android:padding="8sp"-->
+                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
+                <!--android:textColorHint="@color/colorLightGrayForText"-->
+                <!--android:textSize="14sp" />-->
 
-                <EditText
-                    android:id="@+id/password"
-                    style="@style/LogIn"
-                    android:background="@color/colorLightGray"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <Button
-            android:id="@+id/registration"
-            android:fontFamily="@font/manrope_regular"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:background="@drawable/underline_shape"
-            android:textColor="@color/colorDarkGray"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:text="@string/reg_button" />
+            <!--<EditText-->
+                <!--android:id="@+id/passwordLog"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="38dp"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:fontFamily="@font/manrope_regular"-->
+                <!--android:background="@drawable/edittext_back"-->
+                <!--android:ems="10"-->
+                <!--android:hint="пароль"-->
+                <!--android:inputType="textPassword"-->
+                <!--android:padding="8sp"-->
+                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
+                <!--android:textColorHint="@color/colorLightGrayForText"-->
+                <!--android:textSize="14sp" />-->
+        </LinearLayout>
+        <!--</android.support.v7.widget.CardView>-->
+
+
+        <!--<Button-->
+        <!--<TextView-->
+            <!--android:id="@+id/logInForget"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingTop="5sp"-->
+            <!--android:paddingBottom="5sp"-->
+            <!--android:layout_marginEnd="17sp"-->
+            <!--android:layout_gravity="center_vertical|end"-->
+            <!--android:fontFamily="@font/manrope_regular"-->
+            <!--android:text="Забыли пароль?"-->
+            <!--android:clickable="true"-->
+            <!--android:textSize="13sp"-->
+            <!--android:textColor="@color/colorLightGrayForText" />-->
 
         <Button
             android:id="@+id/logInButton"
-            style="@style/LogIn"
+            android:layout_width="200dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center_horizontal"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/manrope_semibold"
             android:text="@string/login_button" />
+
+
+        <!--<Button-->
+        <TextView
+            android:id="@+id/registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:textSize="13sp"
+            android:clickable="true"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"
+            android:fontFamily="@font/manrope_regular"
+            android:text="@string/reg_button"
+            android:textColor="@color/colorLightGrayForText"
+            android:layout_marginBottom="20sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal|bottom"
+            android:fontFamily="@font/manrope_regular"
+            android:padding="5sp"
+            android:textSize="12sp"
+            android:text="@string/agreement"
+            android:textColor="@color/colorLightGrayForText" />
 
     </LinearLayout>
 </RelativeLayout>

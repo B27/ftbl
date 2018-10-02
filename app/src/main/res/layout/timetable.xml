@@ -1,6 +1,403 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorLightGray">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorWhite">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14sp"
+            android:layout_marginBottom="10sp"
+            android:layout_marginEnd="14sp"
+            android:layout_marginTop="12sp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+
+
+            <TextView
+                android:id="@+id/timetableMatchDate"
+                android:textSize="14sp"
+                android:fontFamily="@font/manrope_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/newsSomeDate"
+                android:textColor="@color/colorBottomNavigationUnChecked" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/timetableMatchTime"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/tournamentTime"
+                    android:textColor="@color/colorBottomNavigationUnChecked" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/timetableMatchLeague"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/tournamentTime"
+                    android:textColor="@color/colorBottomNavigationUnChecked" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/timetableMatchStadium"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="end"
+                    android:text="@string/tournamentStadium"
+                    android:textColor="@color/colorBottomNavigationUnChecked" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="15sp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end|center_vertical">
+
+                <ImageView
+                    android:id="@+id/timetableMatchCommandLogo1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="14dp"
+                    android:src="@drawable/ic_football" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical">
+
+                <TextView
+                    android:id="@+id/timetableMatchCommandTitle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@string/commands"
+                    android:textColor="@color/colorBottomNavigationUnChecked"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/timetableMatchScore"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/colorBottomNavigationUnChecked" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start">
+
+                <TextView
+                    android:id="@+id/timetableMatchCommandTitle2"
+                    android:layout_margin="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@string/commands"
+                    android:textColor="@color/colorBottomNavigationUnChecked"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end|center_vertical">
+
+                <ImageView
+                    android:id="@+id/timetableMatchCommandLogo2"
+                    android:layout_gravity="start"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="14dp"
+                    android:src="@drawable/ic_football" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:orientation="horizontal">-->
+
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="end"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/timetableMatchCommandTitle1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:fontFamily="@font/manrope_regular"-->
+                        <!--android:gravity="end"-->
+                        <!--android:text="@string/tournamentCommandTitle1"-->
+                        <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
+                        <!--android:textSize="13sp" />-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_weight="1">-->
+                    <!--<ImageView-->
+                        <!--android:id="@+id/timetableMatchCommandLogo1"-->
+                        <!--android:layout_gravity="end"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="25dp"-->
+                        <!--android:src="@drawable/ic_no_img" />-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/timetableMatchScore"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:fontFamily="@font/manrope_regular"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_gravity="center"-->
+                        <!--android:gravity="center"-->
+                        <!--android:textColor="@color/colorBottomNavigationUnChecked" />-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_weight="1">-->
+                    <!--<ImageView-->
+                        <!--android:id="@+id/timetableMatchCommandLogo2"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="25dp"-->
+                        <!--android:src="@drawable/ic_no_img" />-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_weight="1">-->
+                    <!--<TextView-->
+                        <!--android:id="@+id/timetableMatchCommandTitle2"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:fontFamily="@font/manrope_regular"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/tournamentCommandTitle2"-->
+                        <!--android:textColor="@color/colorBottomNavigationUnChecked" />-->
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+                <TextView
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/referee1"
+                    android:textColor="@color/colorLightGrayForText"
+                    android:layout_marginBottom="5sp"
+                    android:textSize="14sp" />
+                <TextView
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/referee2"
+                    android:textColor="@color/colorLightGrayForText"
+                    android:layout_marginBottom="5sp"
+                    android:textSize="14sp" />
+                <TextView
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/referee3"
+                    android:textColor="@color/colorLightGrayForText"
+                    android:layout_marginBottom="5sp"
+                    android:textSize="14sp" />
+                <TextView
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/referee4"
+                    android:textColor="@color/colorLightGrayForText"
+                    android:layout_marginBottom="5sp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/timetableMatchReferee1"
+                        android:fontFamily="@font/manrope_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/referee1"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:layout_marginBottom="5sp"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/timetableMatchReferee2"
+                        android:fontFamily="@font/manrope_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/referee2"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:layout_marginBottom="5sp"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/timetableMatchReferee3"
+                        android:fontFamily="@font/manrope_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/referee3"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:layout_marginBottom="5sp"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/timetableMatchReferee4"
+                        android:fontFamily="@font/manrope_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/referee4"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:layout_marginBottom="5sp"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/timetableMatchEdit"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginBottom="17dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_settings"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/timetableMatchLine"
+            android:layout_width="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="1dp"
+            android:background="@color/colorLightGray" />
+    </LinearLayout>
+
+</RelativeLayout>

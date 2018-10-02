@@ -47,6 +47,7 @@ public class RecyclerViewClubAdapter extends RecyclerView.Adapter<RecyclerViewCl
                 .asBitmap()
                 .load(R.drawable.ic_football)
                 .apply(new RequestOptions()
+                        .circleCropTransform()
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .priority(Priority.HIGH))
                 .into(holder.imageLogo);

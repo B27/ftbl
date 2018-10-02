@@ -53,6 +53,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -74,14 +75,14 @@
                 android:layout_marginTop="8sp"
                 android:layout_below="@+id/appbar" />
         </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="115dp"
-                android:fontFamily="@font/manrope_regular"
-                android:gravity="center_horizontal|top"
-                android:paddingTop="23dp"
-                android:text="@string/allTournamentsShown"
-                android:textColor="@color/colorBottomNavigationUnChecked" />
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="115dp"-->
+                <!--android:fontFamily="@font/manrope_regular"-->
+                <!--android:gravity="center_horizontal|top"-->
+                <!--android:paddingTop="23dp"-->
+                <!--android:text="@string/allTournamentsShown"-->
+                <!--android:textColor="@color/colorBottomNavigationUnChecked" />-->
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

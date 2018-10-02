@@ -48,7 +48,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/manrope_regular"
-                    android:text="@string/editProtocol"
+                    android:text="@string/confirmProtocol"
                     android:textColor="@color/colorBottomNavigationUnChecked"
                     android:textSize="16sp" />
 
@@ -98,7 +98,7 @@
                     android:background="@color/colorWhite">
 
                     <ImageView
-                        android:id="@+id/editProtocolCommand1Logo"
+                        android:id="@+id/confirmProtocolCommand1Logo"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_centerVertical="true"
@@ -106,7 +106,7 @@
                         android:src="@drawable/ic_football" />
 
                     <TextView
-                        android:id="@+id/editProtocolCommand1Title"
+                        android:id="@+id/confirmProtocolCommand1Title"
                         android:layout_width="235dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -118,7 +118,7 @@
                         android:textSize="14sp" />
 
                     <ImageButton
-                        android:id="@+id/editProtocolCommand1ButtonShow"
+                        android:id="@+id/confirmProtocolCommand1ButtonShow"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_alignParentEnd="true"
@@ -135,7 +135,7 @@
                     android:background="@color/colorWhite">
 
                     <ImageView
-                        android:id="@+id/editProtocolCommand2Logo"
+                        android:id="@+id/confirmProtocolCommand2Logo"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_centerVertical="true"
@@ -143,7 +143,7 @@
                         android:src="@drawable/ic_football" />
 
                     <TextView
-                        android:id="@+id/editProtocolCommand2Title"
+                        android:id="@+id/confirmProtocolCommand2Title"
                         android:layout_width="235dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -155,7 +155,7 @@
                         android:textSize="14sp" />
 
                     <ImageButton
-                        android:id="@+id/editProtocolCommand2ButtonShow"
+                        android:id="@+id/confirmProtocolCommand2ButtonShow"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_alignParentEnd="true"
@@ -185,7 +185,7 @@
                     android:background="@color/colorWhite">
 
                     <TextView
-                        android:id="@+id/editProtocolResponsiblePersons"
+                        android:id="@+id/confirmProtocolResponsiblePersons"
                         android:layout_width="235dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -197,7 +197,7 @@
                         android:textSize="14sp" />
 
                     <ImageButton
-                        android:id="@+id/editProtocolRefereesButtonShow"
+                        android:id="@+id/confirmProtocolRefereesButtonShow"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_alignParentEnd="true"
@@ -227,7 +227,7 @@
                     android:background="@color/colorWhite">
 
                     <TextView
-                        android:id="@+id/editProtocolEvents"
+                        android:id="@+id/confirmProtocolEvents"
                         android:layout_width="235dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -239,7 +239,7 @@
                         android:textSize="14sp" />
 
                     <ImageButton
-                        android:id="@+id/editProtocolEventsButtonShow"
+                        android:id="@+id/confirmProtocolEventsButtonShow"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_alignParentEnd="true"
@@ -251,20 +251,11 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <!--<Button-->
-            <!--android:id="@+id/editProtocolButtonShowScore"-->
-            <!--style="@style/Widget.AppCompat.Button.Borderless"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="end"-->
-            <!--android:fontFamily="@font/manrope_semibold"-->
-            <!--android:text="@string/score"-->
-            <!--android:textColor="@color/colorPrimary" />-->
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/editProtocolButtonShowScore"
+        android:id="@+id/confirmProtocolButtonShowScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"

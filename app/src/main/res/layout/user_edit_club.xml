@@ -1,9 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:orientation="vertical"-->
+    <!--android:background="@color/colorWhite"-->
+    <!--android:focusable="true"-->
+    <!--android:focusableInTouchMode="true"-->
+    <!--tools:context=".user.activity.UserEditClub">-->
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.activity.UserEditClub">
+    android:background="@color/colorWhite"
+    tools:context=".user.activity.UserCommandInfo"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/editClubAppbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarEditClub"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorLightGray2"
+                android:layout_gravity="top"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
-</android.support.constraint.ConstraintLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="18sp"
+                    android:gravity="center_horizontal"
+                    android:visibility="visible">
+
+                    <ImageButton
+                        android:id="@+id/userEditClubSave"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_tick" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/manrope_regular"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:text="@string/editClub"
+                        android:textSize="16sp" />
+
+                    <ImageButton
+                        android:id="@+id/userEditClubClose"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_close8" />
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+
+            <ImageButton
+                android:id="@+id/userEditClubLogo"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="15dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/ic_member"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_height="1dp"
+                android:background="@color/colorWhite"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_regular"
+                android:paddingStart="4sp"
+                android:gravity="start"
+                android:textColor="@color/colorLightGrayForText"
+                android:textSize="12sp"
+                android:text="@string/title"/>
+            <EditText
+                android:id="@+id/userEditClubTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MyEditText"
+                android:hint="@string/title2"
+                android:inputType="text"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_regular"
+                android:paddingStart="4sp"
+                android:gravity="start"
+                android:textColor="@color/colorLightGrayForText"
+                android:textSize="12sp"
+                android:text="@string/desc"/>
+            <EditText
+                android:id="@+id/userEditClubDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MyEditText"
+                android:hint="@string/desc2"
+                android:inputType="text"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_regular"
+                android:paddingStart="4sp"
+                android:layout_marginTop="8sp"
+                android:layout_marginBottom="20sp"
+                android:gravity="start"
+                android:textColor="@color/colorLightGrayForText"
+                android:textSize="12sp"
+                android:text="@string/commandInfoMembers"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewEditClub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
+<!--</LinearLayout>-->

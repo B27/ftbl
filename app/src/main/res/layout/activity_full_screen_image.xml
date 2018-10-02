@@ -1,9 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FullScreenImage">
+    tools:context=".FullScreenImage"
+    android:background="@color/colorWhite">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/fullScreenImg"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:maxHeight="400dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerInside"/>
+    <!--<ImageButton-->
+        <!--android:id="@+id/fullScreenImgBtn"-->
+        <!--android:layout_width="22dp"-->
+        <!--android:layout_height="22dp"-->
+        <!--android:layout_gravity="end"-->
+        <!--android:layout_marginEnd="15dp"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@drawable/ic_close5" />-->
+    <Button
+        android:id="@+id/fullScreenImgBtn"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:drawableLeft="@drawable/ic_button_arrow2"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/manrope_semibold"
+        android:text="@string/back"
+        android:textColor="@color/colorPrimary" />
+
+
+</RelativeLayout>

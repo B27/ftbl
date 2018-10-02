@@ -2,6 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <!--<style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">-->
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorTornamentInfoGray</item> <!-- status bar color-->
@@ -15,7 +16,11 @@
     <style name="MyToolbar" parent="AppTheme">
         <item name="android:textColorSecondary">@color/colorNewsDate</item>
     </style>
+    <style name="SwitchCompatStyle" parent="AppTheme">
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
     <style name="MySearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
         <item name="android:textColorSecondary">@android:color/darker_gray</item>
         <!-- Background for the search query section (e.g. EditText) -->
         <!--<item name="queryBackground">...</item>-->
@@ -100,12 +105,26 @@
         <item name="android:layout_width">97dp</item>
         <item name="android:layout_height">36dp</item>
     </style>
-
+    <style name="DrawerTextStyle" parent="AppTheme">
+        <item name="android:textSize">15sp</item>
+    </style>
     <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
     </style>
-
+    <style name="MyEditText" parent="@android:style/TextAppearance">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColorHint">@color/colorLightGrayForText</item>
+        <item name="android:layout_marginBottom">20sp</item>
+        <item name="android:fontFamily">@font/manrope_regular</item>
+    </style>
+    <style name="EditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/colorDarkBlue</item>
+        <item name="colorControlHighlight">@color/colorDarkGray</item>
+    </style>
     <style name="TournamentFilterText" parent="AppTheme">
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>

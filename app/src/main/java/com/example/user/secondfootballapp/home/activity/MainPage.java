@@ -1,8 +1,12 @@
 package com.example.user.secondfootballapp.home.activity;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
+import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -37,8 +43,8 @@ public class MainPage extends Fragment {
         view = inflater.inflate(R.layout.activity_main_page, container, false);
         imageAds = (ImageView) view.findViewById(R.id.mainPageAds);
         imageNews = (ImageView) view.findViewById(R.id.mainPageNews);
-        Button btnNews = view.findViewById(R.id.showAllNews);
-        Button btnAds = view.findViewById(R.id.showAllAds);
+        final Button btnNews = view.findViewById(R.id.showAllNews);
+        final Button btnAds = view.findViewById(R.id.showAllAds);
         Glide.with(this)
                 .asBitmap()
                 .load(R.drawable.ic_ads_background)
@@ -56,11 +62,14 @@ public class MainPage extends Fragment {
                         .centerCrop())
                 .into(imageNews);
 
+//        final Animation animAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.ripple_effect_main_btn);
         btnNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //show all news
                 log.info("INFO: click all news");
+//                v.startAnimation(animAlpha);
+//                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.ripple_effect_main_btn));
                 fragmentManager.beginTransaction().replace(((ViewGroup)getView().getParent()).getId(), homePage).commit();
             }
         });
@@ -69,6 +78,8 @@ public class MainPage extends Fragment {
             public void onClick(View v) {
                 //show all ads
                 log.info("INFO: click all ads");
+//                v.startAnimation(animAlpha);
+//                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.ripple_effect_main_btn));
                 fragmentManager.beginTransaction().replace(((ViewGroup)getView().getParent()).getId(), adsPage).commit();
             }
         });
@@ -84,4 +95,7 @@ public class MainPage extends Fragment {
         recyclerViewAds.setLayoutManager(new LinearLayoutManager(getActivity()));
         return view;
     }
+
+
+
 }

@@ -23,10 +23,12 @@ public class AdsPage extends Fragment {
         view = inflater.inflate(R.layout.ads_page, container, false);
         collapsingToolbar =
                 (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbarAdsPage);
-        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/manrope_medium.otf");
+        collapsingToolbar.setTitle("Объявления");
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/manrope_regular.otf");
         collapsingToolbar.setCollapsedTitleTypeface(tf);
         collapsingToolbar.setExpandedTitleTypeface(tf);
-        collapsingToolbar.setTitle("Объявления");
+
 //        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewAds);
         RecyclerViewAdsAdapter adapter = new RecyclerViewAdsAdapter(getActivity(),this);

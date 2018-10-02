@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarAdsPage"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="160dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:fitsSystemWindows="true"
         >
@@ -20,15 +20,18 @@
             android:id="@+id/collapsing_toolbarAdsPage"
             app:collapsedTitleTextAppearance="@style/Widget.AppCompat.Toolbar"
             app:titleEnabled = "true"
+            app:expandedTitleGravity="bottom|left"
+            app:expandedTitleMarginBottom="18dp"
+            app:expandedTitleMarginStart="28dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="@color/colorLightGray2"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:src="@drawable/ic_news_back"
+                android:src="@drawable/ic_news_back5"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,9 +55,10 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -67,20 +71,19 @@
                 android:id="@+id/recyclerViewAds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="26dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:fontFamily="@font/manrope_regular"
-                android:paddingTop="23dp"
-                android:layout_height="175dp"
-                android:textColor="@color/colorBottomNavigationUnChecked"
-                android:gravity="center_horizontal|top"
-                android:text="@string/allAdsShown" />
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:fontFamily="@font/manrope_regular"-->
+                <!--android:paddingTop="23dp"-->
+                <!--android:paddingBottom="23dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
+                <!--android:gravity="center_horizontal|top"-->
+                <!--android:text="@string/allAdsShown" />-->
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

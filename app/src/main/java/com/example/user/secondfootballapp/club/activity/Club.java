@@ -37,8 +37,9 @@ public class Club extends Fragment {
         dialog = new AdvertisingFragment();
         Glide.with(this)
                 .asBitmap()
-                .load(R.drawable.ic_logo)
+                .load(R.drawable.ic_member)
                 .apply(new RequestOptions()
+                        .circleCropTransform()
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .priority(Priority.HIGH))
                 .into(imageLogo);

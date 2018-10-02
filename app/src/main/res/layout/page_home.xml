@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="@color/colorLightGray2"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
 
             >
@@ -63,6 +63,7 @@
         android:layout_marginTop="2sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,14 +81,15 @@
             android:layout_below="@+id/appbar"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:fontFamily="@font/manrope_regular"
-                android:paddingTop="23dp"
-                android:layout_height="170dp"
-                android:textColor="@color/colorBottomNavigationUnChecked"
-                android:gravity="center_horizontal|top"
-                android:text="@string/allNewsShown" />
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:fontFamily="@font/manrope_regular"-->
+                <!--android:paddingTop="23dp"-->
+                <!--android:paddingBottom="23dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
+                <!--android:gravity="center_horizontal|top"-->
+                <!--android:text="@string/allNewsShown" />-->
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

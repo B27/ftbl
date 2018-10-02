@@ -1,6 +1,8 @@
 package com.example.user.secondfootballapp.players.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.FullScreenImage;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.players.activity.Player;
@@ -47,6 +50,17 @@ public class RecyclerViewPlayersAdapter extends RecyclerView.Adapter<RecyclerVie
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .priority(Priority.HIGH))
                 .into(holder.imageLogo);
+        holder.imageLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, FullScreenImage.class);
+                String title = "Some title";
+                Bundle bundle = new Bundle();
+                bundle.putString("NEWSTITLE", title);
+                intent.putExtra("NEWSTITLE", bundle);
+                context.startActivity(intent);
+            }
+        });
         holder.buttonShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

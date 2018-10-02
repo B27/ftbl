@@ -27,18 +27,23 @@ public class RVPlayersTournamentAdapter extends RecyclerView.Adapter<RVPlayersTo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 //        holder.textTournament.setText("");
+        if (position==4){
+            holder.view.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 15;
+        return 5;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        View view;
         TextView textTournament;
         public ViewHolder(View item) {
             super(item);
             textTournament = (TextView) item.findViewById(R.id.tournamentPlayersTitle);
+            view = (View) item.findViewById(R.id.playerTournamentLine);
         }
     }
 }

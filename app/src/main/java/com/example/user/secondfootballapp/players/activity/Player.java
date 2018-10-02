@@ -1,5 +1,6 @@
 package com.example.user.secondfootballapp.players.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +20,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.FullScreenImage;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.home.activity.NewsPage;
 import com.example.user.secondfootballapp.players.adapter.RVPlayersTournamentAdapter;
 
 import org.slf4j.Logger;
@@ -53,6 +56,8 @@ public class Player extends Fragment {
             @Override
             public void onClick(View v) {
                 //добавить игрока в команду (только тренер) сделать видимым, если тренер
+                Intent intent = new Intent(getActivity(), PlayerInv.class);
+                getActivity().startActivity(intent);
             }
         });
 
@@ -80,9 +85,21 @@ public class Player extends Fragment {
                 .asBitmap()
                 .load(R.drawable.ic_member)
                 .apply(new RequestOptions()
+                        .circleCropTransform()
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .priority(Priority.HIGH))
                 .into(imageLogo);
+        imageLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FullScreenImage.class);
+                String title = "Some title";
+                Bundle bundle = new Bundle();
+                bundle.putString("NEWSTITLE", title);
+                intent.putExtra("NEWSTITLE", bundle);
+                startActivity(intent);
+            }
+        });
         textName.setText("Иванов В.В.");
         textDOB.setText("12.12.81");
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewPlayerTournaments);

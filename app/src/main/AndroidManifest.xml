@@ -5,6 +5,20 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,14 +38,36 @@
         <activity
             android:name=".PersonalActivity"
             android:label="@string/title_activity_personal"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".home.activity.NewsPage" />
         <!-- android:windowSoftInputMode="stateVisible|adjustResize" -->
         <activity
             android:name=".tournament.activity.CommandInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_command_info"
-            android:theme="@style/FullscreenTheme"/>
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".FullScreenImage" />
+        <activity android:name=".user.activity.UserInfo" />
+        <activity android:name=".user.activity.UserClubInfo" />
+        <activity android:name=".user.activity.NewCommand" />
+        <activity android:name=".user.activity.UserCommandInfo" />
+        <activity android:name=".user.activity.UserEditClub" />
+        <activity android:name=".user.activity.RefereesMatches" />
+        <activity android:name=".user.activity.EditTimeTable" />
+        <activity android:name=".user.activity.ProtocolEdit" />
+        <activity android:name=".user.activity.ProtocolEventsEdit" />
+        <activity android:name=".user.activity.ResponsiblePersons" />
+        <activity android:name=".user.activity.ProtocolMatchScore" />
+        <activity android:name=".user.activity.ProtocolCommand1" />
+        <activity android:name=".user.activity.ProtocolCommand2" />
+        <activity android:name=".players.activity.PlayerInv" />
+        <activity android:name=".club.activity.NewClub" />
+        <activity android:name=".user.activity.RegistrationUser" />
+        <activity android:name=".user.activity.ConfirmProtocol" />
+        <activity android:name=".user.activity.StructureCommand1" />
+        <activity android:name=".user.activity.StructureCommand2" />
+        <activity android:name=".user.activity.MatchResponsiblePersons" />
+        <activity android:name=".user.activity.MatchEvents"></activity>
     </application>
 
 </manifest>

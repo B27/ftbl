@@ -10,14 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.tournament.adapter.RVCommandMatchAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class CommandMatchFragment extends Fragment {
     Logger log = LoggerFactory.getLogger(PersonalActivity.class);
@@ -25,20 +29,23 @@ public class CommandMatchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
-        boolean check = true;
-        TextView textMatchSrarus;
         RecyclerView recyclerView;
+        LinearLayout layout;
         view = inflater.inflate(R.layout.command_info_match, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewCommandMatch);
-        textMatchSrarus = (TextView) view.findViewById(R.id.comandMatchStatus);
-        RVCommandMatchAdapter adapter = new RVCommandMatchAdapter(getActivity(), this);
-        recyclerView.setAdapter(adapter);
+        recyclerView = view.findViewById(R.id.recyclerViewCommandMatch);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //if club.members != null
-        if (!check){
-            recyclerView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+        layout = view.findViewById(R.id.teamMatchEmpty);
+        try {
+        Bundle bundle = getArguments();
+        List<Match> matches = (List<Match>) bundle.getSerializable("TEAMSTRUCTUREMATCHES");
+        if (matches.size()!=0){
+            layout.setVisibility(View.GONE);
         }
-        else {textMatchSrarus.setVisibility(View.VISIBLE);}
+        RVCommandMatchAdapter adapter = new RVCommandMatchAdapter(getActivity(), this, matches);
+        recyclerView.setAdapter(adapter);
+        }catch (Exception e){}
         return view;
     }
 }

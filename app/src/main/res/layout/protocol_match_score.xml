@@ -79,13 +79,13 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/protocolScoreFouls"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/protocolScoreFouls"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_semibold"
@@ -104,24 +104,23 @@
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_height="8sp"
+                    android:background="@color/colorLightGray2" />
             </LinearLayout>
 
-            <View
-                android:id="@+id/protocolScoreFauls"
-                android:layout_width="match_parent"
-                android:layout_gravity="end"
-                android:layout_height="8sp"
-                android:background="@color/colorLightGray2" />
+
 
             <LinearLayout
+                android:id="@+id/protocolScoreOwnGoals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
-                android:layout_marginBottom="8sp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/protocolScoreOwnGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_semibold"
@@ -135,6 +134,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8sp"
                     android:layout_marginTop="5sp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -149,7 +149,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="14dp"
-                            android:src="@drawable/ic_football" />
+                            android:src="@drawable/ic_logo2" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -160,9 +160,12 @@
 
                         <TextView
                             android:id="@+id/ownGoalsFoulsCommand1Title"
-                            android:layout_width="wrap_content"
+                            android:layout_width="80sp"
+                            android:gravity="end"
                             android:layout_height="wrap_content"
                             android:layout_margin="10sp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/manrope_regular"
                             android:text="@string/commands"
@@ -173,41 +176,20 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="end|center_vertical">
+                        android:layout_margin="5sp"
+                        android:layout_gravity="center">
 
                         <TextView
-                            android:id="@+id/ownGoalsFoulsCommand1FoulsNum"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/protocolEditMatchAuthoGoul"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:layout_width="55dp"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5sp"
-                            android:text="15"
-                            android:layout_gravity="center_vertical"
-                            android:textColor="@color/colorBottomNavigationUnChecked"
-                            android:textSize="20sp" />
+                            android:layout_gravity="center"
+                            android:text="4:3"
+                            android:gravity="center"
+                            android:textColor="@color/colorBottomNavigationUnChecked" />
                     </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=":"
-                        android:textColor="@color/colorBottomNavigationUnChecked"
-                        android:textSize="20sp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="start">
-
-                        <TextView
-                            android:id="@+id/ownGoalsFoulsCommand2FoulsNum"
-                            android:layout_margin="5sp"
-                            android:text="15"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/colorBottomNavigationUnChecked"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -216,9 +198,12 @@
 
                         <TextView
                             android:id="@+id/ownGoalsFoulsCommand2Title"
-                            android:layout_margin="10sp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="80sp"
+                            android:gravity="start"
                             android:layout_height="wrap_content"
+                            android:layout_margin="10sp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:fontFamily="@font/manrope_regular"
                             android:text="@string/commands"
                             android:textColor="@color/colorBottomNavigationUnChecked"
@@ -236,31 +221,30 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginEnd="14dp"
-                            android:src="@drawable/ic_football" />
+                            android:src="@drawable/ic_logo2" />
                     </LinearLayout>
                 </LinearLayout>
 
 
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_height="8sp"
+                    android:background="@color/colorLightGray2" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_gravity="end"
-                android:layout_height="8sp"
-                android:background="@color/colorLightGray2" />
 
 
             <LinearLayout
+                android:id="@+id/penalty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
-                android:layout_marginBottom="8sp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/penalty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_semibold"
@@ -273,6 +257,7 @@
 
                 <LinearLayout
                     android:layout_marginTop="5sp"
+                    android:layout_marginBottom="8sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -288,7 +273,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="14dp"
-                            android:src="@drawable/ic_football" />
+                            android:src="@drawable/ic_logo2" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -299,9 +284,12 @@
 
                         <TextView
                             android:id="@+id/penaltyCommand1Title"
-                            android:layout_width="wrap_content"
+                            android:layout_width="80sp"
+                            android:gravity="end"
                             android:layout_height="wrap_content"
                             android:layout_margin="10sp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/manrope_regular"
                             android:text="@string/commands"
@@ -312,39 +300,19 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="end|center_vertical">
+                        android:layout_margin="5sp"
+                        android:layout_gravity="center">
 
                         <TextView
-                            android:id="@+id/penaltyCommand1FoulsNum"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/protocolEditMatchPenalty"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:layout_width="55dp"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5sp"
-                            android:text="15"
-                            android:layout_gravity="center_vertical"
-                            android:textColor="@color/colorBottomNavigationUnChecked"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=":"
-                        android:textColor="@color/colorBottomNavigationUnChecked"
-                        android:textSize="20sp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="start">
-
-                        <TextView
-                            android:id="@+id/penaltyCommand2FoulsNum"
-                            android:layout_margin="5sp"
-                            android:text="15"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/colorBottomNavigationUnChecked"
-                            android:textSize="20sp" />
+                            android:layout_gravity="center"
+                            android:text="4:3"
+                            android:gravity="center"
+                            android:textColor="@color/colorBottomNavigationUnChecked" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -355,9 +323,12 @@
 
                         <TextView
                             android:id="@+id/penaltyCommand2Title"
-                            android:layout_margin="10sp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="80sp"
+                            android:gravity="start"
                             android:layout_height="wrap_content"
+                            android:layout_margin="10sp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:fontFamily="@font/manrope_regular"
                             android:text="@string/commands"
                             android:textColor="@color/colorBottomNavigationUnChecked"
@@ -375,18 +346,18 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginEnd="14dp"
-                            android:src="@drawable/ic_football" />
+                            android:src="@drawable/ic_logo2" />
                     </LinearLayout>
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_height="8sp"
+                    android:background="@color/colorLightGray2" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_gravity="end"
-                android:layout_height="8sp"
-                android:background="@color/colorLightGray2" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -414,6 +385,7 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
             <View
+                android:id="@+id/protocolScoreLine"
                 android:layout_width="match_parent"
                 android:layout_gravity="end"
                 android:layout_height="8sp"
@@ -448,7 +420,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="14dp"
-                        android:src="@drawable/ic_football" />
+                        android:src="@drawable/ic_logo2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -459,9 +431,12 @@
 
                     <TextView
                         android:id="@+id/scoreCommand1Title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80sp"
+                        android:gravity="end"
                         android:layout_height="wrap_content"
                         android:layout_margin="10sp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:layout_gravity="center_vertical"
                         android:fontFamily="@font/manrope_regular"
                         android:text="@string/commands"
@@ -472,39 +447,19 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="end|center_vertical">
+                    android:layout_margin="5sp"
+                    android:layout_gravity="center">
 
                     <TextView
-                        android:id="@+id/scoreCommand1FoulsNum"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/protocolEditMatchScore"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:layout_width="55dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5sp"
-                        android:text="15"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="@color/colorBottomNavigationUnChecked"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=":"
-                    android:textColor="@color/colorBottomNavigationUnChecked"
-                    android:textSize="20sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="start">
-
-                    <TextView
-                        android:id="@+id/scoreCommand2FoulsNum"
-                        android:layout_margin="5sp"
-                        android:text="15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorBottomNavigationUnChecked"
-                        android:textSize="20sp" />
+                        android:layout_gravity="center"
+                        android:text="4:3"
+                        android:gravity="center"
+                        android:textColor="@color/colorBottomNavigationUnChecked" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -515,9 +470,12 @@
 
                     <TextView
                         android:id="@+id/scoreCommand2Title"
-                        android:layout_margin="10sp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80sp"
+                        android:gravity="start"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10sp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:fontFamily="@font/manrope_regular"
                         android:text="@string/commands"
                         android:textColor="@color/colorBottomNavigationUnChecked"
@@ -535,7 +493,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginEnd="14dp"
-                        android:src="@drawable/ic_football" />
+                        android:src="@drawable/ic_logo2" />
                 </LinearLayout>
             </LinearLayout>
 

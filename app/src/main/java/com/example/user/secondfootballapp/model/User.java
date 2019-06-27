@@ -3,21 +3,24 @@ package com.example.user.secondfootballapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+import java.io.Serializable;
 
-    @SerializedName("user")
+public class User implements Serializable {
+
+    @SerializedName("person")
     @Expose
-    private User_ user;
+    private Person person;
     @SerializedName("token")
+
     @Expose
     private String token;
 
-    public User_ getUser() {
-        return user;
+    public Person getUser() {
+        return person;
     }
 
-    public void setUser(User_ user) {
-        this.user = user;
+    public void setUser(Person person) {
+        this.person = person;
     }
 
     public String getToken() {
@@ -27,4 +30,5 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
+
 }

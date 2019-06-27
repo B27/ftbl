@@ -6,45 +6,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".home.activity.MainPage"
+    android:background="@color/colorWhite"
     android:scrollbars="vertical">
 
 
 <android.support.v4.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_marginBottom="50dp"
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/mainPageNews"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_gravity="bottom"/>
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="150dp"-->
-            <!--android:layout_gravity="bottom"-->
-            <!--android:gravity="center_vertical|center_horizontal"-->
-            <!--android:layout_marginTop="25dp"-->
-            <!--android:textColor="@color/colorDarkGray"-->
-            <!--android:textSize="25sp"-->
-            <!--android:textStyle="bold"-->
-            <!--android:text="НОВОСТИ" />-->
+            android:paddingTop="8sp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14sp"
+                android:layout_marginTop="15sp"
+                android:textColor="@color/colorLightGrayForText"
+                android:fontFamily="@font/manrope_semibold"
+                android:text="@string/title_news2"
+                android:textSize="14sp"/>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="3dp"-->
+                <!--android:layout_gravity="bottom"-->
+                <!--android:layout_marginTop="13dp"-->
+                <!--android:background="@color/colorLightGray2" />-->
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/mainPageNewsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="272dp"
+            android:background="@color/colorWhite"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewMainNews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/colorLightGray2" />
             <Button
                 android:id="@+id/showAllNews"
                 android:fontFamily="@font/manrope_regular"
@@ -53,28 +67,50 @@
                 android:textColor="@color/colorDarkGray"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:clickable="true"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8sp"
+                android:layout_marginTop="8sp"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:text="@string/showAllNews" />
         </RelativeLayout>
 
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="150dp"-->
-        <!--android:gravity="center_vertical|center_horizontal"-->
         <!--android:textColor="@color/colorDarkGray"-->
-        <!--android:textSize="25sp"-->
-        <!--android:textStyle="bold"-->
-        <!--android:text="ОБЪЯВЛЕНИЯ"/>-->
 
-        <ImageView
-            android:id="@+id/mainPageAds"
-            android:layout_marginTop="20dp"
+        <!--<ImageView-->
+            <!--android:id="@+id/mainPageAds"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="160dp" />-->
+
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="160dp" />
-
+            android:layout_height="3dp"
+            android:layout_gravity="end"
+            android:background="@color/colorLightGray2" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingTop="8sp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15sp"
+                android:layout_marginStart="14sp"
+                android:textColor="@color/colorLightGrayForText"
+                android:fontFamily="@font/manrope_semibold"
+                android:text="@string/title_ads2"
+                android:textSize="14sp"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/mainPageAdsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="@color/colorWhite"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewMainAds"
@@ -87,7 +123,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!--android:fontFamily="@font/manrope_semibold"-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/colorLightGray2" />
+
             <Button
                 android:id="@+id/showAllAds"
                 android:fontFamily="@font/manrope_regular"
@@ -96,7 +137,8 @@
                 android:textColor="@color/colorDarkGray"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_vertical|center_horizontal"

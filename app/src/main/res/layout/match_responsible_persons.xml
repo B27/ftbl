@@ -107,17 +107,20 @@
                         android:id="@+id/inspectorLogo"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:src="@drawable/ic_logo2"
                         android:layout_gravity="center_vertical" />
 
                     <TextView
                         android:id="@+id/inspectorName"
                         android:layout_width="180dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="14dp"
                         android:fontFamily="@font/manrope_regular"
                         android:paddingEnd="15sp"
-                        android:text="@string/commandPlayer"
+                        android:text="@string/empty2"
                         android:textColor="@color/colorBottomNavigationUnChecked"
                         android:textSize="14sp" />
 
@@ -160,17 +163,20 @@
                         android:id="@+id/referee1Logo"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:src="@drawable/ic_logo2"
                         android:layout_gravity="center_vertical" />
 
                     <TextView
                         android:id="@+id/referee1Name"
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="14dp"
                         android:fontFamily="@font/manrope_regular"
                         android:paddingEnd="15sp"
-                        android:text="@string/commandPlayer"
+                        android:text="@string/empty2"
                         android:textColor="@color/colorBottomNavigationUnChecked"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -211,17 +217,20 @@
                         android:id="@+id/referee2Logo"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:src="@drawable/ic_logo2"
                         android:layout_gravity="center_vertical"/>
 
                     <TextView
                         android:id="@+id/referee2Name"
                         android:layout_width="180dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="14dp"
                         android:fontFamily="@font/manrope_regular"
                         android:paddingEnd="15sp"
-                        android:text="@string/commandPlayer"
+                        android:text="@string/empty2"
                         android:textColor="@color/colorBottomNavigationUnChecked"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -263,17 +272,20 @@
                         android:id="@+id/referee3Logo"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:src="@drawable/ic_logo2"
                         android:layout_gravity="center_vertical" />
 
                     <TextView
                         android:id="@+id/referee3Name"
                         android:layout_width="180dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="14dp"
                         android:fontFamily="@font/manrope_regular"
                         android:paddingEnd="15sp"
-                        android:text="@string/commandPlayer"
+                        android:text="@string/empty2"
                         android:textColor="@color/colorBottomNavigationUnChecked"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -314,17 +326,20 @@
                         android:id="@+id/referee4Logo"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:src="@drawable/ic_logo2"
                         android:layout_gravity="center_vertical" />
 
                     <TextView
                         android:id="@+id/referee4Name"
                         android:layout_width="180dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="14dp"
                         android:fontFamily="@font/manrope_regular"
                         android:paddingEnd="15sp"
-                        android:text="@string/commandPlayer"
+                        android:text="@string/empty2"
                         android:textColor="@color/colorBottomNavigationUnChecked"
                         android:textSize="14sp" />
                 </LinearLayout>

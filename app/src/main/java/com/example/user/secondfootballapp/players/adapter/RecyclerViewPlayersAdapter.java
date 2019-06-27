@@ -11,25 +11,52 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.CheckName;
+import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.FullScreenImage;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.players.activity.Player;
 import com.example.user.secondfootballapp.players.activity.PlayersPage;
+import com.example.user.secondfootballapp.user.activity.AuthoUser;
+import com.example.user.secondfootballapp.user.activity.UserPage;
 
-public class RecyclerViewPlayersAdapter extends RecyclerView.Adapter<RecyclerViewPlayersAdapter.ViewHolder>{
-    PlayersPage context;
-    PersonalActivity activity;
-    public RecyclerViewPlayersAdapter(Activity activity,PlayersPage context){
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import static com.example.user.secondfootballapp.Controller.BASE_URL;
+
+public class RecyclerViewPlayersAdapter extends RecyclerView.Adapter<RecyclerViewPlayersAdapter.ViewHolder> {
+    private Logger log = LoggerFactory.getLogger(PlayersPage.class);
+    private List<Person> allPlayers;
+    private PlayersPage context;
+    private PersonalActivity activity;
+
+    public RecyclerViewPlayersAdapter(Activity activity, PlayersPage context, List<Person> allPlayers) {
+        this.allPlayers = allPlayers;
         this.activity = (PersonalActivity) activity;
         this.context = context;
     }
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,58 +66,99 @@ public class RecyclerViewPlayersAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textDOB.setText("27.03.18");
-        holder.textName.setText("Иванов В.В.");
-        Glide.with(context)
-                .asBitmap()
-                .load(R.drawable.ic_member)
-                .apply(new RequestOptions()
-                        .circleCropTransform()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .priority(Priority.HIGH))
-                .into(holder.imageLogo);
-        holder.imageLogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity, FullScreenImage.class);
-                String title = "Some title";
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        try {
+            String uriPic = BASE_URL;
+            String DOB = allPlayers.get(position).getBirthdate();
+            DateToString dateToString = new DateToString();
+            holder.textDOB.setText(dateToString.ChangeDate(DOB));
+            String str;
+            CheckName checkName = new CheckName();
+            str = checkName.check(allPlayers.get(position).getSurname(), allPlayers.get(position).getName(), allPlayers.get(position).getLastname());
+            holder.textName.setText(str);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.optionalCircleCrop();
+            requestOptions.format(DecodeFormat.PREFER_ARGB_8888);
+            requestOptions.error(R.drawable.ic_logo2);
+            requestOptions.override(500, 500);
+            requestOptions.priority(Priority.HIGH);
+            try {
+                uriPic += "/" + allPlayers.get(position).getPhoto();
+                URL url = new URL(uriPic);
+                Glide.with(activity)
+                        .asBitmap()
+                        .load(url)
+                        .apply(requestOptions)
+                        .into(holder.imageLogo);
+
+                final String finalUriPic = uriPic;
+                holder.imageLogo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                            Intent intent = new Intent(activity, FullScreenImage.class);
+                            intent.putExtra("player_photo", finalUriPic);
+                            context.startActivity(intent);
+                        }
+
+                    }
+                });
+            } catch (MalformedURLException e) {
+                Glide.with(activity)
+                        .asBitmap()
+                        .load(R.drawable.ic_logo2)
+                        .apply(requestOptions)
+                        .into(holder.imageLogo);
+            }
+
+            holder.buttonShow2.setOnClickListener(v -> {
+                Player player = new Player();
                 Bundle bundle = new Bundle();
-                bundle.putString("NEWSTITLE", title);
-                intent.putExtra("NEWSTITLE", bundle);
-                context.startActivity(intent);
-            }
-        });
-        holder.buttonShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                Person person = allPlayers.get(position);
+                bundle.putSerializable("PLAYERINFO", person);
+                player.setArguments(bundle);
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(context.getId(), new Player()).addToBackStack(null).commit();
+                fragmentManager.beginTransaction().add(R.id.pageContainer, player).hide(PersonalActivity.active).show(player).commit();
+                PersonalActivity.active = player;
+            });
+            if (position == (allPlayers.size() - 1)) {
+                holder.line.setVisibility(View.INVISIBLE);
             }
-        });
-        if (position==19){
-            holder.line.setVisibility(View.INVISIBLE);
+
+
+        } catch (Exception e) {
+            log.error("ERROR: ", e);
         }
+
     }
 
     @Override
     public int getItemCount() {
-        return 20;
+        return allPlayers.size();
     }
 
-    public class ViewHolder  extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageLogo;
-        ImageButton buttonShow;
+        LinearLayout buttonShow2;
         TextView textName;
         TextView textDOB;
         View line;
+
         public ViewHolder(View item) {
             super(item);
-            line = (View) item.findViewById(R.id.playersLine);
-            imageLogo = (ImageView) item.findViewById(R.id.playerInfoLogo);
-            buttonShow = (ImageButton) item.findViewById(R.id.playerInfoButtonShow);
-            textName = (TextView) item.findViewById(R.id.playerInfoName);
-            textDOB = (TextView) item.findViewById(R.id.playerInfoDOB);
+            line = item.findViewById(R.id.playersLine);
+            imageLogo = item.findViewById(R.id.playerInfoLogo);
+            buttonShow2 = item.findViewById(R.id.playerInfoButtonShow2);
+            textName = item.findViewById(R.id.playerInfoName);
+            textDOB = item.findViewById(R.id.playerInfoDOB);
         }
     }
+
+    public void dataChanged(List<Person> allPlayers1){
+        allPlayers.clear();
+        allPlayers.addAll(allPlayers1);
+        notifyDataSetChanged();
+    }
+
+
 }

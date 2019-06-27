@@ -11,7 +11,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.CheckName;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.SetImage;
+import com.example.user.secondfootballapp.model.Person;
+import com.example.user.secondfootballapp.model.Referee;
+import com.example.user.secondfootballapp.tournament.activity.TournamentPage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MatchResponsiblePersons extends AppCompatActivity {
 
@@ -30,68 +38,63 @@ public class MatchResponsiblePersons extends AppCompatActivity {
         TextView textReferee4;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.match_responsible_persons);
-        buttonBack = (ImageButton) findViewById(R.id.matchResponsiblePersonsBack);
-        imageInspector = (ImageView) findViewById(R.id.inspectorLogo);
-        imageReferee1 = (ImageView) findViewById(R.id.referee1Logo);
-        imageReferee2 = (ImageView) findViewById(R.id.referee2Logo);
-        imageReferee3 = (ImageView) findViewById(R.id.referee3Logo);
-        imageReferee4 = (ImageView) findViewById(R.id.referee4Logo);
-        textInspector = (TextView) findViewById(R.id.inspectorName);
-        textReferee1 = (TextView) findViewById(R.id.referee1Name);
-        textReferee2 = (TextView) findViewById(R.id.referee2Name);
-        textReferee3 = (TextView) findViewById(R.id.referee3Name);
-        textReferee4 = (TextView) findViewById(R.id.referee4Name);
-        String str = "Иванов В.В.";
-        textInspector.setText(str);
-        textReferee1.setText(str);
-        textReferee2.setText(str);
-        textReferee3.setText(str);
-        textReferee4.setText(str);
-        Glide.with(this)
-                .asBitmap()
-                .load(R.drawable.ic_member)
-                .apply(new RequestOptions()
-                        .circleCropTransform()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .priority(Priority.HIGH))
-                .into(imageInspector);
-        Glide.with(this)
-                .asBitmap()
-                .load(R.drawable.ic_member)
-                .apply(new RequestOptions()
-                        .circleCropTransform()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .priority(Priority.HIGH))
-                .into(imageReferee1);
-        Glide.with(this)
-                .asBitmap()
-                .load(R.drawable.ic_member)
-                .apply(new RequestOptions()
-                        .circleCropTransform()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .priority(Priority.HIGH))
-                .into(imageReferee2);
-        Glide.with(this)
-                .asBitmap()
-                .load(R.drawable.ic_member)
-                .apply(new RequestOptions()
-                        .circleCropTransform()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .priority(Priority.HIGH))
-                .into(imageReferee3);
-        Glide.with(this)
-                .asBitmap()
-                .load(R.drawable.ic_member)
-                .apply(new RequestOptions()
-                        .circleCropTransform()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .priority(Priority.HIGH))
-                .into(imageReferee4);
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        buttonBack = findViewById(R.id.matchResponsiblePersonsBack);
+        imageInspector = findViewById(R.id.inspectorLogo);
+        imageReferee1 = findViewById(R.id.referee1Logo);
+        imageReferee2 = findViewById(R.id.referee2Logo);
+        imageReferee3 = findViewById(R.id.referee3Logo);
+        imageReferee4 = findViewById(R.id.referee4Logo);
+        textInspector = findViewById(R.id.inspectorName);
+        textReferee1 = findViewById(R.id.referee1Name);
+        textReferee2 = findViewById(R.id.referee2Name);
+        textReferee3 = findViewById(R.id.referee3Name);
+        textReferee4 = findViewById(R.id.referee4Name);
+        String str;
+        try {
+            CheckName checkName = new CheckName();
+            SetImage setImage = new SetImage();
+            List<Referee> referees = (List<Referee>) getIntent().getExtras().getSerializable("CONFIRMPROTOCOLREFEREES");
+            List<Person> personList = new ArrayList<>();
+            for (Referee referee : referees) {
+                for (Person person : TournamentPage.referees) {
+                    if (referee.getPerson().equals(person.getId())) {
+                        personList.add(person);
+                    }
+                }
             }
-        });
+            for (int i = 0; i < referees.size(); i++) {
+                switch (referees.get(i).getType()) {
+                    case "Инспектор":
+                        str = checkName.check(personList.get(i).getSurname(), personList.get(i).getName(), personList.get(i).getLastname());
+                        textInspector.setText(str);
+                        setImage.setImage(this, imageInspector, personList.get(i).getPhoto());
+                        break;
+                    case "1 судья":
+                        str = checkName.check(personList.get(i).getSurname(), personList.get(i).getName(), personList.get(i).getLastname());
+                        textReferee1.setText(str);
+                        setImage.setImage(this, imageReferee1, personList.get(i).getPhoto());
+                        break;
+                    case "2 судья":
+                        str = checkName.check(personList.get(i).getSurname(), personList.get(i).getName(), personList.get(i).getLastname());
+                        textReferee2.setText(str);
+                        setImage.setImage(this, imageReferee2, personList.get(i).getPhoto());
+                        break;
+                    case "3 судья":
+                        str = checkName.check(personList.get(i).getSurname(), personList.get(i).getName(), personList.get(i).getLastname());
+                        textReferee3.setText(str);
+                        setImage.setImage(this, imageReferee3, personList.get(i).getPhoto());
+                        break;
+                    case "Хронометрист":
+                        str = checkName.check(personList.get(i).getSurname(), personList.get(i).getName(), personList.get(i).getLastname());
+                        textReferee4.setText(str);
+                        setImage.setImage(this, imageReferee4, personList.get(i).getPhoto());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } catch (NullPointerException e) {
+        }
+        buttonBack.setOnClickListener(v -> finish());
     }
 }

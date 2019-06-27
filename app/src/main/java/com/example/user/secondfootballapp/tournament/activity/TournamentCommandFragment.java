@@ -1,7 +1,9 @@
 package com.example.user.secondfootballapp.tournament.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,49 +11,136 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.LinearLayout;
 
 
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.League;
+import com.example.user.secondfootballapp.model.LeagueInfo;
+import com.example.user.secondfootballapp.model.Team;
+import com.example.user.secondfootballapp.tournament.GroupTeamPlaceComparator;
+import com.example.user.secondfootballapp.tournament.PlayoffTeamMadeToPlayoffComparator;
+import com.example.user.secondfootballapp.tournament.PlayoffTeamPlaceComparator;
+import com.example.user.secondfootballapp.tournament.adapter.RVLeaguePlayoffCommandAdapter;
 import com.example.user.secondfootballapp.tournament.adapter.RVTournamentCommandAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+
 public class TournamentCommandFragment extends Fragment{
     Logger log = LoggerFactory.getLogger(TournamentTimeTableFragment.class);
     boolean scrollStatus;
+    FloatingActionButton fab;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
         NestedScrollView scroller;
         RecyclerView recyclerView;
-        log.info("INFO: TournamentCommandFragment onCreate 2");
+        RecyclerView recyclerViewPlayoff;
+        LinearLayout layout;
+        LinearLayout layoutPlayoff;
+
+        Bundle arguments = getArguments();
+        List<Team> teams = (List<Team>) arguments.getSerializable("TOURNAMENTINFOTEAMS");
+        LeagueInfo leagueInfo = (LeagueInfo) arguments.getSerializable("TOURNAMENTINFOMATCHESLEAGUE");
+//        HashMap<String, List<Team>> commandGroups = new HashMap<>();
+        List<String> groups = new ArrayList<>();
+        try{
+            for (Team team : teams){
+                if (!groups.contains(team.getGroup())){
+                    groups.add(team.getGroup());
+                }
+            }
+        }catch (Exception e){}
+
         view = inflater.inflate(R.layout.tournament_info_tab_command, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.tournamentInfoTabCommand);
-        scroller = (NestedScrollView) view.findViewById(R.id.tournamentInfoCommandScroll);
+        Tournament tournament = (Tournament) this.getParentFragment();
+        fab = tournament.getFabCommand();
+        layout = view.findViewById(R.id.tournamentInfoTabCommandEmpty);
+        layoutPlayoff = view.findViewById(R.id.commandsPlayoff);
+        recyclerView = view.findViewById(R.id.tournamentInfoTabCommand);
+        recyclerViewPlayoff = view.findViewById(R.id.tournamentInfoTabCommandPlayoff);
+        recyclerViewPlayoff.setLayoutManager(new LinearLayoutManager(getActivity()));
+        scroller = view.findViewById(R.id.tournamentInfoCommandScroll);
         scrollStatus = false;
-        RVTournamentCommandAdapter adaptet = new RVTournamentCommandAdapter(getActivity(),this);
-        recyclerView.setAdapter(adaptet);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        if (groups.size()!=0){
+            layout.setVisibility(View.GONE);
+            if (!leagueInfo.getStatus().equals("Groups")){
+                layoutPlayoff.setVisibility(View.VISIBLE);
+                List<Team> list = new ArrayList<>(teams);
+                for (Team team : teams){
+//                    if (team.getPlace()!=null){
+//                    if (team.getPlayoffPlace()!=null){
+                    if (team.getPlayoffPlace()!=null){
+                        list.remove(team);
+                    }
+                }
+                teams.removeAll(list);
+                Collections.sort(teams, new PlayoffTeamPlaceComparator());
+                int count = teams.size();
+                Collections.sort(list, new GroupTeamPlaceComparator());
+                Collections.sort(list, new PlayoffTeamMadeToPlayoffComparator());
+                teams.addAll(count, list);
+                RVLeaguePlayoffCommandAdapter adapter = new RVLeaguePlayoffCommandAdapter(getActivity(),this, teams, leagueInfo);
+                recyclerViewPlayoff.setAdapter(adapter);
+            }
+            else {
+                RVTournamentCommandAdapter adapter = new RVTournamentCommandAdapter(getActivity(),this, groups, teams, leagueInfo);
+                recyclerView.setAdapter(adapter);
+            }
+        }
+        else {
+            fab.setVisibility(View.INVISIBLE);
+        }
+
+
+
         scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
                 if (scrollY > oldScrollY) {
-                    log.info("INFO: RecyclerView scrolled: scroll down!");
-                    PersonalActivity.navigation.animate().translationY(PersonalActivity.navigation.getHeight());
+//                    PersonalActivity.navigation.animate().translationY(PersonalActivity.navigation.getHeight());
 
                 }
                 if (scrollY < oldScrollY) {
-                    log.info("INFO: RecyclerView scrolled: scroll up!");
-                    PersonalActivity.navigation.animate().translationY(0);
+//                    PersonalActivity.navigation.animate().translationY(0);
                     scrollStatus = false;
                 }
                 if (scrollY == ( v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() )) {
-                    log.info("INFO: RecyclerView scrolled: bottom scroll!");
                     scrollStatus = true;
                 }
+            }
+        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//nothing to do
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE ) {
+                    fab.show();
+                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    fab.hide();
+                }
+                if (scrollStatus){
+                    fab.hide();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
             }
         });
         return view;
@@ -59,14 +148,17 @@ public class TournamentCommandFragment extends Fragment{
 
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
     public void onPause() {
-        log.info("INFO: TournamentCommandFragment onPause 2");
         super.onPause();
     }
 
     @Override
     public void onDestroy() {
-        log.info("INFO: TournamentCommandFragment onDestroy 2");
 //        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         super.onDestroy();
     }

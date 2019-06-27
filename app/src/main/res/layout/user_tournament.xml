@@ -54,7 +54,9 @@
 
             <TextView
                 android:id="@+id/userTournamentCommandTitle"
-                android:layout_width="match_parent"
+                android:layout_width="230sp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/manrope_regular"
@@ -65,6 +67,7 @@
                 android:textColor="@color/colorBottomNavigationUnChecked" />
         </LinearLayout>
             <View
+                android:id="@+id/userTournamentLine"
                 android:layout_width="match_parent"
                 android:layout_gravity="end"
                 android:layout_marginTop="5dp"

@@ -1,112 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<?xml version="1.0" encoding="utf-8"?><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:orientation="vertical"--><!--android:background="@color/colorWhite"--><!--android:focusable="true"--><!--android:focusableInTouchMode="true"--><!--tools:context=".user.activity.UserEditClub">-->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/protocolLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_marginTop="5sp"
-    android:layout_marginBottom="5sp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorWhite"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/manrope_regular"
-        android:paddingStart="4sp"
-        android:gravity="start"
-        android:textColor="@color/colorLightGrayForText"
-        android:textSize="12sp"
-        android:text="@string/event"/>
-    <Spinner
-        android:id="@+id/editProtocolSpinnerEvent"
-        android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:background="@drawable/spinner_shape"
-        android:spinnerMode="dialog"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/manrope_regular"
-        android:paddingStart="4sp"
-        android:gravity="start"
-        android:textColor="@color/colorLightGrayForText"
-        android:textSize="12sp"
-        android:text="@string/time"/>
+    android:orientation="vertical"
+    tools:context=".user.activity.ProtocolEdit">
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
-        <EditText
-            android:id="@+id/editProtocolEventMinutes"
-            android:layout_width="40sp"
-            android:gravity="end"
-            android:layout_height="wrap_content"
-            style="@style/MyEditText"
-            android:hint="@string/editMatchTime"
-            android:inputType="number"/>
+
+        <ImageView
+            android:id="@+id/protocolEventCommandLogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="14sp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_logo2" />
+
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/protocolEvent"
+            android:layout_width="200dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="30dp"
             android:fontFamily="@font/manrope_regular"
-            android:layout_marginStart="2sp"
-            android:gravity="start"
-            android:textColor="@color/colorLightGrayForText"
-            android:textSize="12sp"
-            android:text=":"/>
-        <EditText
-            android:id="@+id/editProtocolEventSeconds"
-            android:layout_width="40sp"
+            android:text="@string/commandTitle"
+            android:textColor="@color/colorBottomNavigationUnChecked"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MyEditText"
-            android:hint="@string/editMatchTime"
-            android:inputType="number"/>
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="14dp"
+            android:gravity="center_vertical|end"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/protocolEventDelete"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical|end"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_close8" />
+        </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/manrope_regular"
-        android:paddingStart="4sp"
-        android:gravity="start"
-        android:textColor="@color/colorLightGrayForText"
-        android:textSize="12sp"
-        android:text="@string/half"/>
-    <Spinner
-        android:id="@+id/editProtocolSpinnerHalf"
-        android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:background="@drawable/spinner_shape"
-        android:spinnerMode="dialog"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/manrope_regular"
-        android:paddingStart="4sp"
-        android:gravity="start"
-        android:textColor="@color/colorLightGrayForText"
-        android:textSize="12sp"
-        android:text="@string/commandPlayer2"/>
-    <Spinner
-        android:id="@+id/editProtocolSpinnerPlayers"
-        android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:background="@drawable/spinner_shape"
-        android:spinnerMode="dialog"/>
-
-    <Button
-        android:id="@+id/editProtocolDeleteEvent"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:fontFamily="@font/manrope_semibold"
-        android:textColor="@color/colorPrimary"
-        android:text="@string/remove"/>
     <View
-        android:id="@+id/editProtocolLine"
+        android:id="@+id/protocolLine"
         android:layout_width="match_parent"
         android:layout_gravity="end"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:layout_height="1dp"
         android:background="@color/colorLightGray" />
+
 </LinearLayout>

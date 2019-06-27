@@ -3,32 +3,59 @@ package com.example.user.secondfootballapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Team {
+import java.io.Serializable;
+import java.util.List;
+
+public class Team implements Serializable {
 
     @SerializedName("status")
     @Expose
     private String status;
-    @SerializedName("place")
-    @Expose
-    private Object place;
     @SerializedName("group")
     @Expose
-    private Object group;
+    private String group;
     @SerializedName("goals")
     @Expose
-    private Object goals;
+    private Integer goals;
     @SerializedName("goalsReceived")
     @Expose
-    private Object goalsReceived;
+    private Integer goalsReceived;
+    @SerializedName("wins")
+    @Expose
+    private Integer wins;
+    @SerializedName("place")
+    @Expose
+    private Integer place;
+    @SerializedName("playoffPlace")
+    @Expose
+    private Integer playoffPlace;
+    @SerializedName("losses")
+    @Expose
+    private Integer losses;
+    @SerializedName("draws")
+    @Expose
+    private Integer draws;
     @SerializedName("groupScore")
     @Expose
-    private Object groupScore;
+    private int groupScore;
+    @SerializedName("players")
+    @Expose
+    private List<Player> players = null;
     @SerializedName("_id")
     @Expose
     private String id;
-    @SerializedName("team")
+    @SerializedName("creator")
     @Expose
-    private String team;
+    private String creator;
+    @SerializedName("madeToPlayoff")
+    @Expose
+    private Boolean madeToPlayoff;
+    @SerializedName("club")
+    @Expose
+    private String club;
+    @SerializedName("name")
+    @Expose
+    private String name;
 
     public String getStatus() {
         return status;
@@ -38,44 +65,91 @@ public class Team {
         this.status = status;
     }
 
-    public Object getPlace() {
-        return place;
-    }
-
-    public void setPlace(Object place) {
-        this.place = place;
-    }
-
-    public Object getGroup() {
+    public String getGroup() {
         return group;
     }
 
-    public void setGroup(Object group) {
+    public void setGroup(String group) {
         this.group = group;
     }
 
-    public Object getGoals() {
+    public Integer getGoals() {
         return goals;
     }
 
-    public void setGoals(Object goals) {
+    public void setGoals(Integer goals) {
         this.goals = goals;
     }
+    public Boolean getMadeToPlayoff() {
+        return madeToPlayoff;
+    }
 
-    public Object getGoalsReceived() {
+    public void setMadeToPlayoff(Boolean madeToPlayoff) {
+        this.madeToPlayoff = madeToPlayoff;
+    }
+
+    public Integer getPlayoffPlace() {
+        return playoffPlace;
+    }
+
+    public void setPlayoffPlace(Integer playoffPlace) {
+        this.playoffPlace = playoffPlace;
+    }
+
+    public Integer getGoalsReceived() {
         return goalsReceived;
     }
 
-    public void setGoalsReceived(Object goalsReceived) {
+    public void setGoalsReceived(Integer goalsReceived) {
         this.goalsReceived = goalsReceived;
     }
 
-    public Object getGroupScore() {
+    public Integer getWins() {
+        return wins;
+    }
+
+    public void setWins(Integer wins) {
+        this.wins = wins;
+    }
+
+    public Integer getPlace() {
+        return place;
+    }
+
+    public void setPlace(Integer place) {
+        this.place = place;
+    }
+
+    public Integer getLosses() {
+        return losses;
+    }
+
+    public void setLosses(Integer losses) {
+        this.losses = losses;
+    }
+
+    public Integer getDraws() {
+        return draws;
+    }
+
+    public void setDraws(Integer draws) {
+        this.draws = draws;
+    }
+
+    public int getGroupScore() {
         return groupScore;
     }
 
-    public void setGroupScore(Object groupScore) {
+    public void setGroupScore(int groupScore) {
         this.groupScore = groupScore;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
     public String getId() {
@@ -86,12 +160,27 @@ public class Team {
         this.id = id;
     }
 
-    public String getTeam() {
-        return team;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setTeam(String team) {
-        this.team = team;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
+    public String getClub() {
+        return club;
+    }
+
+    public void setClub(String club) {
+        this.club = club;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

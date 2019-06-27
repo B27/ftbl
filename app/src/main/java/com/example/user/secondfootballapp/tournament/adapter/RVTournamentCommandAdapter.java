@@ -11,20 +11,34 @@ import android.widget.TextView;
 
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.LeagueInfo;
+import com.example.user.secondfootballapp.model.Team;
+import com.example.user.secondfootballapp.tournament.GroupTeamPlaceComparator;
+import com.example.user.secondfootballapp.tournament.PlayerYCComparator;
 import com.example.user.secondfootballapp.tournament.activity.TournamentCommandFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
+import java.util.List;
+
 public class RVTournamentCommandAdapter extends RecyclerView.Adapter<RVTournamentCommandAdapter.ViewHolder>{
     Logger log = LoggerFactory.getLogger(PersonalActivity.class);
 
-    TournamentCommandFragment context;
-    PersonalActivity activity;
+    private TournamentCommandFragment context;
+    private PersonalActivity activity;
+    private List<String> groups;
+    private List<Team> teams;
+    private LeagueInfo leagueInfo;
 
-    public RVTournamentCommandAdapter(Activity activity, TournamentCommandFragment context){
+    public RVTournamentCommandAdapter(Activity activity, TournamentCommandFragment context, List<String> groups, List<Team> teams
+    ,LeagueInfo leagueInfo){
         this.activity = (PersonalActivity) activity;
         this.context = context;
+        this.groups = groups;
+        this.teams = teams;
+        this.leagueInfo = leagueInfo;
     }
     @NonNull
     @Override
@@ -38,29 +52,37 @@ public class RVTournamentCommandAdapter extends RecyclerView.Adapter<RVTournamen
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textGroupTitle.setText("Группа А");
+        String str;
+        str = "Группа " + groups.get(position);
+        holder.textGroupTitle.setText(str);
         //add onClick in adapter
         //getChildFragmentManager()
-        RVTournamentCommandCardAdapter adapter = new RVTournamentCommandCardAdapter(activity, context);
+        Collections.sort(teams, new GroupTeamPlaceComparator());
+        RVTournamentCommandCardAdapter adapter = new RVTournamentCommandCardAdapter(activity, context, teams, groups.get(position), leagueInfo);
         holder.recyclerView.setAdapter(adapter);
 //        holder.recyclerView.setLayoutManager(new CustomLinearLayoutManager(activity));
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        if (position==(groups.size()-1)){
+            holder.line.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return groups.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView textGroupTitle;
         View cardView;
         RecyclerView recyclerView;
+        View line;
         public ViewHolder(View item) {
             super(item);
             textGroupTitle = (TextView) item.findViewById(R.id.groupTitle);
             cardView = (View) item.findViewById(R.id.cv);
             recyclerView = (RecyclerView) item.findViewById(R.id.tournamentInfoTabCommandCard);
+            line = (View) item.findViewById(R.id.tournamentCommandCardLine);
         }
     }
 }

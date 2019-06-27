@@ -8,20 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
+import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.home.activity.AdsPage;
+import com.example.user.secondfootballapp.model.Announce;
+import com.example.user.secondfootballapp.model.News_;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
 
 public class RecyclerViewAdsAdapter extends RecyclerView.Adapter<RecyclerViewAdsAdapter.ViewHolder> {
-
-    AdsPage context;
-    PersonalActivity activity;
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    public RecyclerViewAdsAdapter(Activity activity, AdsPage context){
+    private List<Announce> ads;
+    private AdsPage context;
+    private PersonalActivity activity;
+    public RecyclerViewAdsAdapter(Activity activity, AdsPage context, List<Announce> ads){
+        this.ads = ads;
         this.activity = (PersonalActivity) activity;
         this.context = context;
     }
@@ -36,22 +37,36 @@ public class RecyclerViewAdsAdapter extends RecyclerView.Adapter<RecyclerViewAds
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.textTitle.setText("В мире футбола чето там изменилось. Вау. Как неожиданно.");
-//        holder.textDate.setText("27.01.18");
+        String str = ads.get(position).getContent();
+        holder.textTitle.setText(str);
+        DateToString dateToString = new DateToString();
+        str = ads.get(position).getDate();
+        holder.textDate.setText(dateToString.ChangeDate(str));
+        if (position==(ads.size()-1)){
+            holder.line.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 7;
+        return ads.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView textTitle;
         TextView textDate;
+        View line;
         public ViewHolder(View item) {
             super(item);
-            textDate = (TextView) item.findViewById(R.id.adsDate);
-            textTitle = (TextView) item.findViewById(R.id.adsTitle);
+            textDate = item.findViewById(R.id.adsDate);
+            textTitle = item.findViewById(R.id.adsTitle);
+            line = item.findViewById(R.id.adsLine);
         }
+    }
+
+    public void dataChanged(List<Announce> allPlayers1) {
+        ads.clear();
+        ads.addAll(allPlayers1);
+        notifyDataSetChanged();
     }
 }

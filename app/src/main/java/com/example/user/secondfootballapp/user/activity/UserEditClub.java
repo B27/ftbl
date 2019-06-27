@@ -1,5 +1,6 @@
 package com.example.user.secondfootballapp.user.activity;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -16,43 +17,67 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.Controller;
+import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.user.adapter.RVEditClubMembersAdapter;
+import com.example.user.secondfootballapp.SaveSharedPreference;
+import com.example.user.secondfootballapp.SetImage;
+import com.example.user.secondfootballapp.model.Club;
+import com.example.user.secondfootballapp.model.DataClub;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.CAMERA;
+import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class UserEditClub extends AppCompatActivity {
     Logger log = LoggerFactory.getLogger(UserEditClub.class);
     ImageButton buttonLogo;
     Bitmap myBitmap;
+    Bitmap photo;
     Uri picUri;
+    Club club1;
     private ArrayList permissionsToRequest;
     private ArrayList permissionsRejected = new ArrayList();
     private ArrayList permissions = new ArrayList();
 
     private final static int ALL_PERMISSIONS_RESULT = 107;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RecyclerView recyclerView;
+//        RecyclerView recyclerView;
         ImageButton buttonSave;
         ImageButton buttonClose;
         Toolbar toolbar;
@@ -63,65 +88,88 @@ public class UserEditClub extends AppCompatActivity {
         setContentView(R.layout.user_edit_club);
         try {
             Intent intent = getIntent();
-            String title = intent.getStringExtra("NEWSTITLE");
-            toolbar = (Toolbar) findViewById(R.id.toolbarUserCommandInfo);
+            club1 = (Club) intent.getExtras().getSerializable("AUTHOUSERCLUBINFO");
+            toolbar = findViewById(R.id.toolbarUserCommandInfo);
             setSupportActionBar(toolbar);
-            buttonClose = (ImageButton) findViewById(R.id.userEditClubClose);
-            buttonSave = (ImageButton) findViewById(R.id.userEditClubSave);
-            buttonLogo = (ImageButton) findViewById(R.id.userEditClubLogo);
-            editTitle = (EditText) findViewById(R.id.userEditClubTitle);
-            editDesc = (EditText) findViewById(R.id.userEditClubDesc);
-            recyclerView = (RecyclerView) findViewById(R.id.recyclerViewEditClub);
-            RVEditClubMembersAdapter adapter = new RVEditClubMembersAdapter(this);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            buttonClose = findViewById(R.id.userEditClubClose);
+            buttonSave = findViewById(R.id.userEditClubSave);
+            buttonLogo = findViewById(R.id.userEditClubLogo);
+            editTitle = findViewById(R.id.userEditClubTitle);
+            editDesc = findViewById(R.id.userEditClubDesc);
             editTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-            editTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus){
-                        editTitle.getBackground().clearColorFilter();
+            editTitle.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    editTitle.getBackground().clearColorFilter();
+                } else {
+                    editTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
+                }
+            });
+            editTitle.setText(club1.getName());
+//            editDesc.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
+            editDesc.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    editDesc.getBackground().clearColorFilter();
+                }
+            });
+            editDesc.setText(club1.getInfo());
+            editDesc.setOnTouchListener((v, event) -> {
+                if (v.getId() == R.id.userEditClubDesc) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_UP:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
                     }
-                    else {
-                        editTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
+                }
+                return false;
+            });
+
+
+
+            SetImage setImage = new SetImage();
+            setImage.setImage(this, buttonLogo, club1.getLogo());
+            buttonClose.setOnClickListener(v -> finish());
+            buttonSave.setOnClickListener(v -> {
+                String title = editTitle.getText().toString();
+                String desc = editDesc.getText().toString();
+                String id = SaveSharedPreference.getObject().getUser().getId();
+                Map<String, RequestBody> map = new HashMap<>();
+                Bitmap photo = myBitmap;
+                RequestBody request = RequestBody.create(MediaType.parse("text/plain"), title);
+                map.put("name", request);
+                request = RequestBody.create(MediaType.parse("text/plain"), desc);
+                map.put("info", request);
+//                    request = RequestBody.create(MediaType.parse("text/plain"), id);
+                request = RequestBody.create(MediaType.parse("text/plain"), club1.getId());
+                map.put("_id", request);
+                if (photo != null) {
+                    try {
+                        File file = new File(getCacheDir(), "photo");
+                        file.createNewFile();
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        photo.compress(Bitmap.CompressFormat.JPEG, 80 /*ignored for PNG*/, bos);
+                        byte[] bitmapdata = bos.toByteArray();
+                        FileOutputStream fos = new FileOutputStream(file);
+                        fos.write(bitmapdata);
+                        fos.flush();
+                        fos.close();
+                        RequestBody requestFile =
+                                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                        MultipartBody.Part body =
+                                MultipartBody.Part.createFormData("logo", file.getName(), requestFile);
+                        editClub(SaveSharedPreference.getObject().getToken(), map, body);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
-            });
-            editDesc.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-            editDesc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus){
-                        editDesc.getBackground().clearColorFilter();
-                    }
-                    else {
-                        editDesc.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                    }
+                else{
+                    editClub(SaveSharedPreference.getObject().getToken(), map, null);
                 }
             });
-            buttonClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
-            buttonSave.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
-            buttonLogo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivityForResult(getPickImageChooserIntent(), 200);
-                }
-            });
+            buttonLogo.setOnClickListener(v -> startActivityForResult(getPickImageChooserIntent(), 200));
             permissions.add(CAMERA);
             permissionsToRequest = findUnAskedPermissions(permissions);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-
                 if (permissionsToRequest.size() > 0)
                     requestPermissions((String[]) permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
             }
@@ -131,6 +179,46 @@ public class UserEditClub extends AppCompatActivity {
     }
 
 
+    public void editClub(String token, Map<String, RequestBody> map, final MultipartBody.Part body) {
+        Call<DataClub> call = Controller.getApi().editClub(token, map, body);
+        call.enqueue(new Callback<DataClub>() {
+            @Override
+            public void onResponse(Call<DataClub> call, Response<DataClub> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        try{
+                            Club club =  response.body().getResultClub();
+                            Intent intent = new Intent();
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("CREATECLUBRESULT", club);
+                            intent.putExtras(bundle);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                        catch (Exception t) {
+                            log.error("ERROR: ", t);
+                        }
+                    }
+                }
+                else {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        String str = "Ошибка! ";
+                        str += jsonObject.getString("message");
+                        Toast.makeText(UserEditClub.this, str, Toast.LENGTH_LONG).show();
+                        finish();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataClub> call, Throwable t) {
+                log.error("ERROR: ", t);
+            }
+        });
+}
 
 
     public Intent getPickImageChooserIntent() {
@@ -152,8 +240,7 @@ public class UserEditClub extends AppCompatActivity {
 //                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
                 log.info("INFO: outputFileUri != null");
-            }
-            else{
+            } else {
                 log.error("ERROR: outputFileUri == null");
             }
             allIntents.add(intent);
@@ -225,15 +312,16 @@ public class UserEditClub extends AppCompatActivity {
                                     .priority(Priority.HIGH))
 //                            .load(picUri)
                             .into(buttonLogo);
-                } catch (IOException e) {e.printStackTrace(); }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 log.info("INFO: CAMERA");
-                if (picUri==null){
+                if (picUri == null) {
                     log.info("INFO: picUri==null");
                 }
-                if (data != null && data.getExtras() != null){
+                if (data != null && data.getExtras() != null) {
 //                    bitmap = (Bitmap) data.getExtras().get("data");
-                    log.info("INFO: data != null");
 
                     bitmap = (Bitmap) data.getExtras().get("data");
                     myBitmap = bitmap;
@@ -305,7 +393,7 @@ public class UserEditClub extends AppCompatActivity {
 //            isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
 //        }
         if (android.os.Build.VERSION.SDK_INT >= 23) {
-            isCamera = (data != null && data.getClipData() != null) ? false : true;
+            isCamera = data == null || data.getClipData() == null;
         } else {
             if (data != null) {
                 String action = data.getAction();
@@ -374,7 +462,8 @@ public class UserEditClub extends AppCompatActivity {
         return true;
     }
 
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener
+            okListener) {
         new AlertDialog.Builder(this)
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
@@ -389,7 +478,8 @@ public class UserEditClub extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
 
         switch (requestCode) {
 

@@ -30,7 +30,7 @@
                 android:scaleType="centerCrop"
                 android:layout_width="85dp"
                 android:layout_height="85dp"
-                android:src="@drawable/ic_member"/>
+                android:src="@drawable/ic_add_photo"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_marginBottom="30dp"
@@ -46,14 +46,14 @@
                 android:gravity="start"
                 android:textColor="@color/colorLightGrayForText"
                 android:textSize="12sp"
-                android:text="@string/nameProfile"/>
+                android:text="@string/surnameProfile"/>
             <EditText
-                android:id="@+id/registrationInfoName"
+                android:id="@+id/registrationInfoSurname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/MyEditText"
-                android:hint="@string/name"
-                android:inputType="text"/>
+                android:hint="@string/surname"
+                android:inputType="text|textCapWords"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,14 +62,15 @@
                 android:gravity="start"
                 android:textColor="@color/colorLightGrayForText"
                 android:textSize="12sp"
-                android:text="@string/surnameProfile"/>
+                android:text="@string/nameProfile"/>
             <EditText
-                android:id="@+id/registrationInfoSurname"
+                android:id="@+id/registrationInfoName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/MyEditText"
-                android:hint="@string/surname"
-                android:inputType="text"/>
+                android:hint="@string/name"
+                android:inputType="text|textCapWords"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +86,7 @@
                 android:layout_height="wrap_content"
                 style="@style/MyEditText"
                 android:hint="@string/patronymic"
-                android:inputType="text"/>
+                android:inputType="text|textCapWords"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,6 +131,7 @@
             <TextView
                 android:id="@+id/registrationInfoDOB"
                 android:clickable="true"
+                android:focusable="true"
                 android:paddingStart="4sp"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical|bottom"

@@ -1,99 +1,95 @@
 package com.example.user.secondfootballapp.tournament.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.Match;
+import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.tournament.adapter.ViewPagerCommandInfoAdapter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
+
 public class CommandInfoActivity extends AppCompatActivity {
-    TabLayout tabLayout;
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
+    Team team;
+    List<Match>  matchList;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_command_info);
         final TabLayout tabLayout;
+        ImageButton buttonBack;
         ViewPager viewPager;
         TextView textView;
-        ImageButton imageButton;
+        final AbbreviationDialogFragment dialogFragment;
         Intent intent;
         intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("COMMANDTITLE");
-        String title = bundle.getString("COMMANDTITLE1");
+        team = (Team) intent.getExtras().getSerializable("TOURNAMENTMATCHCOMMANDINFO");
+        List<Match> matches = (List<Match>) intent.getExtras().getSerializable("TOURNAMENTMATCHCOMMANDINFOMATCHES");
+        matchList = new ArrayList<>();
+        for (Match match : matches){
+            if (match.getTeamOne().equals(team.getId())
+                    || match.getTeamTwo().equals(team.getId())){
+                matchList.add(match);
+            }
+        }
 //        String title = intent.getExtras().getString("COMMANDTITLE");
-        tabLayout = (TabLayout) findViewById(R.id.commandInfoTab);
-        viewPager = (ViewPager) findViewById(R.id.commandInfoViewPager);
-        textView = (TextView) findViewById(R.id.commandInfoTitle);
-        imageButton = (ImageButton) findViewById(R.id.commandInfoCloseButton);
-
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        buttonBack = findViewById(R.id.commandInfoBack);
+        tabLayout = findViewById(R.id.commandInfoTab);
+        viewPager = findViewById(R.id.commandInfoViewPager);
+        textView = findViewById(R.id.commandInfoTitle);
+        fab = findViewById(R.id.commandInfoButton);
+        dialogFragment = new AbbreviationDialogFragment();
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                dialogFragment.show(getSupportFragmentManager(), "abbrev2");
             }
         });
-//        textView.setText(title);
-        textView.setText("Кубок Бурятии по мини-футболу. Первый этап. Золотая лига");
+        buttonBack.setOnClickListener(v -> finish());
+        String str;
+        str = team.getName();
+        viewPager.addOnPageChangeListener(onPageChangeListener);
+        tabLayout.addOnTabSelectedListener(onTabSelectedListener);
+        textView.setText(str);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 //        setCustomFont();
         Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/manrope_regular.otf");
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            //noinspection ConstantConditions
             TextView tv = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab_text,null);
             tv.setTypeface(tf);
-//            tv.setTextColor(getResources().getColor(R.color.colorTabUnChecked));
             tabLayout.getTabAt(i).setCustomView(tv);
         }
         TabLayout.Tab tab = tabLayout.getTabAt(0);
         TextView selectedText = (TextView) tab.getCustomView();
-        selectedText.setTextColor(getResources().getColor(R.color.colorWhite));
-//        tab.select();
-//        tabLayout.setTabTextColors(getResources().getColor(R.color.colorAccent), getResources().getColor(R.color.colorWhite));
+        selectedText.setTextColor(getResources().getColor(R.color.colorBottomNavigationUnChecked));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-//                TextView tv = (TextView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.custom_tab_text,null);
-//                tv.setTextColor(getResources().getColor(R.color.colorAccent));
-//                tab.setCustomView(tv);
-//                TextView selectedText = (TextView) findViewById(R.id.commandInfoTab);
-//                TextView selectedText = (TextView) tab.getText();
                 TextView selectedText = (TextView) tab.getCustomView();
-                selectedText.setTextColor(getResources().getColor(R.color.colorWhite));
+                selectedText.setTextColor(getResources().getColor(R.color.colorBottomNavigationUnChecked));
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 TextView selectedText = (TextView) tab.getCustomView();
-                selectedText.setTextColor(getResources().getColor(R.color.colorTabUnChecked));
+                selectedText.setTextColor(getResources().getColor(R.color.colorLightGrayForText));
             }
 
             @Override
@@ -101,9 +97,16 @@ public class CommandInfoActivity extends AppCompatActivity {
         });
     }
     private void setupViewPager(ViewPager viewPager){
+        CommandStructureFragment commandStructureFragment = new CommandStructureFragment();
+        CommandMatchFragment commandMatchFragment = new CommandMatchFragment();
+        Bundle teams = new Bundle();
+        teams.putSerializable("TEAMSTRUCTURE", team);
+        teams.putSerializable("TEAMSTRUCTUREMATCHES", (Serializable) matchList);
+        commandStructureFragment.setArguments(teams);
+        commandMatchFragment.setArguments(teams);
         ViewPagerCommandInfoAdapter adapter = new ViewPagerCommandInfoAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CommandStructureFragment(), "СОСТАВ");
-        adapter.addFragment(new CommandMatchFragment(), "МАТЧ");
+        adapter.addFragment(commandStructureFragment, "СОСТАВ");
+        adapter.addFragment(commandMatchFragment, "МАТЧИ");
         viewPager.setAdapter(adapter);
 
     }
@@ -111,5 +114,58 @@ public class CommandInfoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         this.finish();
+    }
+
+
+    private void animateFab(int position) {
+        switch (position) {
+            case 0:
+                fab.show();
+                break;
+            case 1:
+                fab.hide();
+                break;
+            default:
+                fab.show();
+                break;
+        }
+    }
+
+    TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            animateFab(tab.getPosition());
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+
+        }
+    };
+
+    ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            animateFab(position);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
+
+    public FloatingActionButton getFab() {
+        return fab;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.user.secondfootballapp.tournament.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -10,14 +11,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.CheckName;
+import com.example.user.secondfootballapp.FullScreenImage;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.SetImage;
+import com.example.user.secondfootballapp.model.LeagueInfo;
+import com.example.user.secondfootballapp.model.Person;
+import com.example.user.secondfootballapp.model.Player;
+import com.example.user.secondfootballapp.model.Team;
+import com.example.user.secondfootballapp.tournament.PlayerComparator;
 import com.example.user.secondfootballapp.tournament.adapter.RVCommandStructureAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class CommandStructureFragment extends Fragment {
     Logger log = LoggerFactory.getLogger(PersonalActivity.class);
@@ -25,20 +48,47 @@ public class CommandStructureFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
-        final AbbreviationDialogFragment dialogFragment;
+        TextView textCouch;
+        ImageView imageCoach;
         final FloatingActionButton fab;
         RecyclerView recyclerView;
+        Bundle arguments = getArguments();
+        Team team = (Team) arguments.getSerializable("TEAMSTRUCTURE");
         view = inflater.inflate(R.layout.command_info_structure, container, false);
-        dialogFragment = new AbbreviationDialogFragment();
-        fab = (FloatingActionButton) view.findViewById(R.id.commandInfoButton);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewCommandStructure);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogFragment.show(getFragmentManager(), "abbrev2");
+//        fab = (FloatingActionButton) view.findViewById(R.id.commandInfoButton);
+        CommandInfoActivity commandInfoActivity = (CommandInfoActivity) getActivity();
+        fab = commandInfoActivity.getFab();
+        textCouch = view.findViewById(R.id.commandTrainer);
+        recyclerView = view.findViewById(R.id.recyclerViewCommandStructure);
+        imageCoach = view.findViewById(R.id.commandTrainerPhoto);
+        Person coach = null;
+        for (Person person : PersonalActivity.AllPeople) {
+            if (person.getId().equals(team.getCreator())) {
+                coach = person;
+                break;
             }
-        });
-        RVCommandStructureAdapter adapter = new RVCommandStructureAdapter();
+        }
+
+        SetImage setImage = new SetImage();
+        String str;
+        CheckName checkName = new CheckName();
+        if (coach==null){
+            coach = new Person();
+            coach.setName("Удален");
+            coach.setLastname("");
+            coach.setSurname("");
+        }
+        str = checkName.check(coach.getSurname(), coach.getName(), coach.getLastname());
+        textCouch.setText(str);
+        setImage.setImage(getActivity(), imageCoach, coach.getPhoto());
+
+
+
+
+        List<Player> players = team.getPlayers();
+//        players.sort(Comparator.comparing(Player::getDisquals));
+        Collections.sort(players, new PlayerComparator());
+        RVCommandStructureAdapter adapter = new RVCommandStructureAdapter(players);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -50,16 +100,16 @@ public class CommandStructureFragment extends Fragment {
 //            }
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     fab.show();
-                }
-                else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                     // Do something
                     fab.hide();
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
+
         return view;
     }
 }

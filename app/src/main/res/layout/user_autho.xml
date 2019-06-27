@@ -46,9 +46,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
-                android:layout_marginBottom="75dp"
+                android:layout_marginBottom="70dp"
                 android:layout_marginEnd="25dp"
                 android:src="@drawable/ic_add"
+                app:backgroundTint="@color/colorPrimary" />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/buttonEditClub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_marginBottom="70dp"
+                android:layout_marginEnd="25dp"
+                android:visibility="invisible"
+                android:src="@drawable/ic_edit"
                 app:backgroundTint="@color/colorPrimary" />
         </android.support.design.widget.CoordinatorLayout>
         <!-- The main content view where fragments are loaded -->
@@ -57,10 +67,13 @@
 
     <!-- The navigation drawer that comes from the left -->
     <!-- Note that `android:layout_gravity` needs to be set to 'start' -->
+    <!--app:theme="@style/DrawerTextStyle"-->
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nvView"
-        app:theme="@style/DrawerTextStyle"
-        app:itemTextColor="@color/colorBottomNavigationUnChecked"
+        android:theme="@style/DrawerTextStyle"
+        app:itemTextColor="@color/drawer_item"
+        app:itemIconTint="@color/drawer_item"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"

@@ -13,13 +13,25 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.CheckName;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.SetImage;
+import com.example.user.secondfootballapp.model.Person;
+import com.example.user.secondfootballapp.model.PlayerEvent;
 import com.example.user.secondfootballapp.user.activity.MatchEvents;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class RVEventsAdapter extends RecyclerView.Adapter<RVEventsAdapter.ViewHolder>{
     MatchEvents context;
-    public RVEventsAdapter(Activity context){
+    Logger log = LoggerFactory.getLogger(MatchEvents.class);
+    private List<PlayerEvent> playerEvents;
+    public RVEventsAdapter(Activity context, List<PlayerEvent> playerEvents){
         this.context = (MatchEvents) context;
+        this.playerEvents = playerEvents;
     }
     @NonNull
     @Override
@@ -31,27 +43,52 @@ public class RVEventsAdapter extends RecyclerView.Adapter<RVEventsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RVEventsAdapter.ViewHolder holder, int position) {
-        String str = "16:30";
-        holder.textTime.setText(str);
-        holder.textEvent.setText("K");
-        str = "Иванов В.В.";
+        String str = "";
+        PlayerEvent playerEvent = playerEvents.get(position);
+        switch (playerEvent.getEvent().getEventType()){
+            case "goal":
+                str = "Г";
+                break;
+            case "yellowCard":
+                str = "ЖК";
+                break;
+            case "redCard":
+                str = "КК";
+                break;
+            case "foul":
+                str = "Ф";
+                break;
+            case "autoGoal":
+                str = "А";
+                break;
+            case "penalty":
+                str = "П";
+                break;
+        }
+//        holder.textTime.setText(str);
+        holder.textEvent.setText(str);
+        Person person;
+        try {
+            person = playerEvent.getPerson();
+        }catch (NullPointerException e){
+            person = new Person();
+            person.setSurname("Удален");
+            person.setName("");
+            person.setLastname("");
+        }
+        CheckName checkName = new CheckName();
+        str = checkName.check(person.getSurname(), person.getName(), person.getLastname());
         holder.textName.setText(str);
-        Glide.with(context)
-            .asBitmap()
-            .load(R.drawable.ic_fin)
-            .apply(new RequestOptions()
-                    .circleCropTransform()
-                    .format(DecodeFormat.PREFER_ARGB_8888)
-                    .priority(Priority.HIGH))
-            .into(holder.image);
-        if (position==4){
+        SetImage setImage = new SetImage();
+        setImage.setImage(context, holder.image, person.getPhoto());
+        if (position==(playerEvents.size()-1)){
             holder.line.setVisibility(View.INVISIBLE);
         }
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return playerEvents.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

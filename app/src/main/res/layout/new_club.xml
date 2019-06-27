@@ -87,7 +87,7 @@
                 android:scaleType="centerCrop"
                 android:layout_width="85dp"
                 android:layout_height="85dp"
-                android:src="@drawable/ic_member"/>
+                android:src="@drawable/ic_add_photo"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_marginBottom="30dp"
@@ -110,12 +110,13 @@
                 android:layout_height="wrap_content"
                 style="@style/MyEditText"
                 android:hint="@string/title2"
-                android:inputType="text"/>
+                android:inputType="textCapSentences|text"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manrope_regular"
                 android:paddingStart="4sp"
+                android:layout_marginBottom="15sp"
                 android:gravity="start"
                 android:textColor="@color/colorLightGrayForText"
                 android:textSize="12sp"
@@ -123,10 +124,17 @@
             <EditText
                 android:id="@+id/createClubDesc"
                 android:layout_width="match_parent"
+                android:gravity="top"
                 android:layout_height="wrap_content"
-                style="@style/MyEditText"
+                android:textColorHint="@color/colorLightGrayForText"
+                android:textColor="@color/colorBottomNavigationUnChecked"
+                android:textSize="13sp"
+                android:padding="5sp"
+                android:fontFamily="@font/manrope_regular"
+                android:lines="4"
+                android:background="@drawable/edittext_bg"
                 android:hint="@string/desc2"
-                android:inputType="text"/>
+                android:inputType="textMultiLine|textCapSentences"/>
 
 
         </LinearLayout>

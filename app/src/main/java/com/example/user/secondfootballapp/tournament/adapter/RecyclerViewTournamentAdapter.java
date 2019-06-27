@@ -1,44 +1,49 @@
 package com.example.user.secondfootballapp.tournament.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.tournament.activity.Tournament;
+import com.example.user.secondfootballapp.model.League;
 import com.example.user.secondfootballapp.tournament.activity.TournamentPage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 
 
 public class RecyclerViewTournamentAdapter extends RecyclerView.Adapter<RecyclerViewTournamentAdapter.ViewHolder>{
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    TournamentPage context;
-    //    Activity activity;
-    PersonalActivity activity;
+    private Logger log = LoggerFactory.getLogger(PersonalActivity.class);
+    private TournamentPage context;
+    private List<League> tournaments;
+    private PersonalActivity activity;
+    private ListAdapterListener mListener;
+    private ProgressBar progressBar;
     //    public RecyclerViewTournamentAdapter(Context context){
-    public RecyclerViewTournamentAdapter(Activity activity, TournamentPage context){
-//        this.activity = activity;
+    public RecyclerViewTournamentAdapter(Activity activity, TournamentPage context, List<League> tournaments, ListAdapterListener mListener){
+        this.tournaments = tournaments;
         this.activity = (PersonalActivity) activity;
         this.context = context;
+        this.mListener = mListener;
+    }
+
+    public interface ListAdapterListener {
+        void onClickSwitch(String leagueId);
     }
 
     @NonNull
@@ -50,27 +55,19 @@ public class RecyclerViewTournamentAdapter extends RecyclerView.Adapter<Recycler
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        boolean status = true;
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                log.info("INFO: hello from RecyclerViewTournamentAdapter");
-                Bundle bundle = new Bundle();
-                bundle.putString("TOURNAMENT", holder.textTitle.toString());
-                Tournament tornament = new Tournament();
-                tornament.setArguments(bundle);
-//                fragmentManager = PersonalActivity.getSupportFragmentManager();
-//                fragmentManager.beginTransaction().add(R.id.pageContainer, new Tornament(), "1").commit();
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        boolean status = false;
+        final League league = tournaments.get(position);
+        if (league.getStatus().equals("Finished")) {status = true;}
+        DateToString dateToString = new DateToString();
+        String str = dateToString.ChangeDate(league.getBeginDate()) + "-" + dateToString.ChangeDate(league.getEndDate());
+        holder.textDate.setText(str);
+        holder.textDate.setText(str);
 
-                activity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.pageContainer, tornament, "tornamentTAG")
-                        .addToBackStack(null)
-//                        .show(tornament)
-                        .commit();
-
-            }
-        });
+        str = league.getTourney() + ". " + league.getName();
+        holder.textTitle.setText(str);
+        str = activity.getString(R.string.tournamentFilterCommandNum) + ": " + league.getMaxTeams();
+        holder.textCommandNum.setText(str);
         if (status){
             holder.textStatusFinish.setVisibility(View.VISIBLE);
             Glide.with(context)
@@ -79,15 +76,9 @@ public class RecyclerViewTournamentAdapter extends RecyclerView.Adapter<Recycler
                     .apply(new RequestOptions()
                             .format(DecodeFormat.PREFER_ARGB_8888)
                             .priority(Priority.HIGH))
-//                    .load(R.drawable.ic_finish)
-//                    .apply(new RequestOptions()
-//                    .fitCenter()
-//                    .override(Target.SIZE_ORIGINAL)
-//                    .format(DecodeFormat.PREFER_ARGB_8888))
                     .into(holder.imageView);
         }
         else {
-            holder.textStatusFinish.setVisibility(View.INVISIBLE);
             Glide.with(context)
                     .asBitmap()
                     .load(R.drawable.ic_con)
@@ -96,12 +87,17 @@ public class RecyclerViewTournamentAdapter extends RecyclerView.Adapter<Recycler
                             .priority(Priority.HIGH))
                     .into(holder.imageView);}
 
-        holder.imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                log.info("INFO: hello from RecyclerViewTournamentAdapter");
-                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(context.getId(), new Tournament()).commit();
+        holder.imageButton.setOnClickListener(v -> {
+
+            try {
+//                showTournamentInfo(league.getId());
+                mListener.onClickSwitch(league.getId());
+            }catch (Exception e){
+                log.error("ERROR: " , e);
+            }
+
+
+//                fragmentManager.beginTransaction().replace(context.getId(), new Tournament()).commit();
 
 //                            Intent intent = new Intent(activity, Tornament.class);
 //                            String title = "Some title";
@@ -109,16 +105,15 @@ public class RecyclerViewTournamentAdapter extends RecyclerView.Adapter<Recycler
 //                            bundle.putString("TOURNAMENT", title);
 //                            intent.putExtra("TOURNAMENT", bundle);
 //                            context.startActivity(intent);
-            }
         });
-        if (position==4){
+        if (position==tournaments.size()-1){
             holder.view.setVisibility(View.INVISIBLE);
         }
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return tournaments.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -128,22 +123,33 @@ public class RecyclerViewTournamentAdapter extends RecyclerView.Adapter<Recycler
         TextView textStatusFinish;
         ImageView imageView;
         View view;
-        ImageButton imageButton;
+        RelativeLayout imageButton;
         public ViewHolder(View itemView) {
             super(itemView);
-            view = (View) itemView.findViewById(R.id.tournamentLine);
+            view = itemView.findViewById(R.id.tournamentLine);
 //            view.setOnClickListener(new View.OnClickListener() {
 //                @Override public void onClick(View v) {
 //                    // item clicked
 //                }
 //            });
-            textCommandNum = (TextView) itemView.findViewById(R.id.tournamentCommandNum);
-            textDate = (TextView) itemView.findViewById(R.id.tournamentDate);
-            textTitle = (TextView) itemView.findViewById(R.id.tournamentTitle);
-            textStatusFinish = (TextView) itemView.findViewById(R.id.tournamentStatusFinish);
-            imageView = (ImageView) itemView.findViewById(R.id.tournamentStatusImg);
-            imageButton = (ImageButton) itemView.findViewById(R.id.tournamentButtonShow);
+            textCommandNum = itemView.findViewById(R.id.tournamentCommandNum);
+            textDate = itemView.findViewById(R.id.tournamentDate);
+            textTitle = itemView.findViewById(R.id.tournamentTitle);
+            textStatusFinish = itemView.findViewById(R.id.tournamentStatusFinish);
+            imageView = itemView.findViewById(R.id.tournamentStatusImg);
+            imageButton = itemView.findViewById(R.id.tournamentButtonShow);
+
+
+//            mProgressDialog.setIndeterminate(true);
         }
     }
+
+
+    public void dataChanged(List<League> allPlayers1){
+        tournaments.clear();
+        tournaments.addAll(allPlayers1);
+        notifyDataSetChanged();
+    }
+
 }
 

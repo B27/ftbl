@@ -4,86 +4,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorWhite"
     tools:context=".PersonalActivity"
     >
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarAdsPage"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:fitsSystemWindows="true"
         >
-        <!--app:expandedTitleGravity="bottom|left"-->
-        <!--app:collapsedTitleGravity="fill_vertical"-->
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbarAdsPage"
-            app:collapsedTitleTextAppearance="@style/Widget.AppCompat.Toolbar"
-            app:titleEnabled = "true"
-            app:expandedTitleGravity="bottom|left"
-            app:expandedTitleMarginBottom="18dp"
-            app:expandedTitleMarginStart="28dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-            app:contentScrim="@color/colorLightGray2"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:src="@drawable/ic_news_back5"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
-                android:minHeight="100dp"/>
-
-            <!--android:layout_gravity="top"-->
-            <!--app:contentInsetStart="72dp"-->
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbarAdsPage"
                 app:titleTextAppearance="@style/Widget.AppCompat.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:minHeight="?attr/actionBarSize"
+                android:background="@color/colorWhite"
+                app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+                app:layout_collapseMode="pin" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="18sp"
+                    android:visibility="visible">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/manrope_regular"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:text="@string/title_ads"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+
+
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:layout_marginTop="2sp"
+        android:id="@+id/scrollerAds"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewAds"
+                android:paddingTop="8sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="26dp" />
 
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:fontFamily="@font/manrope_regular"-->
-                <!--android:paddingTop="23dp"-->
-                <!--android:paddingBottom="23dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
-                <!--android:gravity="center_horizontal|top"-->
-                <!--android:text="@string/allAdsShown" />-->
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

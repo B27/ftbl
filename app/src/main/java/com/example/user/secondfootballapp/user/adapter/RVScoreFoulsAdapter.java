@@ -14,12 +14,28 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.SetImage;
+import com.example.user.secondfootballapp.model.ActiveMatch;
+import com.example.user.secondfootballapp.model.Match;
+import com.example.user.secondfootballapp.model.PlayerEvent;
+import com.example.user.secondfootballapp.model.TeamTitleClubLogoMatchEvents;
 import com.example.user.secondfootballapp.user.activity.ProtocolMatchScore;
+import com.example.user.secondfootballapp.user.activity.ProtocolScore;
+
+import java.net.URL;
+import java.util.HashMap;
+
+import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVScoreFoulsAdapter extends RecyclerView.Adapter<RVScoreFoulsAdapter.ViewHolder>{
-    ProtocolMatchScore context;
-    public RVScoreFoulsAdapter(Activity context){
-        this.context = (ProtocolMatchScore) context;
+    ProtocolScore context;
+    private HashMap<Integer, String> halves;
+    private TeamTitleClubLogoMatchEvents playerEvents;
+    public RVScoreFoulsAdapter(Activity context, HashMap<Integer, String> halves,
+                               TeamTitleClubLogoMatchEvents playerEvents){
+        this.context = (ProtocolScore) context;
+        this.halves = halves;
+        this.playerEvents = playerEvents;
     }
     @NonNull
     @Override
@@ -31,53 +47,61 @@ public class RVScoreFoulsAdapter extends RecyclerView.Adapter<RVScoreFoulsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RVScoreFoulsAdapter.ViewHolder holder, int position) {
-        String half = ProtocolMatchScore.halves.get(0);
+        String half = halves.get(position);
         holder.textHalf.setText(half);
-        Glide.with(context)
-                .asBitmap()
-                .load(R.drawable.ic_fin)
-                .apply(new RequestOptions()
-                        .circleCropTransform()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .priority(Priority.HIGH))
-                .into(holder.image1);
-        Glide.with(context)
-                .asBitmap()
-                .load(R.drawable.ic_fin)
-                .apply(new RequestOptions()
-                        .circleCropTransform()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .priority(Priority.HIGH))
-                .into(holder.image2);
-        if (position == 2){
-            holder.line.setVisibility(View.INVISIBLE);
+        String str;
+        str = playerEvents.getNameTeam1();
+        holder.textTitle1.setText(str);
+        str = playerEvents.getNameTeam2();
+        holder.textTitle2.setText(str);
+
+        int count1=0;
+        int count2=0;
+
+        for (PlayerEvent playerEvent : playerEvents.getPlayerEvents()){
+            if (playerEvent.getNameTeam().equals(playerEvents.getNameTeam1())
+                    && playerEvent.getEvent().getEventType().equals("foul")
+                    && playerEvent.getEvent().getTime().equals(half))
+            {
+                count1++;
+            }
+            if (playerEvent.getNameTeam().equals(playerEvents.getNameTeam2())
+                    && playerEvent.getEvent().getEventType().equals("foul")
+                    && playerEvent.getEvent().getTime().equals(half))
+            {
+                count2++;
+            }
         }
+
+        str = count1 + ":" + count2;
+
+        holder.textScore.setText(str);
+        SetImage setImage = new SetImage();
+        setImage.setImage(context, holder.image1, playerEvents.getClubLogo1());
+        setImage.setImage(context, holder.image2, playerEvents.getClubLogo2());
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return halves.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textHalf;
         TextView textTitle1;
         TextView textTitle2;
-        TextView textFoulsNum1;
-        TextView textFoulsNum2;
+        TextView textScore;
         ImageView image1;
         ImageView image2;
-        View line;
         public ViewHolder(View item) {
             super(item);
-            textHalf = (TextView) item.findViewById(R.id.foulsHalf);
-            image1 = (ImageView) item.findViewById(R.id.foulsCommand1Logo);
-            image2 = (ImageView) item.findViewById(R.id.foulsCommand2Logo);
-            textTitle1 = (TextView) item.findViewById(R.id.foulsCommand1Title);
-            textTitle2 = (TextView) item.findViewById(R.id.foulsCommand2Title);
-            textFoulsNum1 = (TextView) item.findViewById(R.id.foulsCommand1FoulsNum);
-            textFoulsNum2 = (TextView) item.findViewById(R.id.foulsCommand2FoulsNum);
-            line = (View) item.findViewById(R.id.foulsLine);
+            textHalf = item.findViewById(R.id.foulsHalf);
+            image1 = item.findViewById(R.id.foulsCommand1Logo);
+            image2 = item.findViewById(R.id.foulsCommand2Logo);
+            textTitle1 = item.findViewById(R.id.foulsCommand1Title);
+            textTitle2 = item.findViewById(R.id.foulsCommand2Title);
+            textScore = item.findViewById(R.id.foulsCommand1FoulsNum);
         }
     }
+
 }

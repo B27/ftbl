@@ -53,10 +53,13 @@
 
                 <TextView
                     android:id="@+id/command1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:gravity="center_horizontal"
                     android:fontFamily="@font/manrope_regular"
                     android:textColor="@color/colorBottomNavigationUnChecked"
                     android:text="@string/editProtocol"
@@ -83,38 +86,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
             android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/editProtocolCommand1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_semibold"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="@string/participants"
-                android:textColor="@color/colorBottomNavigationUnChecked"
-                android:textSize="14sp" />
+            <!--<TextView-->
+                <!--android:id="@+id/editProtocolCommand1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:fontFamily="@font/manrope_semibold"-->
+                <!--android:paddingBottom="8dp"-->
+                <!--android:paddingTop="8dp"-->
+                <!--android:text="@string/participants"-->
+                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
+                <!--android:textSize="14sp" />-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_regular"
-                android:gravity="start"
-                android:textColor="@color/colorLightGrayForText"
-                android:textSize="12sp"
-                android:text="@string/representative"/>
-            <Spinner
-                android:id="@+id/protocolCommand1Representative"
-                android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
-                android:spinnerMode="dialog"/>
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:fontFamily="@font/manrope_regular"-->
+                <!--android:gravity="start"-->
+                <!--android:layout_marginTop="8sp"-->
+                <!--android:textColor="@color/colorLightGrayForText"-->
+                <!--android:textSize="12sp"-->
+                <!--android:paddingStart="14dp"-->
+                <!--android:paddingEnd="14dp"-->
+                <!--android:text="@string/representative"/>-->
+            <!--<Spinner-->
+                <!--android:id="@+id/protocolCommand1Representative"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="34dp"-->
+                <!--android:layout_marginEnd="14dp"-->
+                <!--android:layout_marginStart="14dp"-->
+                <!--android:background="@drawable/spinner_shape"-->
+                <!--android:spinnerMode="dialog"/>-->
+
+            <!--android:layout_marginTop="5sp"-->
             <android.support.v7.widget.RecyclerView
-                android:layout_marginTop="5sp"
+
                 android:id="@+id/recyclerViewProtocolCommand1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

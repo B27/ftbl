@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.activity.NewsPage"
-    android:scrollbars="vertical"
     android:background="@color/colorWhite"
-    >
+    android:scrollbars="vertical"
+    tools:context=".home.activity.NewsPage">
     <!--android:background="@color/colorLightGray"-->
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="280dp"
@@ -19,72 +19,96 @@
 
             <TextView
                 android:id="@+id/newsInfoTitle"
-                android:paddingBottom="5dp"
-                android:paddingTop="10dp"
-                android:layout_gravity="center_horizontal"
                 style="@style/DarkTextColor"
                 android:layout_width="346dp"
-                android:textSize="18sp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="11dp"
                 android:fontFamily="@font/manrope_bold"
-                android:text="@string/newsSomeTitle" />
+                android:paddingBottom="5dp"
+                android:paddingTop="10dp"
+                android:text="@string/newsSomeTitle"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/newsInfoDate"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorNewsDate"
                 android:layout_width="346dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/newsInfoTitle"
-                android:fontFamily="@font/manrope_thin"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/manrope_regular"
                 android:gravity="left"
-                android:textSize="12dp"
                 android:paddingBottom="10dp"
-                android:text="@string/newsSomeDate" />
+                android:text="@string/newsSomeDate"
+                android:textColor="@color/colorNewsDate"
+                android:textSize="12dp" />
 
-            <ImageView
-        android:id="@+id/newsInfoImg"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:src="@drawable/no_image" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp">
+                <!--android:background="@color/colorLightGray2">-->
+
+                <ImageView
+                    android:id="@+id/newsInfoImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"/>
+
+                <ProgressBar
+                    android:id="@+id/progressNews"
+                    android:layout_width="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_height="40dp"
+                    android:visibility="visible" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/newsInfoText"
                 style="@style/DarkTextColor"
-                android:textSize="14dp"
                 android:layout_width="338dp"
-                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/manrope_regular"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="@string/newsSomeText" />
+                android:textSize="14dp" />
+
             <LinearLayout
-                android:gravity="bottom"
                 android:layout_width="338dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:gravity="bottom"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_height="20sp"
+                        android:src="@drawable/ic_button_arrow2" />
+
                 <Button
                     android:id="@+id/newsButtonBack"
-                    android:layout_width="wrap_content"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:textColor="@color/colorPrimary"
-                    android:fontFamily="@font/manrope_semibold"
-                    android:layout_gravity="end"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="5dp"
-                    android:drawableLeft="@drawable/ic_button_arrow2"
-                    android:text="@string/allNewsButton"/>
+                    android:paddingStart="0dp"
+                    android:layout_gravity="end"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/allNewsButton"
+                    android:textColor="@color/colorPrimary" />
+
+
+                </LinearLayout>
 
                 <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="5dp"-->
-                    <!--android:background="@color/colorPrimary" />-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="5dp"-->
+                <!--android:background="@color/colorPrimary" />-->
             </LinearLayout>
 
         </LinearLayout>

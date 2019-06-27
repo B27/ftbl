@@ -1,4 +1,10 @@
 package com.example.user.secondfootballapp.user.adapter;
 
-class MatchViewHolder {
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+class MatchViewHolder extends RecyclerView.ViewHolder {
+    public MatchViewHolder(View itemView) {
+        super(itemView);
+    }
 }

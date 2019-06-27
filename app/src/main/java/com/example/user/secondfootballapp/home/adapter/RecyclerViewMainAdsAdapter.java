@@ -8,19 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.home.activity.MainPage;
+import com.example.user.secondfootballapp.home.activity.NewsAndAds;
+import com.example.user.secondfootballapp.model.Announce;
+import com.example.user.secondfootballapp.model.News_;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
 
 public class RecyclerViewMainAdsAdapter extends RecyclerView.Adapter<RecyclerViewMainAdsAdapter.ViewHolder> {
-    MainPage context;
-    PersonalActivity activity;
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    public RecyclerViewMainAdsAdapter(Activity activity, MainPage context){
+
+    private List<Announce> announces;
+    private NewsAndAds context;
+    private PersonalActivity activity;
+    public RecyclerViewMainAdsAdapter(Activity activity, NewsAndAds context, List<Announce> announces){
+        this.announces = announces;
         this.activity = (PersonalActivity) activity;
         this.context = context;
     }
@@ -34,23 +37,44 @@ public class RecyclerViewMainAdsAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textTitle.setText("В мире футбола чето там изменилось. Вау. Как неожиданно.");
-        holder.textDate.setText("27.01.18");
-
+        holder.textDate.setVisibility(View.GONE);
+        String str = announces.get(position).getContent();
+        holder.textTitle.setText(str);
+        if (announces.size()>=2 && position==2){
+            holder.line.setVisibility(View.INVISIBLE);
+        }
+        if (announces.size()==1 && position==1){
+            holder.line.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        int count = 0;
+        if (announces.size()>=2){
+            count=2;
+        }
+        if (announces.size()==1){
+            count=1;
+        }
+        return count;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView textTitle;
         TextView textDate;
+        View line;
         public ViewHolder(View item) {
             super(item);
-            textDate = (TextView) item.findViewById(R.id.adsDate);
-            textTitle = (TextView) item.findViewById(R.id.adsTitle);
+            textDate = item.findViewById(R.id.adsDate);
+            textTitle = item.findViewById(R.id.adsTitle);
+            line = item.findViewById(R.id.adsLine);
         }
+    }
+
+    public void dataChanged(List<Announce> allPlayers1) {
+        announces.clear();
+        announces.addAll(allPlayers1);
+        notifyDataSetChanged();
     }
 }

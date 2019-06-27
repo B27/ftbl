@@ -5,7 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite">
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scrollUserTournament"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
@@ -15,31 +14,54 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:fontFamily="@font/manrope_semibold"-->
-                <!--android:paddingStart="13dp"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
-                <!--android:textSize="14sp"-->
-                <!--android:text="@string/title_tournament"/>-->
+
+        <LinearLayout
+            android:id="@+id/emptyTournament"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="65sp"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_marginTop="45sp"
+                android:layout_marginBottom="45sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:src="@drawable/ic_empty1"/>
             <TextView
-                android:id="@+id/userTournamentListStatus"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginBottom="15sp"
                 android:fontFamily="@font/manrope_regular"
                 android:textColor="@color/colorBottomNavigationUnChecked"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@string/emptyTournaments"
-                android:visibility="gone"/>
+                android:text="@string/empty"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="25sp"
+                android:paddingStart="25sp"
+                android:gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textColor="@color/colorLightGrayForText"
+                android:fontFamily="@font/manrope_regular"
+                android:text="@string/not_leagues"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/notEmptyTournament"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewUserTournament"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+        </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

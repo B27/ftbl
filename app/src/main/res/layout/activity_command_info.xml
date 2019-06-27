@@ -1,43 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".activity.CommandInfoActivity">
+    android:layout_height="wrap_content"
+    android:background="@color/colorLightGray2"
+    app:layout_scrollFlags="scroll|enterAlways"
+    tools:context=".tournament.activity.CommandInfoActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-
-
-        <TextView
-            android:id="@+id/commandInfoTitle"
-            android:textColor="@color/colorWhite"
-            android:fontFamily="@font/manrope_bold"
-            android:textSize="15sp"
-            android:padding="5sp"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="23dp"
-            android:gravity="center_horizontal"
-            android:text="TextView" />
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="top"
+                android:background="@color/colorLightGray2"
+                android:elevation="2sp"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="18sp"
+                    android:gravity="center_horizontal"
+                    android:visibility="visible">
+
+                    <ImageButton
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:scaleType="centerCrop"
+                        android:visibility="invisible"
+                        app:srcCompat="@drawable/ic_tick" />
+
+                    <TextView
+                        android:id="@+id/commandInfoTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/protocolScore"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:textSize="16sp" />
+
+                    <ImageButton
+                        android:id="@+id/commandInfoBack"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_arrow_back" />
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorLightGray" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/commandInfoTab"
-            app:tabTextAppearance="@style/CustomTabTextSize"
-            app:tabIndicatorColor="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/commandInfoTitle">
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorBottomNavigationUnChecked"
+            app:tabTextAppearance="@style/CustomTabTextSize"
+            app:tabTextColor="@color/colorLightGrayForText">
 
             <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
@@ -48,24 +95,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Center" />
-
         </android.support.design.widget.TabLayout>
-
-        <ImageButton
-            android:id="@+id/commandInfoCloseButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/commandInfoTitle"
-            android:layout_alignParentEnd="true"
-            app:srcCompat="@android:drawable/btn_dialog"
-            android:visibility="gone"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/commandInfoViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/commandInfoTab" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-</RelativeLayout>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/commandInfoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_question"
+        app:backgroundTint="@color/colorPrimary" />
+</android.support.design.widget.CoordinatorLayout>

@@ -119,7 +119,7 @@
 
         <LinearLayout
             android:paddingStart="18dp"
-            android:paddingEnd="18dp"
+            android:paddingEnd="6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -139,8 +139,19 @@
                 android:id="@+id/responsiblePersonsSpinnerInspector"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
+                android:padding="0dp"
+                android:layout_marginEnd="4dp"
+                android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+                android:backgroundTint="@color/colorPrimary"
                 android:spinnerMode="dialog"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginStart="6sp"
+                android:layout_marginEnd="18sp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="20sp"
+                android:background="@color/colorLightGray"
+                />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -154,8 +165,19 @@
                 android:id="@+id/responsiblePersonsSpinnerReferee1"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
+                android:padding="0dp"
+                android:layout_marginEnd="4dp"
+                android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+                android:backgroundTint="@color/colorPrimary"
                 android:spinnerMode="dialog"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginStart="6sp"
+                android:layout_marginEnd="18sp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="20sp"
+                android:background="@color/colorLightGray"
+                />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -170,8 +192,19 @@
                 android:id="@+id/responsiblePersonsSpinnerReferee2"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
+                android:padding="0dp"
+                android:layout_marginEnd="4dp"
+                android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+                android:backgroundTint="@color/colorPrimary"
                 android:spinnerMode="dialog"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginStart="6sp"
+                android:layout_marginEnd="18sp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="20sp"
+                android:background="@color/colorLightGray"
+                />
 
 
             <TextView
@@ -188,8 +221,19 @@
                 android:id="@+id/responsiblePersonsSpinnerReferee4"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
+                android:padding="0dp"
+                android:layout_marginEnd="4dp"
+                android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+                android:backgroundTint="@color/colorPrimary"
                 android:spinnerMode="dialog"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginStart="6sp"
+                android:layout_marginEnd="18sp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="20sp"
+                android:background="@color/colorLightGray"
+                />
 
 
         </LinearLayout>

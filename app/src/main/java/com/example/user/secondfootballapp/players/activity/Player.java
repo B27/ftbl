@@ -8,129 +8,174 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.CheckName;
+import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.FullScreenImage;
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.home.activity.NewsPage;
+import com.example.user.secondfootballapp.SetImage;
+import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.players.adapter.RVPlayersTournamentAdapter;
+import com.example.user.secondfootballapp.user.activity.AuthoUser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static android.app.Activity.RESULT_OK;
+import static com.example.user.secondfootballapp.Controller.BASE_URL;
+
 public class Player extends Fragment {
     boolean scrollStatus;
     Logger log = LoggerFactory.getLogger(Player.class);
+    final int REQUEST_CODE_PLAYERINV = 286;
+    Person person;
+    public static FloatingActionButton fab;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
         ImageView imageLogo;
         TextView textName;
         TextView textDOB;
-        TextView textTournaments;
         RecyclerView recyclerView;
         NestedScrollView scroller;
-        final FloatingActionButton fab;
-        boolean check = true;
+        RelativeLayout layout;
         view = inflater.inflate(R.layout.player_info, container, false);
-        imageLogo = (ImageView) view.findViewById(R.id.playerImage);
-        textName = (TextView) view.findViewById(R.id.playerName);
-        textDOB = (TextView) view.findViewById(R.id.playerDOB);
-        textTournaments = (TextView) view.findViewById(R.id.playerInfoTournamentsStatus);
-        fab = (FloatingActionButton) view.findViewById(R.id.addPlayerButton);
-        scroller = (NestedScrollView) view.findViewById(R.id.playerInfoScroll);
+        imageLogo = view.findViewById(R.id.playerImage);
+        textName = view.findViewById(R.id.playerName);
+        textDOB = view.findViewById(R.id.playerDOB);
+        layout = view.findViewById(R.id.layoutPlayerInfoLeagues);
+        fab = view.findViewById(R.id.addPlayerButton);
+        scroller = view.findViewById(R.id.playerInfoScroll);
         scrollStatus = false;
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //добавить игрока в команду (только тренер) сделать видимым, если тренер
-                Intent intent = new Intent(getActivity(), PlayerInv.class);
-                getActivity().startActivity(intent);
+
+        try {
+            Bundle bundle = this.getArguments();
+            person = (Person) bundle.getSerializable("PLAYERINFO");
+            String str;
+            CheckName checkName = new CheckName();
+            str = checkName.check(person.getSurname(), person.getName(), person.getLastname());
+            textName.setText(str);
+            SetImage setImage = new SetImage();
+            setImage.setImage(getActivity(), imageLogo, person.getPhoto());
+            String uriPic = BASE_URL;
+            try {
+                uriPic += "/" + person.getPhoto();
+            } catch (Exception e) {
             }
-        });
 
-        scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            fab.setOnClickListener(v -> {
+                try {
+                    if (AuthoUser.personOngoingLeagues.size()==0){
+                        Toast.makeText(getActivity(), "Ошибка! У вас нет ни одной команды", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                            Intent intent = new Intent(getActivity(), PlayerInv.class);
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putSerializable("PLAYERINV", person);
+                            intent.putExtras(bundle1);
+                            startActivityForResult(intent, REQUEST_CODE_PLAYERINV);
 
-                if (scrollY > oldScrollY) {
-//                    PersonalActivity.navigation.animate().translationY(PersonalActivity.navigation.getHeight());
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "Необходимо авторизоваться", Toast.LENGTH_SHORT).show();
                 }
+
+            });
+
+            scroller.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+
                 if (scrollY < oldScrollY) {
-//                    PersonalActivity.navigation.animate().translationY(0);
                     scrollStatus = false;
                 }
 
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                     scrollStatus = true;
-                    log.info("INFO: scroll");
                     fab.hide();
                 }
-            }
-        });
+            });
 
-        Glide.with(this)
-                .asBitmap()
-                .load(R.drawable.ic_member)
-                .apply(new RequestOptions()
-                        .circleCropTransform()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .priority(Priority.HIGH))
-                .into(imageLogo);
-        imageLogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FullScreenImage.class);
-                String title = "Some title";
-                Bundle bundle = new Bundle();
-                bundle.putString("NEWSTITLE", title);
-                intent.putExtra("NEWSTITLE", bundle);
-                startActivity(intent);
+            final String finalUriPic = uriPic;
+            imageLogo.setOnClickListener(v -> {
+                if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                    Intent intent = new Intent(getActivity(), FullScreenImage.class);
+                    intent.putExtra("player_photo", finalUriPic);
+                    startActivity(intent);
+                }
+            });
+
+            String DOB = person.getBirthdate();
+            DateToString dateToString = new DateToString();
+            textDOB.setText(dateToString.ChangeDate(DOB));
+            recyclerView = view.findViewById(R.id.recyclerViewPlayerTournaments);
+            recyclerView.setNestedScrollingEnabled(false);
+            try {
+                if (person.getPastLeagues().size()==0){
+                    layout.setVisibility(View.GONE);
+                }
+                else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }catch (NullPointerException r){
+                layout.setVisibility(View.GONE);
             }
-        });
-        textName.setText("Иванов В.В.");
-        textDOB.setText("12.12.81");
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewPlayerTournaments);
-        if (check) {
-            recyclerView.setVisibility(View.VISIBLE);
-        } else {
-            textTournaments.setVisibility(View.VISIBLE);
-        }
-        RVPlayersTournamentAdapter adapter = new RVPlayersTournamentAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+            RVPlayersTournamentAdapter adapter = new RVPlayersTournamentAdapter(this, person.getPastLeagues());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 //nothing to do
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    fab.show();
-                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    fab.hide();
                 }
-                if (scrollStatus) {
-                    fab.hide();
+
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        fab.show();
+                    } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                        fab.hide();
+                    }
+                    if (scrollStatus) {
+                        fab.hide();
+                    }
+                    super.onScrollStateChanged(recyclerView, newState);
                 }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
+            });
+        } catch (Exception E) {
+            log.error("ERROR: " + E);
+        }
+
+        fab.show();
         return view;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE_PLAYERINV) {
+                Toast.makeText(getContext(), "Вы отправили игроку приглашение", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            log.error("ERROR: onActivityResult");
+        }
+    }
+
 }

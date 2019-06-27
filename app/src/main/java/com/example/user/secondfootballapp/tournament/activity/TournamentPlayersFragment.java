@@ -1,4 +1,7 @@
 package com.example.user.secondfootballapp.tournament.activity;
+
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +16,8 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
@@ -20,6 +25,13 @@ import android.widget.Toast;
 
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.Player;
+import com.example.user.secondfootballapp.model.Team;
+import com.example.user.secondfootballapp.tournament.PlayerComparator;
+import com.example.user.secondfootballapp.tournament.PlayerGoalsComparator;
+import com.example.user.secondfootballapp.tournament.PlayerMatchComparator;
+import com.example.user.secondfootballapp.tournament.PlayerRCComparator;
+import com.example.user.secondfootballapp.tournament.PlayerYCComparator;
 import com.example.user.secondfootballapp.tournament.activity.AbbreviationDialogFragment;
 import com.example.user.secondfootballapp.tournament.activity.TournamentTimeTableFragment;
 import com.example.user.secondfootballapp.tournament.adapter.RVTournamentPlayersAdapter;
@@ -28,46 +40,69 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TournamentPlayersFragment extends Fragment {
     Logger log = LoggerFactory.getLogger(TournamentTimeTableFragment.class);
     boolean scrollStatus;
+    List<Player> playerList = new ArrayList<>();
+    RVTournamentPlayersAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
         Spinner spinner;
-        final AbbreviationDialogFragment dialogFragment;
+        LinearLayout layout;
+        RelativeLayout layout1;
         final FloatingActionButton fab;
         NestedScrollView scroller;
         List<String> categories = new ArrayList<String>();
-        categories.add("по проведенным мячам");
+        categories.add("по проведенным матчам");
         categories.add("по забитым мячам");
         categories.add("по количеству ЖК");
         categories.add("по количеству КК");
-        categories.add("по количеству дисквалификаций");
 
         RecyclerView recyclerView;
-        log.info("INFO: TournamentPlayersFragment onCreateView 3");
-        view = inflater.inflate(R.layout.tournament_info_tab_players, container, false);
-        dialogFragment = new AbbreviationDialogFragment();
-        fab = (FloatingActionButton) view.findViewById(R.id.playersInfoButton);
-        spinner = (Spinner) view.findViewById(R.id.playersSpinner);
-        scroller = (NestedScrollView) view.findViewById(R.id.tournamentInfoPlayersScroll);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewTournamentPlayers);
-        scrollStatus = false;
-//        ArrayAdapter<?> adapter1 = ArrayAdapter.createFromResource(getActivity(), R.array.spinnerItem, android.R.layout.simple_spinner_item);
-//        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, R.id.playersSort, categories);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogFragment.show(getFragmentManager(), "abbrev");
+        Bundle arguments = getArguments();
+        List<Team> team = (List<Team>) arguments.getSerializable("TOURNAMENTINFOTEAMS");
+        List<String> clubs = new ArrayList<>();
+        for (Team team1 : team) {
+            for (Player player : team1.getPlayers()) {
+                playerList.add(player);
+//                if (team1.getClub().)
+                clubs.add(team1.getClub());
             }
-        });
+        }
+        Collections.sort(playerList, new PlayerMatchComparator());
+        view = inflater.inflate(R.layout.tournament_info_tab_players, container, false);
+        layout = view.findViewById(R.id.tournamentPlayersEmpty);
+        layout1 = view.findViewById(R.id.mainview);
+//        LayoutInflater factory = getLayoutInflater();
+//        View newRow = factory.inflate(R.layout.tournament_info_two, null,   false);
+//        fab = (FloatingActionButton) view.findViewById(R.id.playersInfoButton);
+        Tournament tournament = (Tournament) this.getParentFragment();
+        fab = tournament.getFabPlayers();
+        spinner = view.findViewById(R.id.playersSpinner);
+        scroller = view.findViewById(R.id.tournamentInfoPlayersScroll);
+        recyclerView = view.findViewById(R.id.recyclerViewTournamentPlayers);
+        scrollStatus = false;
+        adapter = new RVTournamentPlayersAdapter(this, playerList, clubs);
+        recyclerView.setAdapter(adapter);
+        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
 
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getActivity(), R.array.spinnerItem, R.layout.spinner_item);
+
+        if (playerList.size() != 0) {
+            layout.setVisibility(View.GONE);
+        } else {
+            layout1.setVisibility(View.GONE);
+            fab.setVisibility(View.INVISIBLE);
+
+        }
+
+
+        final ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getActivity(), R.array.spinnerItem, R.layout.spinner_item);
         try {
 //            adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapter1.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -81,13 +116,48 @@ public class TournamentPlayersFragment extends Fragment {
             log.error("ERROR: from TournamentPlayersFragment set Adapter", t);
         }
 
+        Drawable spinnerDrawable = spinner.getBackground().getConstantState().newDrawable();
 
+
+        spinnerDrawable.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+
+        spinner.setBackground(spinnerDrawable);
         spinner.setSelection(0);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String[] choose = getResources().getStringArray(R.array.spinnerItem);
-                Toast.makeText(getActivity(), choose[position], Toast.LENGTH_LONG).show();
+                switch (choose[position]) {
+                    case "по проведенным матчам": {
+                        log.error("по проведенным матчам");
+                        List<Player> players = new ArrayList<>(playerList);
+                        Collections.sort(players, new PlayerMatchComparator());
+                        adapter.dataChanged(players);
+                        break;
+                    }
+                    case "по забитым мячам": {
+                        log.error("по забитым мячам");
+                        List<Player> players = new ArrayList<>(playerList);
+                        Collections.sort(players, new PlayerGoalsComparator());
+                        adapter.dataChanged(players);
+                        break;
+                    }
+                    case "по количеству ЖК": {
+                        log.error("по количеству ЖК");
+                        List<Player> players = new ArrayList<>(playerList);
+                        Collections.sort(players, new PlayerYCComparator());
+                        adapter.dataChanged(players);
+                        break;
+                    }
+                    case "по количеству КК": {
+                        log.error("по количеству КК");
+                        List<Player> players = new ArrayList<>(playerList);
+                        Collections.sort(players, new PlayerRCComparator());
+                        adapter.dataChanged(players);
+                        break;
+                    }
+                }
+//                Toast.makeText(getActivity(), choose[position], Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -96,33 +166,22 @@ public class TournamentPlayersFragment extends Fragment {
             }
         });
 
-        RVTournamentPlayersAdapter adapter = new RVTournamentPlayersAdapter();
-        recyclerView.setAdapter(adapter);
-        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
 
         scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
                 if (scrollY > oldScrollY) {
-                    log.info("INFO: RecyclerView scrolled: scroll down!");
-                    PersonalActivity.navigation.animate().translationY(PersonalActivity.navigation.getHeight());
+//                    log.info("INFO: RecyclerView scrolled: scroll down!");
 
                 }
                 if (scrollY < oldScrollY) {
-                    log.info("INFO: RecyclerView scrolled: scroll up!");
-                    PersonalActivity.navigation.animate().translationY(0);
+//                    log.info("INFO: RecyclerView scrolled: scroll up!");
                     scrollStatus = false;
                 }
 
-//                if (scrollY == 0) {
-//                    Log.i(TAG, "TOP SCROLL");
-//                }
-//
-                if (scrollY == ( v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() )) {
-                    log.info("INFO: RecyclerView scrolled: bottom scroll!");
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+//                    log.info("INFO: RecyclerView scrolled: bottom scroll!");
                     scrollStatus = true;
 //                    fab.hide();
                 }
@@ -149,12 +208,12 @@ public class TournamentPlayersFragment extends Fragment {
 //                    PersonalActivity.navigation.animate().translationY(0);
 //                }
 //                firstVisibleInListview = currentFirstVisible;
-                if (newState == RecyclerView.SCROLL_STATE_IDLE ) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     fab.show();
                 } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                     fab.hide();
                 }
-                if (scrollStatus){
+                if (scrollStatus) {
                     fab.hide();
                 }
                 super.onScrollStateChanged(recyclerView, newState);

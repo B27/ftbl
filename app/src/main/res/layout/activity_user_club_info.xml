@@ -1,174 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.activity.UserClubInfo"
-    android:background="@color/colorLightGray2">
-    <RelativeLayout
+    android:background="@color/colorWhite"
+    tools:context=".user.activity.UserClubInfo">
 
-        android:id="@+id/relativeLayoutClub"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/white_back"
         android:fitsSystemWindows="true"
-        android:padding="8dp">
-        <RelativeLayout
-            android:id="@+id/userClubCV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="top"
+            android:background="@color/colorLightGray2"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="18sp"
+                android:gravity="center_horizontal"
+                android:visibility="visible">
+
+                <ImageButton
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_tick"
+                    android:visibility="invisible"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@string/myClub"
+                    android:textColor="@color/colorBottomNavigationUnChecked"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/userClubInfoButtonBack"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_arrow_back" />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+
+            android:padding="8dp"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:id="@+id/clubInfoLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorWhite">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/userClubInfoLogo"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignStart="@+id/clubInfoDesc"
                     android:layout_marginTop="5dp"
                     android:src="@drawable/ic_con" />
 
-                <TextView
-                    android:id="@+id/userClubInfoTitle"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginStart="90dp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/title_club"
-                    android:textColor="@color/colorBottomNavigationUnChecked"
-                    android:textSize="20sp" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/userClubInfoDesc"
-                    android:textSize="13sp"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="95dp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:textColor="@color/colorBottomNavigationUnChecked"
-                    android:padding="5dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:text="@string/fishText" />
+                    <TextView
+                        android:id="@+id/userClubInfoTitle"
+                        android:layout_width="250sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/title_club"
+                        android:textColor="@color/colorBottomNavigationUnChecked"
+                        android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/userClubInfoCoach"
-                    android:layout_width="120dp"
-                    android:layout_height="25dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_alignBottom="@+id/userClubInfoLogo"
-                    android:layout_alignStart="@+id/userClubInfoTitle"
-                    android:layout_below="@+id/userClubInfoTitle"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="Тренер"
-                    android:textColor="@color/colorLightGrayForText"
-                    android:textSize="13sp" />
-                <Button
-                    android:id="@+id/editClub"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/userClubInfoDesc"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/manrope_semibold"
-                    android:textColor="@color/colorPrimary"
-                    android:visibility="gone"
-                    android:text="@string/edit"/>
-                <Button
-                    android:id="@+id/userEscapeClub"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/userClubInfoDesc"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/manrope_semibold"
-                    android:textColor="@color/colorPrimary"
-                    android:visibility="gone"
-                    android:text="@string/escapeClub"/>
 
-            </RelativeLayout>
-            <!--</android.support.v7.widget.CardView>-->
-
-        </RelativeLayout>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_marginTop="1dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayoutClub"
-        android:background="@color/colorWhite">
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/userClubInfoCoach"
+                        android:layout_width="120dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="3dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="Тренер"
+                        android:textColor="@color/colorLightGrayForText"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/userClubMembersTitle"
-                android:paddingStart="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:fontFamily="@font/manrope_semibold"
-                android:paddingTop="8sp"
-                android:text="@string/commandInfoMembers"
-                android:textColor="@color/colorBottomNavigationUnChecked"
-                android:textSize="13sp" />
-            <TextView
-                android:id="@+id/userClubInfoMembersStatus"
-                android:layout_width="wrap_content"
+                android:id="@+id/userClubInfoDesc"
+                android:layout_width="360dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/manrope_regular"
-                android:text="НЕТ УЧАСТНИКОВ"
+                android:padding="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="@string/fishText"
                 android:textColor="@color/colorBottomNavigationUnChecked"
-                android:visibility="gone"/>
+                android:textSize="14sp" />
+
         </LinearLayout>
-        <android.support.v4.widget.NestedScrollView
-            android:layout_below="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            >
-            <!-- scrolling content -->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewUserClubInfoMembers"
-                android:visibility="gone"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        </android.support.v4.widget.NestedScrollView>
-    </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/userClubInfoButtonBack"
-        style="@style/Widget.AppCompat.Button.Borderless"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/editClub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="end"
-        android:drawableLeft="@drawable/ic_button_arrow2"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/manrope_semibold"
-        android:text="@string/back"
-        android:textColor="@color/colorPrimary" />
-</RelativeLayout>
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="20dp"
+        app:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_edit" />
+</android.support.design.widget.CoordinatorLayout>

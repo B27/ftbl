@@ -10,6 +10,10 @@ public class Tournaments {
     @Expose
     private List<League> leagues = null;
 
+    @SerializedName("count")
+    @Expose
+    private Integer count;
+
     public List<League> getLeagues() {
         return leagues;
     }
@@ -18,4 +22,12 @@ public class Tournaments {
         this.leagues = leagues;
     }
 
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
 }

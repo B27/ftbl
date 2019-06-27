@@ -80,6 +80,11 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+        <LinearLayout
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
             android:layout_width="match_parent"
@@ -97,7 +102,7 @@
                 android:scaleType="centerCrop"
                 android:layout_width="85dp"
                 android:layout_height="85dp"
-                android:src="@drawable/ic_member"/>
+                android:src="@drawable/ic_add_photo"/>
 
             <View
                 android:layout_width="match_parent"
@@ -121,12 +126,13 @@
                 android:layout_height="wrap_content"
                 style="@style/MyEditText"
                 android:hint="@string/title2"
-                android:inputType="text"/>
+                android:inputType="text|textCapSentences"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manrope_regular"
                 android:paddingStart="4sp"
+                android:layout_marginBottom="15sp"
                 android:gravity="start"
                 android:textColor="@color/colorLightGrayForText"
                 android:textSize="12sp"
@@ -134,28 +140,51 @@
             <EditText
                 android:id="@+id/userEditClubDesc"
                 android:layout_width="match_parent"
+                android:gravity="top"
                 android:layout_height="wrap_content"
-                style="@style/MyEditText"
-                android:hint="@string/desc2"
-                android:inputType="text"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorLightGrayForText"
+                android:textColor="@color/colorBottomNavigationUnChecked"
+                android:textSize="13sp"
+                android:padding="5sp"
                 android:fontFamily="@font/manrope_regular"
-                android:paddingStart="4sp"
-                android:layout_marginTop="8sp"
-                android:layout_marginBottom="20sp"
-                android:gravity="start"
-                android:textColor="@color/colorLightGrayForText"
-                android:textSize="12sp"
-                android:text="@string/commandInfoMembers"/>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewEditClub"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:lines="4"
+                android:background="@drawable/edittext_bg"
+                android:hint="@string/desc2"
+                android:inputType="textMultiLine|textCapSentences"/>
+        </LinearLayout>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_gravity="end"-->
+                <!--android:layout_marginTop="30sp"-->
+                <!--android:layout_height="8sp"-->
+                <!--android:background="@color/colorLightGray2" />-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:fontFamily="@font/manrope_semibold"-->
+                <!--android:paddingBottom="8dp"-->
+                <!--android:paddingStart="13dp"-->
+                <!--android:paddingTop="8dp"-->
+                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
+                <!--android:textSize="14sp"-->
+                <!--android:text="@string/commandInfoMembers"/>-->
+
+        <!--<LinearLayout-->
+            <!--android:paddingStart="18dp"-->
+            <!--android:paddingEnd="18dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--&gt;-->
 
 
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/recyclerViewEditClub"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+        <!--</LinearLayout>-->
 
         </LinearLayout>
 

@@ -11,22 +11,19 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,34 +31,64 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.PersonalActivity;
-import com.ycuwq.datepicker.date.DatePicker;
+import com.example.user.secondfootballapp.SaveSharedPreference;
+import com.example.user.secondfootballapp.model.EditProfile;
+import com.example.user.secondfootballapp.model.Person;
+import com.example.user.secondfootballapp.model.ServerResponse;
 
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.User;
+import com.example.user.secondfootballapp.players.activity.PlayersPage;
 import com.example.user.secondfootballapp.tournament.activity.TournamentTimeTableFragment;
-import com.ycuwq.datepicker.date.DatePickerDialogFragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.CAMERA;
+import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class UserInfo extends AppCompatActivity {
     Logger log = LoggerFactory.getLogger(UserInfo.class);
-//    public static Button buttonDOB;
+    String token;
+    User user;
+    //    public static Button buttonDOB;
+    String uriPic;
+    URL url;
     public static TextView buttonDOB;
     ImageButton buttonPhoto;
     ImageButton buttonClose;
     ImageButton buttonSave;
-    TextView textStatus;
     EditText textName;
     EditText textSurname;
     EditText textPatronymic;
@@ -69,48 +96,40 @@ public class UserInfo extends AppCompatActivity {
     TextView textDOB;
     Bitmap myBitmap;
     Uri picUri;
+    Bitmap photo;
+    Person person;
+    Person person1;
     private ArrayList permissionsToRequest;
     private ArrayList permissionsRejected = new ArrayList();
     private ArrayList permissions = new ArrayList();
 
     private final static int ALL_PERMISSIONS_RESULT = 107;
+
+    boolean press;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
-        final Logger log = LoggerFactory.getLogger(TournamentTimeTableFragment.class);
-//        final DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
-//        final DatePickerDialogFragment datePickerDialogFragment;
-//        final DatePicker datePickerDialogFragment;
-//        buttonDOB = (Button) findViewById(R.id.userInfoDOB);
-        textStatus = (TextView) findViewById(R.id.userStatus);
-        textName = (EditText) findViewById(R.id.userInfoName);
+        final Logger log = LoggerFactory.getLogger(UserInfo.class);
+        press = false;
+        textName = findViewById(R.id.userInfoName);
         textName.clearFocus();
-        textSurname = (EditText) findViewById(R.id.userInfoSurname);
-        textPatronymic = (EditText) findViewById(R.id.userInfoPatronymic);
-        textLogin = (EditText) findViewById(R.id.userInfoLogin);
-        buttonPhoto = (ImageButton) findViewById(R.id.userInfoPhoto);
-        buttonDOB = (TextView) findViewById(R.id.userInfoDOB);
-        buttonClose = (ImageButton) findViewById(R.id.userProfileClose);
-        buttonSave = (ImageButton) findViewById(R.id.userProfileSave);
-//        datePickerDialogFragment = new DatePickerDialogFragment();
-//        datePickerDialogFragment = new DatePicker();
-//        datePickerDialogFragment.setOnDateChooseListener(new DatePickerDialogFragment.OnDateChooseListener() {
-//            @Override
-//            public void onDateChoose(int year, int month, int day) {
-//                log.info("INFO: chosen: ", year, " " , month, " ", day);
-//            }
-//        });
-//        buttonDOB.setPaintFlags(buttonDOB.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        textSurname = findViewById(R.id.userInfoSurname);
+        textPatronymic = findViewById(R.id.userInfoPatronymic);
+        textLogin = findViewById(R.id.userInfoLogin);
+        buttonPhoto = findViewById(R.id.userInfoPhoto);
+        buttonDOB = findViewById(R.id.userInfoDOB);
+        buttonClose = findViewById(R.id.userProfileClose);
+        buttonSave = findViewById(R.id.userProfileSave);
         textName.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
         textName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     textName.getBackground().clearColorFilter();
-                }
-                else {
+                } else {
                     textName.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
                 }
             }
@@ -119,10 +138,9 @@ public class UserInfo extends AppCompatActivity {
         textSurname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     textSurname.getBackground().clearColorFilter();
-                }
-                else {
+                } else {
                     textSurname.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
                 }
             }
@@ -132,10 +150,9 @@ public class UserInfo extends AppCompatActivity {
         textPatronymic.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     textPatronymic.getBackground().clearColorFilter();
-                }
-                else {
+                } else {
                     textPatronymic.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
                 }
             }
@@ -144,14 +161,82 @@ public class UserInfo extends AppCompatActivity {
         textLogin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     textLogin.getBackground().clearColorFilter();
-                }
-                else {
+                } else {
                     textLogin.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
                 }
             }
         });
+        try {
+            Intent intent = getIntent();
+//            user = (User) intent.getExtras().getSerializable("ONLYPERSONINFO");
+            user = SaveSharedPreference.getObject();
+            token = user.getToken();
+            person = user.getUser();
+            textName.setText(person.getName());
+            textSurname.setText(person.getSurname());
+//            textSurname.setText(UserPage.person.getSurname());
+            textPatronymic.setText(person.getLastname());
+            textLogin.setText(person.getLogin());
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.optionalCircleCrop();
+            requestOptions.format(DecodeFormat.PREFER_ARGB_8888);
+            RequestOptions.errorOf(R.drawable.ic_logo2);
+            requestOptions.override(500, 500);
+            requestOptions.priority(Priority.HIGH);
+            if (person.getPhoto().equals(null)){
+
+                Glide.with(this)
+                        .asBitmap()
+                        .load(R.drawable.ic_logo2)
+                        .apply(requestOptions)
+                        .into(buttonPhoto);
+            }
+            uriPic = BASE_URL;
+            uriPic += "/" + person.getPhoto();
+            try {
+                url = new URL(uriPic);
+                Glide.with(this)
+                        .asBitmap()
+                        .load(url)
+                        .apply(requestOptions)
+                        .into(buttonPhoto);
+            } catch (Exception e) {
+                log.error("ERROR: don't load img");
+            }
+
+
+            String DOB = person.getBirthdate();
+
+
+            try {
+                HashMap<Integer, String> months = new HashMap<Integer, String>();
+                months.put(0, "янв.");
+                months.put(1, "февр.");
+                months.put(2, "марта");
+                months.put(3, "апр.");
+                months.put(4, "мая");
+                months.put(5, "июня");
+                months.put(6, "июля");
+                months.put(7, "авг.");
+                months.put(8, "сент.");
+                months.put(9, "окт.");
+                months.put(10, "нояб.");
+                months.put(11, "дек.");
+                DateFormat dateFormat = new SimpleDateFormat("EEE MMM d HH:mm:ss Z yyyy", Locale.US);
+                Date date = dateFormat.parse(DOB);
+
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+                String dateDOB = String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + " " + months.get(cal.get(Calendar.MONTH)) + " " + String.valueOf(cal.get(Calendar.YEAR));
+                buttonDOB.setText(dateDOB);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         buttonClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,38 +251,186 @@ public class UserInfo extends AppCompatActivity {
                 String surname;
                 String patronymic;
                 String login;
-                String status;
-                String[] str;
                 String DOB;
-                int yearDOB;
-                int monthDOB;
-                int dayDOB;
-                Image photo;
-                HashMap<String, Integer> months = new HashMap<String, Integer>();
-                months.put("янв.", 1);
-                months.put("февр.", 2);
-                months.put("марта", 3);
-                months.put("апр.", 4);
-                months.put("мая", 5);
-                months.put("июня", 6);
-                months.put("июля", 7);
-                months.put("авг.", 8);
-                months.put("сент.", 9);
-                months.put("окт.", 10);
-                months.put("нояб.", 11);
-                months.put("дек.", 12);
-                try{
+
+                try {
                     name = textName.getText().toString();
                     surname = textSurname.getText().toString();
                     patronymic = textPatronymic.getText().toString();
                     login = textLogin.getText().toString();
-                    status = (String) textStatus.getText();
                     DOB = (String) buttonDOB.getText();
-                    str = DOB.split(" ");
-                    yearDOB = Integer.parseInt(str[2]);
-                    monthDOB = months.get(str[1]);
-                    dayDOB = Integer.parseInt(str[0]);
-                }catch (Exception e){}
+                    photo = myBitmap;
+                    Map<String, RequestBody> map = new HashMap<>();
+                    RequestBody request = RequestBody.create(MediaType.parse("text/plain"), name);
+                    map.put("name", request);
+                    request = RequestBody.create(MediaType.parse("text/plain"), surname);
+                    map.put("surname", request);
+                    request = RequestBody.create(MediaType.parse("text/plain"), patronymic);
+                    map.put("lastname", request);
+                    request = RequestBody.create(MediaType.parse("text/plain"), login);
+                    map.put("login", request);
+                    request = RequestBody.create(MediaType.parse("text/plain"), person.getId());
+                    map.put("_id", request);
+                    DateFormat format = new SimpleDateFormat("dd MMMM yyyy", new Locale("ru"));
+                    try {
+                        Date date = format.parse(DOB);
+                        RequestBody requestDOB = RequestBody.create(MediaType.parse("text/plain"), date.toString());
+                        map.put("birthdate", requestDOB);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+
+                        if (photo != null) {
+                            //create a file to write bitmap data
+                            File file = new File(getCacheDir(), "photo");
+                            file.createNewFile();
+                            //Convert bitmap to byte array
+                            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                            photo.compress(Bitmap.CompressFormat.JPEG, 80 /*ignored for PNG*/, bos);
+                            byte[] bitmapdata = bos.toByteArray();
+                            //write the bytes in file
+                            FileOutputStream fos = new FileOutputStream(file);
+                            fos.write(bitmapdata);
+                            fos.flush();
+                            fos.close();
+                            //        File file = new File(String.valueOf(PersonalInfo.picUri));
+                            RequestBody requestFile =
+                                    RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                            // MultipartBody.Part is used to send also the actual file name
+                            MultipartBody.Part body =
+                                    MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+                            Call<EditProfile> call = Controller.getApi().editProfile(token, map, body);
+                            call.enqueue(new Callback<EditProfile>() {
+                                @Override
+                                public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
+                                    log.info("INFO: check response");
+                                    if (response.isSuccessful()) {
+                                        log.info("INFO: response isSuccessful");
+                                        if (response.body() == null) {
+                                            log.error("ERROR: body is null");
+                                        } else {
+//                                            Person person1;
+                                            person1 = response.body().getPerson();
+//                                            person = person1;
+                                            user.setUser(person1);
+//                                            AuthoUser.user.setUser(person1);
+                                            SaveSharedPreference.getObject().setUser(person1);
+                                            SaveSharedPreference.saveObject(user);
+                                            RequestOptions requestOptions = new RequestOptions();
+                                            requestOptions.optionalCircleCrop();
+                                            requestOptions.format(DecodeFormat.PREFER_ARGB_8888);
+                                            RequestOptions.errorOf(R.drawable.ic_logo2);
+                                            requestOptions.override(500, 500);
+                                            requestOptions.priority(Priority.HIGH);
+//                                                Glide.with(UserInfo.this)
+                                            Glide.with(AuthoUser.buttonOpenProfile.getContext())
+                                                    .asBitmap()
+                                                    .load(myBitmap)
+                                                    .apply(requestOptions)
+                                                    .into(AuthoUser.buttonOpenProfile);
+                                            AuthoUser.textName.setText(person1.getName());
+                                            //all is ok
+                                            if (person.getType().equals("player")) {
+                                                Person man1 = new Person();
+                                                for (Person man : PersonalActivity.people) {
+                                                    if (man.getId().equals(person.getId())) {
+                                                        man1 = man;
+                                                    }
+                                                }
+                                                PersonalActivity.people.remove(man1);
+                                                PersonalActivity.people.add(user.getUser());
+                                                PlayersPage.adapter.notifyDataSetChanged();
+                                            }
+                                            String str = "Изменения сохранены.";
+                                            Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
+                                            finish();
+//                        }
+                                        }
+                                    } else {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                                            String str = "Ошибка! ";
+                                            str += jsonObject.getString("message");
+                                            Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
+                                        } catch (IOException | JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<EditProfile> call, Throwable t) {
+                                    log.error("ERROR: ", t);
+                                    Toast.makeText(UserInfo.this, "Ошибка сервера. Изменения не сохранены.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Call<EditProfile> call = Controller.getApi().editProfile(token, map, null);
+                            call.enqueue(new Callback<EditProfile>() {
+                                @Override
+                                public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
+                                    log.info("INFO: check response");
+                                    if (response.isSuccessful()) {
+                                        log.info("INFO: response isSuccessful");
+                                        if (response.body() == null) {
+                                            log.error("ERROR: body is null");
+                                        } else {
+                                            person1 = response.body().getPerson();
+                                            user.setUser(person1);
+//                                            AuthoUser.user.setUser(person1);
+                                            SaveSharedPreference.getObject().setUser(person1);
+                                            log.error(SaveSharedPreference.getObject().getUser().getName());
+                                            log.error("777777777777777777777777777777777777777777777777777777777777777");
+                                            SaveSharedPreference.editObject(user);
+                                            log.error("777777777777777777777777777777777777777777777777777777777777777");
+
+//                                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                                            ft.detach(PersonalActivity.authoUser).attach(PersonalActivity.authoUser).commit();
+//                                            person = person1;
+                                            AuthoUser.textName.setText(person1.getName());
+                                            Person man1 = new Person();
+                                            if (person.getType().equals("player")) {
+                                                for (Person man : PersonalActivity.people) {
+                                                    if (man.getId().equals(person.getId())) {
+                                                        man1 = man;
+                                                    }
+                                                }
+                                                PersonalActivity.people.remove(man1);
+                                                PersonalActivity.people.add(user.getUser());
+                                                PlayersPage.adapter.notifyDataSetChanged();
+                                            }
+                                            String str = "Изменения сохранены.";
+                                            Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
+                                            //all is ok
+                                            finish();
+                                        }
+                                    } else {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                                            String str = "Ошибка! ";
+                                            str += jsonObject.getString("message");
+                                            Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
+                                        } catch (IOException | JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(@NonNull Call<EditProfile> call, Throwable t) {
+                                    log.error("ERROR: ", t);
+                                    Toast.makeText(UserInfo.this, "Ошибка сервера. Изменения не сохранены.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                    } catch (IOException e) {
+                        log.error("ERROR");
+                    }
+                } catch (Exception e) {
+                }
 
                 finish();
             }
@@ -205,6 +438,7 @@ public class UserInfo extends AppCompatActivity {
         buttonPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                press = true;
                 startActivityForResult(getPickImageChooserIntent(), 200);
             }
         });
@@ -221,19 +455,12 @@ public class UserInfo extends AppCompatActivity {
         buttonDOB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                datePickerDialogFragment.show(getSupportFragmentManager(), "DatePickerDialogFragment");
-//                DatePickerDialogFragment datePickerDialogFragment = new DatePickerDialogFragment();
-//                DatePickerDialogFragment datePickerDialogFragment = new DatePickerDialogFragment();
-//                com.example.user.secondfootballapp.user.activity.DatePicker datePicker1 = new com.example.user.secondfootballapp.user.activity.DatePicker();
                 buttonDOB.setTextColor(getResources().getColor(R.color.colorBottomNavigationUnChecked));
                 com.example.user.secondfootballapp.user.activity.DatePicker datePicker1 = new com.example.user.secondfootballapp.user.activity.DatePicker();
                 datePicker1.show(getSupportFragmentManager(), "DatePickerDialogFragment");
-//                datePicker.show(getSupportFragmentManager(), "DatePickerDialogFragment");
-//                datePickerDialogFragment.show(getSupportFragmentManager(), "DatePickerDialogFragment");
             }
         });
     }
-
 
 
     public Intent getPickImageChooserIntent() {
@@ -255,8 +482,7 @@ public class UserInfo extends AppCompatActivity {
 //                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
                 log.info("INFO: outputFileUri != null");
-            }
-            else{
+            } else {
                 log.error("ERROR: outputFileUri == null");
             }
             allIntents.add(intent);
@@ -293,7 +519,7 @@ public class UserInfo extends AppCompatActivity {
     }
 
     /**
-            * Get URI to image received from capture by camera.
+     * Get URI to image received from capture by camera.
      */
     private Uri getCaptureImageOutputUri() {
         Uri outputFileUri = null;
@@ -315,34 +541,32 @@ public class UserInfo extends AppCompatActivity {
                 try {
                     myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), picUri);
 //                    myBitmap = rotateImageIfRequired(myBitmap, picUri);
-                    myBitmap = getResizedBitmap(myBitmap, 500);
-
-//                    CircleImageView croppedImageView = (CircleImageView) findViewById(R.id.img_profile);
-//                    croppedImageView.setImageBitmap(myBitmap);
-//                    buttonPhoto.setImageBitmap(myBitmap);
+                    Bitmap newBitmap = getResizedBitmap(myBitmap, 500);
                     Glide.with(this)
-                            .load(myBitmap)
+                            .load(newBitmap)
                             .apply(new RequestOptions()
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
                                     .priority(Priority.HIGH))
 //                            .load(picUri)
                             .into(buttonPhoto);
-                } catch (IOException e) {e.printStackTrace(); }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 log.info("INFO: CAMERA");
-                if (picUri==null){
+                if (picUri == null) {
                     log.info("INFO: picUri==null");
                 }
-                if (data != null && data.getExtras() != null){
+                if (data != null && data.getExtras() != null) {
 //                    bitmap = (Bitmap) data.getExtras().get("data");
                     log.info("INFO: data != null");
 
                     bitmap = (Bitmap) data.getExtras().get("data");
                     myBitmap = bitmap;
-                    myBitmap = getResizedBitmap(myBitmap, 500);
+                    Bitmap newBitmap = getResizedBitmap(myBitmap, 500);
                     Glide.with(this)
-                            .load(myBitmap)
+                            .load(newBitmap)
                             .apply(new RequestOptions()
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
@@ -350,35 +574,7 @@ public class UserInfo extends AppCompatActivity {
 //                        .load(picUri)
                             .into(buttonPhoto);
                 }
-//                else {
-//                    try {
-//                        myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), picUri);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-////                    myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_con);
-//                }
 
-//                if(data.getData()!=null){
-//                    bitmap = (Bitmap)data.getExtras().get("data");
-//                    myBitmap = bitmap;
-//                }else{
-//                    try {
-//                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-//                        myBitmap = bitmap;
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-
-
-//                CircleImageView croppedImageView = (CircleImageView) findViewById(R.id.img_profile);
-//                if (croppedImageView != null) {
-//                    croppedImageView.setImageBitmap(myBitmap);
-//                }
-
-
-//                buttonPhoto.setImageBitmap(myBitmap);
 
             }
 
@@ -408,7 +604,7 @@ public class UserInfo extends AppCompatActivity {
 //            isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
 //        }
         if (android.os.Build.VERSION.SDK_INT >= 23) {
-            isCamera = (data != null && data.getClipData() != null) ? false : true;
+            isCamera = data == null || data.getClipData() == null;
         } else {
             if (data != null) {
                 String action = data.getAction();

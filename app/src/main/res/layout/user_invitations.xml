@@ -15,31 +15,53 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:fontFamily="@font/manrope_semibold"-->
-                <!--android:paddingStart="13dp"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
-                <!--android:textSize="14sp"-->
-                <!--android:text="@string/invitation"/>-->
+        <LinearLayout
+            android:id="@+id/emptyInv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="65sp"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_marginTop="45sp"
+                android:layout_marginBottom="45sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:src="@drawable/ic_empty1"/>
             <TextView
-                android:id="@+id/userInvListStatus"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginBottom="15sp"
                 android:fontFamily="@font/manrope_regular"
                 android:textColor="@color/colorBottomNavigationUnChecked"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@string/emptyInvitation"
-                android:visibility="gone"/>
+                android:text="@string/empty"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="25sp"
+                android:paddingStart="25sp"
+                android:gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textColor="@color/colorLightGrayForText"
+                android:fontFamily="@font/manrope_regular"
+                android:text="@string/not_inv"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/notEmptyInv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewUserInvitation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+        </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

@@ -29,7 +29,6 @@
         <!-- Close button icon -->
         <item name="closeIcon">@color/colorBottomNavigationUnChecked</item>
         <!-- Search button icon -->
-        <item name="searchIcon">@drawable/ic_search2</item>
         <!-- Go/commit button icon -->
         <item name="goIcon">@color/colorBottomNavigationUnChecked</item>
         <!-- Voice search button icon -->
@@ -39,7 +38,12 @@
         <!--&lt;!&ndash; Layout for query suggestion rows &ndash;&gt;-->
         <!--<item name="suggestionRowLayout">...</item>-->
     </style>
-
+    <style name="MyProgressDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:textColor">@color/colorLightGrayForText</item>
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:background">@color/colorWhite</item>
+    </style>
     <style name="LogIn" parent="AppTheme">
         <item name="android:padding">5dp</item>
         <item name="android:layout_margin">3dp</item>
@@ -146,21 +150,25 @@
     </style>
 
     <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
     <style name="DarkTextColor" parent="AppTheme">
         <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
     </style>
     <style name="CustomTabTextSize" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">@color/colorLightGrayForText</item>
         <item name="android:textSize">11sp</item>
     </style>
 
+    <style name="MySpinner" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+    </style>
     <style name="SpinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
         <item name="android:background">@color/colorWhite</item>
         <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
         <item name="android:fontFamily">@font/manrope_regular</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:paddingStart">15dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>

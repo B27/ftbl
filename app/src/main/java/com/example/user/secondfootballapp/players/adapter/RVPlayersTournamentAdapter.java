@@ -8,13 +8,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.PastLeague;
 import com.example.user.secondfootballapp.players.activity.Player;
+
+import java.util.List;
 
 
 public class RVPlayersTournamentAdapter extends RecyclerView.Adapter<RVPlayersTournamentAdapter.ViewHolder>{
-    Player context;
-    public RVPlayersTournamentAdapter(Player context){
+    private Player context;
+    private List<PastLeague> pastLeagues;
+    public RVPlayersTournamentAdapter(Player context, List<PastLeague> pastLeagues){
         this.context = context;
+        this.pastLeagues = pastLeagues;
     }
     @NonNull
     @Override
@@ -26,15 +31,25 @@ public class RVPlayersTournamentAdapter extends RecyclerView.Adapter<RVPlayersTo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.textTournament.setText("");
-        if (position==4){
+        String str;
+        if (pastLeagues.get(position).getPlace().equals("0")){
+            str = pastLeagues.get(position).getTourney() + ". " + pastLeagues.get(position).getName() + ". Команда: "
+                    + pastLeagues.get(position).getTeamName();
+        }
+        else {
+            str = pastLeagues.get(position).getTourney() + ". " + pastLeagues.get(position).getName() + ". Команда: "
+                    + pastLeagues.get(position).getTeamName() + ". " + pastLeagues.get(position).getPlace() + " место";
+        }
+
+        holder.textTournament.setText(str);
+        if (position==(pastLeagues.size()-1)){
             holder.view.setVisibility(View.INVISIBLE);
         }
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return pastLeagues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,8 +57,8 @@ public class RVPlayersTournamentAdapter extends RecyclerView.Adapter<RVPlayersTo
         TextView textTournament;
         public ViewHolder(View item) {
             super(item);
-            textTournament = (TextView) item.findViewById(R.id.tournamentPlayersTitle);
-            view = (View) item.findViewById(R.id.playerTournamentLine);
+            textTournament = item.findViewById(R.id.tournamentPlayersTitle);
+            view = item.findViewById(R.id.playerTournamentLine);
         }
     }
 }

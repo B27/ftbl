@@ -12,6 +12,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.user.secondfootballapp.R;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,21 +41,21 @@ import static android.Manifest.permission.CAMERA;
 
 public class PersonalInfo extends Fragment {
     public static TextView textDOB;
-    ImageButton buttonPhoto;
-    Bitmap myBitmap;
-    Uri picUri;
+    public static ImageButton buttonPhoto;
+    public static Bitmap myBitmap;
+    public static Uri picUri;
     private ArrayList permissionsToRequest;
     private ArrayList permissionsRejected = new ArrayList();
     private ArrayList permissions = new ArrayList();
     private final static int ALL_PERMISSIONS_RESULT = 107;
 
+    public static EditText textLogin;
+    public static EditText textPassword;
+    public static EditText textName;
+    public static EditText textSurname;
+    public static EditText textPatronymic;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
-        final EditText textName;
-        final EditText textSurname;
-        final EditText textPatronymic;
-        final EditText textLogin;
-        final EditText textPassword;
         view = inflater.inflate(R.layout.personal_info, container, false);
         buttonPhoto = (ImageButton) view.findViewById(R.id.registrationInfoPhoto);
         textName = (EditText) view.findViewById(R.id.registrationInfoName);
@@ -221,14 +223,18 @@ public class PersonalInfo extends Fragment {
                 picUri = getPickImageResultUri(data);
                 try {
                     myBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), picUri);
-//                    myBitmap = rotateImageIfRequired(myBitmap, picUri);
-                    myBitmap = getResizedBitmap(myBitmap, 500);
 
+//                    MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), myBitmap ,"nameofimage" , "description");
+//                    myBitmap = rotateImageIfRequired(myBitmap, picUri);
+//                    myBitmap = getResizedBitmap(myBitmap, 500);
+
+                    Bitmap newBitmap = getResizedBitmap(myBitmap, 500);
 //                    CircleImageView croppedImageView = (CircleImageView) findViewById(R.id.img_profile);
 //                    croppedImageView.setImageBitmap(myBitmap);
 //                    buttonPhoto.setImageBitmap(myBitmap);
                     Glide.with(this)
-                            .load(myBitmap)
+//                            .load(myBitmap)
+                            .load(newBitmap)
                             .apply(new RequestOptions()
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
@@ -242,12 +248,27 @@ public class PersonalInfo extends Fragment {
                 if (data != null && data.getExtras() != null) {
 //                    bitmap = (Bitmap) data.getExtras().get("data");
 
-
                     bitmap = (Bitmap) data.getExtras().get("data");
                     myBitmap = bitmap;
-                    myBitmap = getResizedBitmap(myBitmap, 500);
+//                    MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), myBitmap ,"nameofimage" , "description");
+//                    String root = Environment.getExternalStorageDirectory().toString();
+//                    File myDir = new File(root);
+//                    myDir.mkdirs();
+//                    String fname = "Image-" + "profile" + ".jpg";
+//                    File file = new File(myDir, fname);
+//                    if (file.exists()) file.delete();
+//                    try {
+//                        FileOutputStream out = new FileOutputStream(file);
+//                        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+//                        out.flush();
+//                        out.close();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+                    Bitmap newBitmap = getResizedBitmap(myBitmap, 500);
                     Glide.with(this)
-                            .load(myBitmap)
+                            .load(newBitmap)
+//                            .load(myBitmap)
                             .apply(new RequestOptions()
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)

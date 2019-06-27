@@ -69,81 +69,116 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="35sp">
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        <!--&gt;-->
+
         <LinearLayout
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:layout_height="match_parent"
+            android:paddingTop="35sp"
+            android:paddingStart="18dp"
+            android:orientation="vertical">
+
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manrope_regular"
-                android:paddingStart="4sp"
                 android:gravity="start"
+                android:paddingStart="4sp"
+                android:text="@string/commandTitle"
                 android:textColor="@color/colorLightGrayForText"
-                android:textSize="12sp"
-                android:text="@string/tournament"/>
-            <!--<EditText-->
-                <!--android:id="@+id/userInfoName"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--style="@style/MyEditText"-->
-                <!--android:hint="@string/name"-->
-                <!--android:inputType="text"/>-->
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/newCommandTitle"
+                style="@style/MyEditText"
+
+                android:layout_marginEnd="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/commandTitle2"
+                android:inputType="text|textCapSentences" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_regular"
+                android:gravity="start"
+                android:paddingStart="4sp"
+                android:text="@string/tournament"
+                android:textColor="@color/colorLightGrayForText"
+                android:textSize="12sp" />
+
             <Spinner
                 android:id="@+id/newCommandTournamentSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
+                android:padding="0dp"
+                android:layout_marginEnd="4dp"
+                android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+                android:backgroundTint="@color/colorPrimary"
                 android:spinnerMode="dialog"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginStart="6sp"
+                android:layout_marginEnd="18sp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="20sp"
+                android:background="@color/colorLightGray"
+                />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manrope_regular"
-                android:paddingStart="4sp"
                 android:gravity="start"
+                android:paddingStart="6sp"
+                android:text="@string/club2"
+                android:popupBackground="#ffffff"
                 android:textColor="@color/colorLightGrayForText"
-                android:textSize="12sp"
-                android:text="@string/league"/>
-            <!--<EditText-->
-                <!--android:id="@+id/userInfoSurname"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--style="@style/MyEditText"-->
-                <!--android:hint="@string/surname"-->
-                <!--android:inputType="text"/>-->
+                android:textSize="12sp" />
+
+
             <Spinner
-                android:id="@+id/newCommandLeagueSpinner"
+                android:id="@+id/newCommandClubSpinner"
                 android:layout_width="match_parent"
+                android:padding="0dp"
+                android:layout_marginEnd="4dp"
                 android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
-                android:spinnerMode="dialog"/>
-            <TextView
+                android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+                android:backgroundTint="@color/colorPrimary"
+                android:spinnerMode="dialog" />
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_regular"
-                android:paddingStart="4sp"
-                android:gravity="start"
-                android:textColor="@color/colorLightGrayForText"
-                android:textSize="12sp"
-                android:text="@string/commandTitle"/>
-            <EditText
-                android:id="@+id/newCommandTitle"
+                android:layout_marginStart="6sp"
+                android:layout_marginEnd="18sp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="20sp"
+                android:background="@color/colorLightGray"
+                />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/MyEditText"
-                android:hint="@string/commandTitle2"
-                android:inputType="text"/>
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom">
 
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="center_horizontal"
+                    android:layout_marginBottom="8sp"
+                    android:layout_marginEnd="18sp"
+                    android:text="@string/commandRules"
+                    android:textColor="@color/colorLightGrayForText"
+                    android:textSize="12sp" />
+            </RelativeLayout>
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    <!--</android.support.v4.widget.NestedScrollView>-->
 </LinearLayout>

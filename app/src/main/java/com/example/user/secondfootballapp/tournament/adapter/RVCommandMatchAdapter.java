@@ -3,6 +3,7 @@ package com.example.user.secondfootballapp.tournament.adapter;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +14,46 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.DateToString;
+import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.Club;
+import com.example.user.secondfootballapp.model.Event;
+import com.example.user.secondfootballapp.model.League;
+import com.example.user.secondfootballapp.model.Match;
+import com.example.user.secondfootballapp.model.Player;
+import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.tournament.activity.CommandInfoActivity;
 import com.example.user.secondfootballapp.tournament.activity.CommandMatchFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RVCommandMatchAdapter extends RecyclerView.Adapter<RVCommandMatchAdapter.ViewHolder>{
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.spec.ECField;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import q.rorbin.badgeview.QBadgeView;
+
+import static com.example.user.secondfootballapp.Controller.BASE_URL;
+
+public class RVCommandMatchAdapter extends RecyclerView.Adapter<RVCommandMatchAdapter.ViewHolder> {
     Logger log = LoggerFactory.getLogger(CommandInfoActivity.class);
-    CommandMatchFragment context;
-    CommandInfoActivity activity;
-    public RVCommandMatchAdapter(Activity activity, CommandMatchFragment context){
+    private CommandMatchFragment context;
+    private CommandInfoActivity activity;
+    private List<Match> matches;
+
+    public RVCommandMatchAdapter(Activity activity, CommandMatchFragment context, List<Match> matches) {
         this.activity = (CommandInfoActivity) activity;
         this.context = context;
+        this.matches = matches;
     }
 
     @NonNull
@@ -39,37 +66,189 @@ public class RVCommandMatchAdapter extends RecyclerView.Adapter<RVCommandMatchAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String str = "SomeText";
-        if (str == "SomeText"){
-            holder.textCommandTitle1.setText("Лара");
-            holder.textCommandTitle2.setText("Спартак");
-            holder.imgCard1.setVisibility(View.INVISIBLE);
-            holder.imgCard2.setVisibility(View.INVISIBLE);
-            Glide.with(context)
-                    .asBitmap()
-                    .load(R.drawable.ic_club)
-                    .apply(new RequestOptions()
-                            .format(DecodeFormat.PREFER_ARGB_8888)
-                            .priority(Priority.HIGH))
-                    .into(holder.imgCommandLogo1);
-            Glide.with(context)
-                    .asBitmap()
-                    .load(R.drawable.ic_club2)
-                    .apply(new RequestOptions()
-                            .format(DecodeFormat.PREFER_ARGB_8888)
-                            .priority(Priority.HIGH))
-                    .into(holder.imgCommandLogo2);
-            holder.textDate.setText("24.01.18");
-            holder.textTime.setText("12:30");
-            holder.textScore.setText("4:1");
-            holder.textStadium.setText("ВСГУТУ");
-            holder.textTournamentTitle.setText("финал какой-нибудь");
+        Match match = matches.get(position);
+        String str = match.getDate();
+        DateToString dateToString = new DateToString();
+        holder.textDate.setText(dateToString.ChangeDate(str));
+        try{
+            holder.textTime.setText(TimeToString(str));
+        }catch (Exception e){
+            holder.textTime.setText(str);
+        }
+
+
+        str = match.getPlace();
+        try {
+            String[] stadium;
+            stadium = str.split(":", 1);
+            holder.textStadium.setText(stadium[0]);
+        } catch (NullPointerException e) {
+            holder.textStadium.setText(str);
+        }
+
+        str = match.getTour();
+        holder.textTour.setText(str);
+        int score1 = 0;
+        int score2 = 0;
+        Team team1 = null;
+        Team team2 = null;
+        List<String> teamPlayers1 = new ArrayList<>();
+        List<String> teamPlayers2 = new ArrayList<>();
+        League league = null;
+        for (League league1 : PersonalActivity.tournaments) {
+            if (league1.getId().equals(match.getLeague())) {
+                league = league1;
+            }
+        }
+
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.optionalCircleCrop();
+        requestOptions.format(DecodeFormat.PREFER_ARGB_8888);
+        requestOptions.error(R.drawable.ic_logo2);
+        requestOptions.override(500, 500);
+        requestOptions.priority(Priority.HIGH);
+
+        for (Team team : league.getTeams()) {
+            if (team.getId().equals(match.getTeamOne())) {
+                str = team.getName();
+                team1 = team;
+                holder.textCommandTitle1.setText(str);
+                for (Club club : PersonalActivity.allClubs) {
+                    if (club.getId().equals(team.getClub())) {
+                        String uriPic = BASE_URL;
+                        try {
+                            uriPic += "/" + club.getLogo();
+                            URL url = new URL(uriPic);
+                            Glide.with(activity)
+                                    .asBitmap()
+                                    .load(url)
+                                    .apply(requestOptions)
+                                    .into(holder.imgCommandLogo1);
+                        } catch (MalformedURLException e) {
+                            Glide.with(activity)
+                                    .asBitmap()
+                                    .load(R.drawable.ic_logo2)
+                                    .apply(requestOptions)
+                                    .into(holder.imgCommandLogo1);
+                        }
+//                        break;
+                    }
+                }
+                for (Player player : team.getPlayers()) {
+                    teamPlayers1.add(player.getId());
+                    if (player.getActiveDisquals() != 0) {
+                        new QBadgeView(activity)
+                                .bindTarget(holder.imgCommandLogo1)
+                                .setBadgeBackground(activity.getDrawable(R.drawable.ic_circle))
+                                .setBadgeTextColor(activity.getResources().getColor(R.color.colorBadge))
+                                .setBadgeTextSize(5, true)
+                                .setBadgePadding(5, true)
+                                .setBadgeGravity(Gravity.END | Gravity.BOTTOM)
+                                .setGravityOffset(-3, 1, true)
+                                .setBadgeNumber(3);
+//                        break;
+                    }
+//                    if (player.getGoals()!=0){
+                    score1 += player.getGoals();
+//                    }
+                }
+            }
+            if (team.getId().equals(match.getTeamTwo())) {
+                str = team.getName();
+                team2 = team;
+                holder.textCommandTitle2.setText(str);
+                for (Club club : PersonalActivity.allClubs) {
+                    if (club.getId().equals(team.getClub())) {
+                        String uriPic = BASE_URL;
+                        try {
+                            uriPic += "/" + club.getLogo();
+                            URL url = new URL(uriPic);
+                            Glide.with(activity)
+                                    .asBitmap()
+                                    .load(url)
+                                    .apply(requestOptions)
+                                    .into(holder.imgCommandLogo2);
+                        } catch (MalformedURLException e) {
+                            Glide.with(activity)
+                                    .asBitmap()
+                                    .load(R.drawable.ic_logo2)
+                                    .apply(requestOptions)
+                                    .into(holder.imgCommandLogo1);
+                        }
+//                        break;
+                    }
+                }
+                for (Player player : team.getPlayers()) {
+                    teamPlayers2.add(player.getId());
+                    if (player.getActiveDisquals() != 0) {
+                        new QBadgeView(activity)
+                                .bindTarget(holder.imgCommandLogo2)
+                                .setBadgeBackground(activity.getDrawable(R.drawable.ic_circle))
+                                .setBadgeTextColor(activity.getResources().getColor(R.color.colorBadge))
+                                .setBadgeTextSize(5, true)
+                                .setBadgePadding(5, true)
+                                .setBadgeGravity(Gravity.END | Gravity.BOTTOM)
+                                .setGravityOffset(-3, 1, true)
+                                .setBadgeNumber(3);
+                    }
+                    score2 += player.getGoals();
+                }
+            }
+        }
+        try{
+            str = match.getScore();
+            if (str.equals("")){
+                str = "-";
+            }
+        }catch (NullPointerException e){
+            str = "-";
+        }
+        holder.textScore.setText(str);
+        if (!str.equals("-")) {
+            List<Match> list = new ArrayList<>(matches);
+            list.remove(match);
+            for (Match match1 : list) {
+                try{
+                    str = match1.getScore();
+                    if ( !str.equals("")
+                            && match1.getTeamOne().equals(match.getTeamOne())
+                            && match1.getTeamOne().equals(match.getTeamTwo())){
+                        str = match1.getScore();
+                        holder.textLastScore.setVisibility(View.VISIBLE);
+                        holder.textLastScore.setText(str);
+                    }
+                    if ( !str.equals("")
+                            && match1.getTeamOne().equals(match.getTeamTwo())
+                            && match1.getTeamOne().equals(match.getTeamOne())){
+                        str = match1.getScore();
+                        String[] strArray = str.split(":");
+                        str = strArray[1]+":"+ strArray[0];
+                        holder.textLastScore.setVisibility(View.VISIBLE);
+                        holder.textLastScore.setText(str);
+                    }
+                }catch (Exception e){}
+
+            }
+        }
+
+
+
+        try{
+            str = match.getPenalty();
+            if (!str.equals("")) {
+                holder.textPenalty.setText(str);
+                holder.textPenalty.setVisibility(View.VISIBLE);
+            }
+        }catch (NullPointerException e){}
+
+        if (position == (matches.size() - 1)) {
+            holder.line.setVisibility(View.INVISIBLE);
         }
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return matches.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -80,24 +259,71 @@ public class RVCommandMatchAdapter extends RecyclerView.Adapter<RVCommandMatchAd
         TextView textStadium;
         TextView textDate;
         TextView textTime;
-        TextView textTournamentTitle;
-        ImageView imgCard1;
-        ImageView imgCard2;
+        TextView textTour;
+        TextView textLastScore;
+        TextView textPenalty;
         TextView textScore;
+        View line;
 
         public ViewHolder(View item) {
             super(item);
-            textCommandTitle1 = (TextView) item.findViewById(R.id.timetableCommandTitle1);
-            textCommandTitle2 = (TextView) item.findViewById(R.id.timetableCommandTitle2);
-            imgCommandLogo1 = (ImageView) item.findViewById(R.id.timetableCommandLogo1);
-            imgCommandLogo2 = (ImageView) item.findViewById(R.id.timetableCommandLogo2);
-            textStadium = (TextView) item.findViewById(R.id.timetableStadium);
-            textDate = (TextView) item.findViewById(R.id.timetableDate);
-            textTime = (TextView) item.findViewById(R.id.timetableTime);
-            textTournamentTitle = (TextView) item.findViewById(R.id.timetableLeagueTitle);
-            imgCard1 = (ImageView) item.findViewById(R.id.timetableCommandCard1);
-            imgCard2 = (ImageView) item.findViewById(R.id.timetableCommandCard2);
-            textScore = (TextView) item.findViewById(R.id.timetableGameScore);
+            textCommandTitle1 = item.findViewById(R.id.timetableCommandTitle1);
+            textCommandTitle2 = item.findViewById(R.id.timetableCommandTitle2);
+            imgCommandLogo1 = item.findViewById(R.id.timetableCommandLogo1);
+            imgCommandLogo2 = item.findViewById(R.id.timetableCommandLogo2);
+            textStadium = item.findViewById(R.id.timetableStadium);
+            textDate = item.findViewById(R.id.timetableDate);
+            textTime = item.findViewById(R.id.timetableTime);
+            textTour = item.findViewById(R.id.timetableTour);
+            textLastScore = item.findViewById(R.id.timetableLastScore);
+            textScore = item.findViewById(R.id.timetableGameScore);
+            textPenalty = item.findViewById(R.id.timetablePenalty);
+            line = item.findViewById(R.id.timetableLine);
         }
+    }
+
+
+    private String TimeToString(String str) {
+        String dateDOB = "";
+        try {
+            SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+            Date date1;
+            date1 = mdformat.parse(str);
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date1);
+            if (String.valueOf(cal.get(Calendar.HOUR)).length() == 1) {
+                dateDOB += "0" + String.valueOf(cal.get(Calendar.HOUR)) + ":";
+            } else {
+                dateDOB += String.valueOf(cal.get(Calendar.HOUR)) + ":";
+            }
+            if ((String.valueOf(cal.get(Calendar.MINUTE) + 1).length() == 1)) {
+                dateDOB += "0" + String.valueOf(cal.get(Calendar.MINUTE) + 1);
+            } else {
+                dateDOB += String.valueOf(cal.get(Calendar.MINUTE) + 1);
+            }
+        } catch (ParseException e) {
+            try {
+                SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.US);
+                Date date1;
+                date1 = mdformat.parse(str);
+
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date1);
+                if (String.valueOf(cal.get(Calendar.HOUR)).length() == 1) {
+                    dateDOB += "0" + String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                } else {
+                    dateDOB += String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                }
+                if ((String.valueOf(cal.get(Calendar.MINUTE) + 1).length() == 1)) {
+                    dateDOB += "0" + String.valueOf(cal.get(Calendar.MINUTE) + 1);
+                } else {
+                    dateDOB += String.valueOf(cal.get(Calendar.MINUTE) + 1);
+                }
+            } catch (ParseException t) {
+                t.printStackTrace();
+            }
+        }
+        return dateDOB;
     }
 }

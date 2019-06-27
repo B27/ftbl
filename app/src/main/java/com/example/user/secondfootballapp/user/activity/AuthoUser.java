@@ -1,137 +1,265 @@
 package com.example.user.secondfootballapp.user.activity;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.user.secondfootballapp.CheckError;
+import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.SaveSharedPreference;
+import com.example.user.secondfootballapp.SetImage;
+import com.example.user.secondfootballapp.club.activity.ClubPage;
 import com.example.user.secondfootballapp.controller.CustomTypefaceSpan;
-import com.example.user.secondfootballapp.home.activity.NewsPage;
-import com.example.user.secondfootballapp.tournament.activity.TournamentTimeTableFragment;
-import com.example.user.secondfootballapp.user.adapter.RVOngoingTournamentAdapter;
+import com.example.user.secondfootballapp.model.Club;
+import com.example.user.secondfootballapp.model.GetLeagueInfo;
+import com.example.user.secondfootballapp.model.League;
+import com.example.user.secondfootballapp.model.PendingTeamInvite;
+import com.example.user.secondfootballapp.model.People;
+import com.example.user.secondfootballapp.model.Person;
+import com.example.user.secondfootballapp.model.PersonTeams;
+import com.example.user.secondfootballapp.model.Team;
+import com.example.user.secondfootballapp.model.User;
+import com.example.user.secondfootballapp.user.adapter.RVInvitationAdapter;
+import com.example.user.secondfootballapp.user.adapter.RVOwnCommandAdapter;
+import com.example.user.secondfootballapp.user.adapter.RVUserCommandAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AuthoUser extends Fragment{
-    Logger log = LoggerFactory.getLogger(AuthoUser.class);
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+import static android.app.Activity.RESULT_OK;
+
+public class AuthoUser extends Fragment {
+    static final Logger log = LoggerFactory.getLogger(AuthoUser.class);
     DrawerLayout drawer;
+    Person person;
     public static FloatingActionButton fab;
+    //adapters
+    public static RVInvitationAdapter adapterInv;
+    public static RVUserCommandAdapter adapterCommand;
+    public static RVOwnCommandAdapter adapterOwnCommand;
+
+    public static TextView invBadge;
+    List<PersonTeams> personTeams;
+    public static List<Person> allReferees = new ArrayList<>();
+    public static List<PersonTeams> personOngoingLeagues;
+    public static List<PersonTeams> personOwnCommand;
+    public static List<PersonTeams> personCommand;
+    List<PendingTeamInvite> pendingTeamInvites;
+    public static List<PendingTeamInvite> pendingTeamInvitesList;
     Toolbar toolbar;
     public static TextView categoryTitle;
+    public static ImageButton buttonOpenProfile;
+    public static TextView textName;
     InvitationFragment firstFragment = new InvitationFragment();
     OngoingTournamentFragment defaultFragment = new OngoingTournamentFragment();
     UserClubs secondFragment = new UserClubs();
     TimeTableFragment timeTableFragment = new TimeTableFragment();
     RefereeFragment refereeFragment = new RefereeFragment();
-    MyMatches myMatches = new  MyMatches();
+    MyMatches myMatches = new MyMatches();
+    UserCommands commands = new UserCommands();
+    User user;
+    Menu m;
+    public NavigationView nvDrawer;
+    FloatingActionButton fab1;
+    FragmentTransaction fm;
+    final int REQUEST_CODE_CLUBEDIT = 276;
+    int clubOldIndex;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fm = this.getChildFragmentManager().beginTransaction();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        log.info("INFO: AuthoUser onCreateView");
         View view;
-        ImageButton buttonOpenProfile;
-        ActionBarDrawerToggle mDrawerToggle;
-        NavigationView nvDrawer;
         ImageButton button;
-//        RecyclerView recyclerView;
-        view = inflater.inflate(R.layout.user_autho, container, false);
-        fab = (FloatingActionButton) view.findViewById(R.id.addCommandButton);
-        // Set a Toolbar to replace the ActionBar.
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        categoryTitle = (TextView) view.findViewById(R.id.categoryType);
-        button = (ImageButton) view.findViewById(R.id.drawerBtn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawer.openDrawer(GravityCompat.END);
-            }
-        });
-
-        // Find our drawer view
-        drawer = (DrawerLayout) view.findViewById(R.id.drawer_layout);
-//        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewUserTournament);
-//        RVOngoingTournamentAdapter adapter = new RVOngoingTournamentAdapter();
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        nvDrawer = (NavigationView) view.findViewById(R.id.nvView);
+        view = inflater.inflate(R.layout.user_autho, container, false);// Find our drawer view
+        drawer = view.findViewById(R.id.drawer_layout);
+        nvDrawer = view.findViewById(R.id.nvView);
         nvDrawer.setItemIconTintList(null);
-//        LayoutInflater inflater1 = getLayoutInflater();
-//        View view1 = inflater1.inflate(R.layout.navigation_header, null);
         View view1 = nvDrawer.getHeaderView(0);
-        buttonOpenProfile = (ImageButton) view1.findViewById(R.id.userProfileOpen);
-        buttonOpenProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), UserInfo.class);
-                String title = "Some title";
-                Bundle bundle = new Bundle();
-                bundle.putString("NEWSTITLE", title);
-                intent.putExtra("NEWSTITLE", bundle);
-                getContext().startActivity(intent);
-            }
-        });
-        Menu m = nvDrawer.getMenu();
-        for (int i=0;i<m.size();i++) {
-            MenuItem mi = m.getItem(i);
+        buttonOpenProfile = view1.findViewById(R.id.userProfileOpen);
+        textName = view1.findViewById(R.id.navigationName);
+        try {
+            categoryTitle = view.findViewById(R.id.categoryType);
+            user = SaveSharedPreference.getObject();
+            person = user.getUser();
+            personTeams = new ArrayList<>();
+            personTeams = person.getParticipation();
+            personOngoingLeagues = new ArrayList<>();
+            personOwnCommand = new ArrayList<>();
+            personCommand = new ArrayList<>();
+            pendingTeamInvitesList = new ArrayList<>();
+            pendingTeamInvites = person.getPendingTeamInvites();
+            invBadge = (TextView) nvDrawer.getMenu().findItem(R.id.nav_first_fragment).getActionView();
 
-            //for aapplying a font to subMenu ...
-            SubMenu subMenu = mi.getSubMenu();
-            if (subMenu!=null && subMenu.size() >0 ) {
-                for (int j=0; j <subMenu.size();j++) {
-                    MenuItem subMenuItem = subMenu.getItem(j);
-                    applyFontToMenuItem(subMenuItem);
+            userGetType(person.getType());
+
+
+            try {
+                textName.setText(person.getName());
+                if (person.getName().equals("")) {
+                    textName.setText("Имя");
                 }
+            } catch (NullPointerException e) {
+                textName.setText("Имя");
             }
 
-            //the method we have create in activity
-            applyFontToMenuItem(mi);
+            SetImage setImage = new SetImage();
+            setImage.setImage(getActivity(), buttonOpenProfile, person.getPhoto());
+
+
+            m = nvDrawer.getMenu();
+            for (int i = 0; i < m.size(); i++) {
+                MenuItem mi = m.getItem(i);
+                try {
+                    if (person.getType().equals("player") && i==1) {
+                        clearItemColor(i);
+                        SpannableString s = new SpannableString(mi.getTitle());
+                        s.setSpan(new ForegroundColorSpan(getActivity().getResources().getColor(R.color.colorAccent)), 0, s.length(), 0);
+                        mi.setTitle(s);
+                    }
+                    if (person.getType().equals("referee") && i==5) {
+                        clearItemColor(i);
+                        SpannableString s = new SpannableString(mi.getTitle());
+                        s.setSpan(new ForegroundColorSpan(getActivity().getResources().getColor(R.color.colorAccent)), 0, s.length(), 0);
+                        mi.setTitle(s);
+                    }
+                    if (person.getType().equals("mainReferee") && i==4) {
+                        clearItemColor(i);
+                        SpannableString s = new SpannableString(mi.getTitle());
+                        s.setSpan(new ForegroundColorSpan(getActivity().getResources().getColor(R.color.colorAccent)), 0, s.length(), 0);
+                        mi.setTitle(s);
+                    }
+                    if (person.getType().equals("player") && (i == 6 || i == 4 || i == 5)) {
+                        m.getItem(i).setVisible(false);
+                    }
+                    if (person.getType().equals("referee") && (i == 6 || i == 4 || i == 0 || i == 1 || i == 2 || i == 3)) {
+                        m.getItem(i).setVisible(false);
+                    }
+                    if (person.getType().equals("mainReferee") && (i == 0 || i == 1 || i == 2 || i == 3 || i == 5)) {
+                        m.getItem(i).setVisible(false);
+                    }
+
+                } catch (Exception e) {
+                    log.error("ERROR: ", e);
+                }
+
+                //for aapplying a font to subMenu ...
+                SubMenu subMenu = mi.getSubMenu();
+                if (subMenu != null && subMenu.size() > 0) {
+                    for (int j = 0; j < subMenu.size(); j++) {
+                        MenuItem subMenuItem = subMenu.getItem(j);
+                        applyFontToMenuItem(subMenuItem);
+                    }
+                }
+
+                applyFontToMenuItem(mi);
+            }
+
+
+            if (person.getType().equals("referee")) {
+                this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, myMatches).show(myMatches).commit();
+                categoryTitle.setText(getActivity().getText(R.string.matches));
+            }
+            if (person.getType().equals("player")) {
+                this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, defaultFragment).show(defaultFragment).commit();
+                categoryTitle.setText(getActivity().getText(R.string.title_tournament));
+            }
+            if (person.getType().equals("mainReferee")) {
+                this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, timeTableFragment).show(timeTableFragment).commit();
+                categoryTitle.setText(getActivity().getText(R.string.tournamentInfoTimetable));
+            }
+
+
+
+            //adapters
+            adapterInv = new RVInvitationAdapter(getActivity(), firstFragment, AuthoUser.pendingTeamInvitesList);
+            adapterCommand = new RVUserCommandAdapter(getActivity(), AuthoUser.personCommand);
+            adapterOwnCommand = new RVOwnCommandAdapter(getActivity(), AuthoUser.personOwnCommand);
+
+        } catch (NullPointerException | IllegalStateException e) {
+            log.error("ERROR: ", e);
         }
-//        nvDrawer.setNavigationItemSelectedListener(this);
+
+        fab = view.findViewById(R.id.addCommandButton);
+        toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        button = view.findViewById(R.id.drawerBtn);
+        button.setOnClickListener(v -> drawer.openDrawer(GravityCompat.END));
+
+
+        buttonOpenProfile.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent(getActivity(), UserInfo.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                log.error("ERROR: ", e);
+            }
+
+        });
+
+
+        fab1 = view.findViewById(R.id.buttonEditClub);
+        fab1.setVisibility(View.INVISIBLE);
+
+
         // Setup drawer view
         setupDrawerContent(nvDrawer);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContent, defaultFragment).show(defaultFragment).commit();
         fab.setVisibility(View.INVISIBLE);
-        categoryTitle.setText(getActivity().getText(R.string.title_tournament));
+
+
         return view;
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/manrope_regular.otf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
-        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
     }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
@@ -143,78 +271,372 @@ public class AuthoUser extends Fragment{
 
         return super.onOptionsItemSelected(item);
     }
+
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
+                menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return true;
                 });
     }
-    public void selectDrawerItem(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
-        Class fragmentClass;
 
-        switch(menuItem.getItemId()) {
+    public void selectDrawerItem(MenuItem menuItem) {
+
+        switch (menuItem.getItemId()) {
             case R.id.nav_default_fragment:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContent, defaultFragment).show(defaultFragment).commit();
-                categoryTitle.setText(getActivity().getText(R.string.title_tournament));
-                fab.setVisibility(View.INVISIBLE);
+                try {
+                    setItemColor(1);
+                    clearItemColor(1);
+//                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, defaultFragment, "ONGOINGTOURNAMENT").show(defaultFragment).commit();
+                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, defaultFragment, "ONGOINGTOURNAMENT").show(defaultFragment).commit();
+                    categoryTitle.setText(getActivity().getText(R.string.title_tournament));
+                    fab.setVisibility(View.INVISIBLE);
+                    fab1.setVisibility(View.INVISIBLE);
+
+                } catch (Exception e) {
+                    log.error("ERROR: ", e);
+                }
                 break;
             case R.id.nav_first_fragment:
-//                fragmentClass = InvitationFragment.class;
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContent, firstFragment).show(firstFragment).commit();
-                categoryTitle.setText(getActivity().getText(R.string.invitation));
-                fab.setVisibility(View.INVISIBLE);
+                try {
+                    setItemColor(0);
+                    clearItemColor(0);
+//                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, firstFragment, "INVITATIONFRAGMENT").show(firstFragment).commit();
+                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, firstFragment, "INVITATIONFRAGMENT").show(firstFragment).commit();
+                    categoryTitle.setText(getActivity().getText(R.string.invitation));
+                    fab.setVisibility(View.INVISIBLE);
+                    fab1.setVisibility(View.INVISIBLE);
+                } catch (Exception e) {
+                    log.error("ERROR: ", e);
+                }
                 break;
             case R.id.nav_second_fragment:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContent, secondFragment).show(secondFragment).commit();
-                categoryTitle.setText(getActivity().getText(R.string.title_club));
-                fab.setVisibility(View.VISIBLE);
-//                fragmentClass = SecondFragment.class;
+                try {
+                    setItemColor(2);
+                    clearItemColor(2);
+//                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, secondFragment).show(secondFragment).commit();
+                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, secondFragment).show(secondFragment).commit();
+//                    , "CLUBFRAGMENT"
+                    if (person.getClub() != null) {
+                        fab1.setVisibility(View.VISIBLE);
+                        Club club = null;
+                        Person person = user.getUser();
+                        for (Club club1 : PersonalActivity.allClubs) {
+                            String str = person.getClub();
+                            if (club1.getId().equals(str)) {
+                                club = club1;
+                            }
+                        }
+                        final Club finalClub = club;
+                        fab1.setOnClickListener(v -> {
+                            Intent intent1 = new Intent(getActivity(), UserEditClub.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("AUTHOUSERCLUBINFO", finalClub);
+                            clubOldIndex = PersonalActivity.allClubs.indexOf(finalClub);
+                            intent1.putExtras(bundle);
+                            startActivityForResult(intent1, REQUEST_CODE_CLUBEDIT);
+                        });
+                    }
+                    categoryTitle.setText(getActivity().getText(R.string.title_club));
+                    fab.setVisibility(View.INVISIBLE);
+                } catch (Exception e) {
+                    log.error("ERROR: ", e);
+                }
+                break;
+            case R.id.nav_command_fragment:
+                try {
+                    setItemColor(3);
+                    clearItemColor(3);
+//                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, commands).show(commands).commit();
+                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, commands).show(commands).commit();
+                    categoryTitle.setText(getActivity().getText(R.string.commands));
+                    fab.setVisibility(View.VISIBLE);
+                    fab1.setVisibility(View.INVISIBLE);
+                } catch (Exception e) {
+                    log.error("ERROR: ", e);
+                }
                 break;
             case R.id.nav_third_fragment:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContent, myMatches).show(myMatches).commit();
-                categoryTitle.setText(getActivity().getText(R.string.matches));
-                fab.setVisibility(View.INVISIBLE);
-//                fragmentClass = ThirdFragment.class;
+                try {
+                    setItemColor(5);
+                    clearItemColor(5);
+//                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, myMatches, "MYMATCHESFRAGMENT").show(myMatches).commit();
+                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, myMatches, "MYMATCHESFRAGMENT").show(myMatches).commit();
+                    categoryTitle.setText(getActivity().getText(R.string.matches));
+                    fab.setVisibility(View.INVISIBLE);
+                    fab1.setVisibility(View.INVISIBLE);
+                } catch (Exception e) {
+                    log.error("ERROR: ", e);
+                }
                 break;
             case R.id.nav_referee_fragment:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContent, refereeFragment).show(refereeFragment).commit();
-                categoryTitle.setText(getActivity().getText(R.string.referees));
-                fab.setVisibility(View.INVISIBLE);
+                try {
+                    setItemColor(6);
+                    clearItemColor(6);
+//                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, refereeFragment, "REFEREESFRAGMENT").show(refereeFragment).commit();
+                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, refereeFragment, "REFEREESFRAGMENT").show(refereeFragment).commit();
+                    categoryTitle.setText(getActivity().getText(R.string.referees));
+                    fab.setVisibility(View.INVISIBLE);
+                    fab1.setVisibility(View.INVISIBLE);
+                } catch (Exception e) {
+                    log.error("ERROR: ", e);
+                }
                 break;
             case R.id.nav_timetable_fragment:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContent, timeTableFragment).show(timeTableFragment).commit();
-                categoryTitle.setText(getActivity().getText(R.string.tournamentInfoTimetable));
-                fab.setVisibility(View.INVISIBLE);
+                try {
+                    setItemColor(4);
+                    clearItemColor(4);
+//                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, timeTableFragment, "TIMETABLEFRAGMENT").show(timeTableFragment).commit();
+                    this.getChildFragmentManager().beginTransaction().replace(R.id.flContent, timeTableFragment, "TIMETABLEFRAGMENT").show(timeTableFragment).commit();
+                    categoryTitle.setText(getActivity().getText(R.string.tournamentInfoTimetable));
+                    fab.setVisibility(View.INVISIBLE);
+                    fab1.setVisibility(View.INVISIBLE);
+                } catch (Exception e) {
+                    log.error("ERROR: ", e);
+                }
                 break;
             default:
-                fab.setVisibility(View.INVISIBLE);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContent, defaultFragment).show(defaultFragment).commit();
-                categoryTitle.setText(getActivity().getText(R.string.title_tournament));
-// fragmentClass = FirstFragment.class;
+                SaveSharedPreference.setLoggedIn(getActivity().getApplicationContext(), false);
+                SaveSharedPreference.saveObject(null);
+//                PersonalActivity.fragmentUser.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                getActivity().getSupportFragmentManager().beginTransaction().hide(this).show(PersonalActivity.fragmentUser).commit();
+                PersonalActivity.active = PersonalActivity.fragmentUser;
+                refreshTournaments();
+                log.info("INFO: AuthoUser onDestroy");
+                this.onDestroy();
+                break;
+
         }
 
-        try {
-//            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        // Insert the fragment by replacing any existing fragment
-//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
-        // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
-        // Set action bar title
-//        toolbar.setTitle(menuItem.getTitle());
-        // Close the navigation drawer
         drawer.closeDrawers();
     }
 
+    private void clearItemColor(int itemColor) {
+        m = nvDrawer.getMenu();
+        for (int i = 0; i < m.size(); i++) {
+            if (i != itemColor){
+                MenuItem mi = m.getItem(i);
+            try {
+                SpannableString s = new SpannableString(mi.getTitle());
+                s.setSpan(new ForegroundColorSpan(getActivity().getResources().getColor(R.color.colorBottomNavigationUnChecked)), 0, s.length(), 0);
+                mi.setTitle(s);
+            } catch (Exception e) {
+                log.error("ERROR: ", e);
+            }
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            applyFontToMenuItem(mi);
+        }
+    }
+    }
+
+    @SuppressLint("CheckResult")
+    private void refreshTournaments() {
+            Controller.getApi().getAllTournaments("32575", "0")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(tournaments1 -> PersonalActivity.saveData(tournaments1)
+                            ,
+                            error ->{
+                        CheckError checkError = new CheckError();
+                                checkError.checkError(getActivity(), error);
+                            }
+                    );
+        }
+
+
+
+    @SuppressLint("CheckResult")
+    public void getUserCommands(String leagueId, String teamId, PersonTeams team){
+
+        Controller.getApi().getLeagueInfo(leagueId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getLeagueInfo -> getParticipation(getLeagueInfo, teamId, team)
+                        ,
+                        error -> {
+                            CheckError checkError = new CheckError();
+                            checkError.checkError(getActivity(), error);
+                        }
+                );
+    }
+
+    private void getParticipation(GetLeagueInfo getLeagueInfo, String teamId, PersonTeams team) {
+        for (Team team1 : getLeagueInfo.getLeagueInfo().getTeams()) {
+            if (team1.getId().equals(teamId)) {
+                if (team1.getCreator().equals(person.getId())) {
+                    if (!personOwnCommand.contains(team)) {
+                        personOwnCommand.add(team);
+                    }
+                } else {
+                    if (!personCommand.contains(team)) {
+                        personCommand.add(team);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public static void SetInvNum(Activity activity, int position) {
+        Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/manrope_bold.otf");
+        invBadge.setTypeface(font);
+        invBadge.setGravity(Gravity.CENTER_VERTICAL);
+        invBadge.setTextColor(activity.getResources().getColor(R.color.colorAccent));
+        if (position > 99) {
+            invBadge.setText("99+");
+        } else {
+            if (position == 0) {
+                invBadge.setText(null);
+            } else {
+                invBadge.setText(String.valueOf(position));
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        log.info("INFO: AuthoUser onDestroy");
+        super.onDestroy();
+    }
+
+
+    private void userGetType(String type) {
+        switch (type) {
+            case "player":
+                for (PendingTeamInvite pendingTeamInvite : pendingTeamInvites) {
+                    League league = null;
+                    for (League tournament : PersonalActivity.tournaments) {
+                        if (tournament.getStatus().equals("Pending") && tournament.getId().equals(pendingTeamInvite.getLeague())) {
+                            league = tournament;
+                            break;
+                        }
+                    }
+                    Team team = null;
+                    if (league != null) {
+                        for (Team teams : league.getTeams()) {
+                            if (teams.getStatus().equals("Pending") && teams.getId().equals(pendingTeamInvite.getTeam())) {
+                                team = teams;
+                                for (com.example.user.secondfootballapp.model.Player player : teams.getPlayers()) {
+                                    if (player.getId().equals(person.getId()) && player.getInviteStatus().equals("Rejected")) {
+                                        team = null;
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    if (league != null && team != null) {
+                        pendingTeamInvitesList.add(pendingTeamInvite);
+                    }
+                }
+                if (pendingTeamInvitesList.size() != 0) {
+                    SetInvNum(getActivity(), pendingTeamInvitesList.size());
+                }
+                if (personTeams.size() != 0) {
+                    for (PersonTeams team : personTeams) {
+                        personOngoingLeagues.add(team);
+                        getUserCommands(team.getLeague(), team.getTeam(), team);
+                    }
+                }
+
+                break;
+            case "referee":
+                GetAllReferees();
+
+//                this.getChildFragmentManager().beginTransaction().add(R.id.flContent, timeTableFragment).hide(timeTableFragment).commit();
+                break;
+            case "mainReferee":
+                GetAllReferees();
+                break;
+            default:
+                break;
+        }
+    }
+
+
+
+    @SuppressLint("CheckResult")
+    private void GetAllReferees() {
+        String type = "referee";
+        Controller.getApi().getAllUsers(type, null, "32575", "0")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
+                .subscribe(people -> saveReferees(people),
+                        error -> {
+                            CheckError checkError = new CheckError();
+                            checkError.checkError(getActivity(), error);
+                        }
+                );
+    }
+
+    private void saveReferees(People people) {
+        allReferees.clear();
+        allReferees.addAll(people.getPeople());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE_CLUBEDIT) {
+                Club result = (Club) data.getExtras().getSerializable("CREATECLUBRESULT");
+                Person person1 = SaveSharedPreference.getObject().getUser();
+                person1.setClub(result.getId());
+//                SaveSharedPreference.getObject().setUser(person1);
+                User user = SaveSharedPreference.getObject();
+                user.setUser(person1);
+                SaveSharedPreference.editObject(user);
+                try {
+                    if (PersonalActivity.allClubs.size() == 1) {
+                        PersonalActivity.allClubs.clear();
+                        PersonalActivity.allClubs.add(result);
+                    } else {
+                        PersonalActivity.allClubs.set(clubOldIndex, result);
+                    }
+                }catch (Exception e){}
+                List<Club> list = new ArrayList<>(PersonalActivity.allClubs);
+                ClubPage.adapter.dataChanged(list);
+                FragmentTransaction ft = this.getChildFragmentManager().beginTransaction();
+                ft.detach(secondFragment).attach(secondFragment).commit();
+                Toast.makeText(getActivity(), "Изменения сохранены", Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+    public void setItemColor(int itemColor) {
+            MenuItem mi = m.getItem(itemColor);
+            try {
+                    SpannableString s = new SpannableString(mi.getTitle());
+                    s.setSpan(new ForegroundColorSpan(getActivity().getResources().getColor(R.color.colorAccent)), 0, s.length(), 0);
+                    mi.setTitle(s);
+            } catch (Exception e) {
+                log.error("ERROR: ", e);
+            }
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            applyFontToMenuItem(mi);
+    }
 }

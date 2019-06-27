@@ -117,7 +117,7 @@ public class DatePicker extends DatePickerDialogFragment {
             @Override
             public void onClick(View v) {
                 String str = datePicker.getDate();
-                Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
                 try{
                     UserInfo.buttonDOB.setText(str);
                 }catch (Exception e){

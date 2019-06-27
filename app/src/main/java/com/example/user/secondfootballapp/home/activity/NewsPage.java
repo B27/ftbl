@@ -1,18 +1,28 @@
 package com.example.user.secondfootballapp.home.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.example.user.secondfootballapp.Controller;
+import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.News_;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,26 +38,59 @@ public class NewsPage extends AppCompatActivity {
         TextView textTitle;
         TextView textDate;
         TextView textDesc;
+        final ProgressBar progressBar = findViewById(R.id.progressNews);
         try{
             Intent intent = getIntent();
-            String title = intent.getStringExtra("NEWSTITLE");
-            imageNews = (ImageView) findViewById(R.id.newsInfoImg);
-            button = (Button) findViewById(R.id.newsButtonBack);
-            textTitle = (TextView) findViewById(R.id.newsInfoTitle);
-            textDate = (TextView) findViewById(R.id.newsInfoDate);
-            textDesc = (TextView) findViewById(R.id.newsInfoText);
-            Glide.with(this)
-                    .asBitmap()
-                    .load(R.drawable.ic_some_news)
-                    .apply(new RequestOptions()
-                            .format(DecodeFormat.PREFER_ARGB_8888)
-                            .priority(Priority.HIGH)
-                            .centerCrop())
-                    .into(imageNews);
+            Bundle bundle = intent.getExtras();
+            News_ news = (News_) bundle.getSerializable("NEWS");
+            imageNews = findViewById(R.id.newsInfoImg);
+            button = findViewById(R.id.newsButtonBack);
+            textTitle = findViewById(R.id.newsInfoTitle);
+            textDate = findViewById(R.id.newsInfoDate);
+            textDesc = findViewById(R.id.newsInfoText);
+            textTitle.setText(news.getCaption());
+            DateToString dateToString = new DateToString();
+            String str = news.getCreatedAt();
+            textDate.setText(dateToString.ChangeDate(str));
+            textDesc.setText(news.getContent());
+            try {
+                str = Controller.BASE_URL + "/" + news.getImg();
+                Glide.with(this)
+                        .asBitmap()
+                        .load(str)
+                        .listener(new RequestListener<Bitmap>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                                progressBar.setVisibility(View.GONE);
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                progressBar.setVisibility(View.GONE);
+                                return false;
+                            }
+                        })
+                        .apply(new RequestOptions()
+                                .format(DecodeFormat.PREFER_ARGB_8888)
+                                .priority(Priority.HIGH)
+                                .centerCrop())
+                        .into(imageNews);
+            }catch (Exception e){
+                Glide.with(this)
+                        .asBitmap()
+                        .load(R.drawable.ic_logo2)
+                        .apply(new RequestOptions()
+                                .format(DecodeFormat.PREFER_ARGB_8888)
+                                .priority(Priority.HIGH)
+                                .centerCrop())
+                        .into(imageNews);
+            }
+
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();//??????
+                    finish();
                 }
             });
 

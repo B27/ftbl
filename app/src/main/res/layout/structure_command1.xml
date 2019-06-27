@@ -70,56 +70,57 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <!--android:layout_height="wrap_content"-->
         <LinearLayout
+            android:layout_marginTop="15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-            <TextView
-                android:id="@+id/editProtocolCommand1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_semibold"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="@string/participants"
-                android:textColor="@color/colorBottomNavigationUnChecked"
-                android:textSize="14sp" />
+            <!--<TextView-->
+                <!--android:id="@+id/editProtocolCommand1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:fontFamily="@font/manrope_semibold"-->
+                <!--android:paddingBottom="8dp"-->
+                <!--android:paddingTop="8dp"-->
+                <!--android:text="@string/participants"-->
+                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
+                <!--android:textSize="14sp" />-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_regular"
-                android:gravity="start"
-                android:textColor="@color/colorLightGrayForText"
-                android:textSize="12sp"
-                android:paddingEnd="5sp"
-                android:text="@string/representative"/>
-            <TextView
-                android:id="@+id/confirmProtocolCommand1Representative"
-                android:layout_width="match_parent"
-                android:fontFamily="@font/manrope_regular"
-                android:textColor="@color/colorBottomNavigationUnChecked"
-                android:gravity="center_vertical|bottom"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:text="@string/representative"/>
-            </LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:fontFamily="@font/manrope_regular"-->
+                <!--android:gravity="start"-->
+                <!--android:textColor="@color/colorLightGrayForText"-->
+                <!--android:textSize="12sp"-->
+                <!--android:paddingEnd="5sp"-->
+                <!--android:text="@string/representative"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/confirmProtocolCommand1Representative"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:fontFamily="@font/manrope_regular"-->
+                <!--android:textColor="@color/colorBottomNavigationUnChecked"-->
+                <!--android:gravity="center_vertical|bottom"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="13sp"-->
+                <!--android:text="@string/representative"/>-->
+            <!--</LinearLayout>-->
+            <!--android:layout_marginTop="20sp"-->
             <android.support.v7.widget.RecyclerView
-                android:layout_marginTop="20sp"
                 android:id="@+id/recyclerViewConfirmProtocolCommand1"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                android:layout_height="wrap_content"/>
 
 
         </LinearLayout>

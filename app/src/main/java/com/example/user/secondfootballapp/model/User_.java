@@ -1,10 +1,11 @@
 package com.example.user.secondfootballapp.model;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User_ {
+public class User_ implements Serializable {
 
     @SerializedName("photo")
     @Expose

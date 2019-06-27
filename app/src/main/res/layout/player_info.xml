@@ -4,56 +4,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="50dp"
-    android:background="@color/colorLightGray2">
+    android:background="@color/colorWhite">
+    <!--android:background="@color/colorLightGray2"-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <RelativeLayout
-        android:id="@+id/relativeLayoutPlayers"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="5dp"
-        android:padding="8dp"
-        android:background="@drawable/white_back"
-        android:fitsSystemWindows="true">
-
+        android:orientation="vertical">
 
         <RelativeLayout
-
-            android:id="@+id/playerCV"
+            android:id="@+id/relativeLayoutPlayers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/white_back"
+            android:fitsSystemWindows="true"
+            android:padding="8dp"
+            android:paddingEnd="8sp">
 
 
-            <!--<android.support.v7.widget.CardView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
+            <LinearLayout
+                android:id="@+id/playerCV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal">
 
-                <RelativeLayout
+                <ImageView
+                    android:id="@+id/playerImage"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_logo2" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorWhite">
-
-                    <ImageView
-                        android:id="@+id/playerImage"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/ic_member" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/playerName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="250sp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginTop="14dp"
-                        android:layout_marginStart="90dp"
                         android:fontFamily="@font/manrope_regular"
                         android:text="@string/commandPlayer"
                         android:textColor="@color/colorBottomNavigationUnChecked"
@@ -63,81 +58,76 @@
                         android:id="@+id/playerDOB"
                         android:layout_width="120dp"
                         android:layout_height="25dp"
-                        android:layout_alignStart="@+id/playerName"
-                        android:layout_below="@+id/playerName"
-                        android:layout_alignBottom="@+id/playerImage"
                         android:layout_marginTop="3dp"
-                        android:textSize="13sp"
                         android:fontFamily="@font/manrope_regular"
                         android:text="@string/newsSomeDate"
-                        android:textColor="@color/colorLightGrayForText" />
+                        android:textColor="@color/colorLightGrayForText"
+                        android:textSize="13sp" />
+                </LinearLayout>
 
-
-                </RelativeLayout>
-            <!--</android.support.v7.widget.CardView>-->
+                <!--</android.support.v7.widget.CardView>-->
+            </LinearLayout>
         </RelativeLayout>
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_marginTop="1dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayoutPlayers"
-        android:background="@color/colorWhite">
-        <LinearLayout
-            android:id="@+id/linearLayoutPlayer"
+
+        <RelativeLayout
+            android:id="@+id/layoutPlayerInfoLeagues"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/playerInfoTournaments"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:paddingStart="15dp"
-                android:fontFamily="@font/manrope_semibold"
-                android:paddingTop="8sp"
-                android:text="Турниры:"
-                android:textColor="@color/colorBottomNavigationUnChecked" />
-
-            <TextView
-                android:id="@+id/playerInfoTournamentsStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/playerInfoTournaments"
-                android:fontFamily="@font/manrope_regular"
-                android:paddingTop="8dp"
-                android:text="НЕ УЧАСТВОВАЛ НИ В ОДНОМ"
-                android:textColor="@color/colorBottomNavigationUnChecked"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/playerInfoScroll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayoutPlayer"
-            android:paddingTop="8dp">
+            android:background="@color/colorWhite">
 
             <LinearLayout
+                android:id="@+id/linearLayoutPlayer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerViewPlayerTournaments"
+                <View
+                android:layout_width="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginTop="8sp"
+                android:layout_height="8sp"
+                android:background="@color/colorLightGray2" />
+
+                <TextView
+                    android:id="@+id/playerInfoTournaments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:paddingStart="15dp"
+                    android:paddingTop="8sp"
+                    android:text="Турниры:"
+                    android:textColor="@color/colorBottomNavigationUnChecked" />
+
+            </LinearLayout>
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/playerInfoScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayoutPlayer"
+                android:paddingTop="8dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:layout_gravity="center_horizontal"
-                    android:scrollbars="vertical"
-                    android:visibility="gone" />
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-    </RelativeLayout>
+                    android:orientation="vertical">
 
-    </RelativeLayout>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerViewPlayerTournaments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp"
+                        android:scrollbars="vertical"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </RelativeLayout>
+
+    </LinearLayout>
     <!--</LinearLayout>-->
     <!--</android.support.v4.widget.NestedScrollView>-->
     <android.support.design.widget.FloatingActionButton
@@ -147,6 +137,7 @@
         android:layout_gravity="end|bottom"
         android:layout_marginBottom="25dp"
         android:layout_marginEnd="25dp"
+        android:visibility="invisible"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/colorPrimary" />
 

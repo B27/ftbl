@@ -1,29 +1,55 @@
 package com.example.user.secondfootballapp.model;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Person {
+public class Person implements Serializable {
 
+    @SerializedName("surname")
+    @Expose
+    private String surname;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("lastname")
+    @Expose
+    private String lastname;
+    @SerializedName("birthdate")
+    @Expose
+    private String birthdate;
     @SerializedName("photo")
     @Expose
-    private Object photo;
+    private String photo;
     @SerializedName("desc")
     @Expose
     private String desc;
-    @SerializedName("club")
+    @SerializedName("participationMatches")
     @Expose
-    private Object club;
-    @SerializedName("pendingClubInvites")
+    private List<Match> participationMatches = null;
+    @SerializedName("participation")
     @Expose
-    private List<Object> pendingClubInvites = null;
-    @SerializedName("pendingTeamInvites")
+    private List<PersonTeams> participation = null;
+    @SerializedName("pastLeagues")
     @Expose
-    private List<Object> pendingTeamInvites = null;
+    private List<PastLeague> pastLeagues = null;
     @SerializedName("_id")
     @Expose
     private String id;
+    @SerializedName("club")
+    @Expose
+    private String club;
+//    private Club club;
+    @SerializedName("pendingClubInvites")
+    @Expose
+    private List<Object> pendingClubInvites = null;
+    @SerializedName("login")
+    @Expose
+    private String login;
+    @SerializedName("password")
+    @Expose
+    private String password;
     @SerializedName("type")
     @Expose
     private String type;
@@ -36,18 +62,47 @@ public class Person {
     @SerializedName("__v")
     @Expose
     private Integer v;
-    @SerializedName("name")
+    @SerializedName("pendingTeamInvites")
     @Expose
-    private String name;
-    @SerializedName("surname")
-    @Expose
-    private String surname;
+    private List<PendingTeamInvite> pendingTeamInvites = null;
 
-    public Object getPhoto() {
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Object photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -59,11 +114,27 @@ public class Person {
         this.desc = desc;
     }
 
-    public Object getClub() {
+    public List<PersonTeams> getParticipation() {
+        return participation;
+    }
+
+    public void setParticipation(List<PersonTeams> participation) {
+        this.participation = participation;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getClub() {
         return club;
     }
 
-    public void setClub(Object club) {
+    public void setClub(String club) {
         this.club = club;
     }
 
@@ -75,20 +146,20 @@ public class Person {
         this.pendingClubInvites = pendingClubInvites;
     }
 
-    public List<Object> getPendingTeamInvites() {
-        return pendingTeamInvites;
+    public String getLogin() {
+        return login;
     }
 
-    public void setPendingTeamInvites(List<Object> pendingTeamInvites) {
-        this.pendingTeamInvites = pendingTeamInvites;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public String getId() {
-        return id;
+    public String getPassword() {
+        return password;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getType() {
@@ -123,20 +194,25 @@ public class Person {
         this.v = v;
     }
 
-    public String getName() {
-        return name;
+    public List<PendingTeamInvite> getPendingTeamInvites() {
+        return pendingTeamInvites;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPendingTeamInvites(List<PendingTeamInvite> pendingTeamInvites) {
+        this.pendingTeamInvites = pendingTeamInvites;
+    }
+    public List<PastLeague> getPastLeagues() {
+        return pastLeagues;
     }
 
-    public String getSurname() {
-        return surname;
+    public void setPastLeagues(List<PastLeague> pastLeagues) {
+        this.pastLeagues = pastLeagues;
     }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setParticipationMatches(List<Match> participationMatches) {
+        this.participationMatches = participationMatches;
+    }
+    public List<Match> getParticipationMatches() {
+        return participationMatches;
     }
 
 }

@@ -1,89 +1,89 @@
 package com.example.user.secondfootballapp.user.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.players.activity.Player;
+import com.example.user.secondfootballapp.SaveSharedPreference;
+import com.example.user.secondfootballapp.club.activity.ClubPage;
+import com.example.user.secondfootballapp.model.Person;
+import com.example.user.secondfootballapp.model.SignIn;
+import com.example.user.secondfootballapp.model.User;
+import com.example.user.secondfootballapp.players.activity.PlayersPage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
 
 public class UserPage extends Fragment {
+    public static Person person;
+    public static boolean auth;
+    public static AuthoUser authoUser;
     Logger log = LoggerFactory.getLogger(UserPage.class);
+    boolean check = false;
     final int REQUEST_CODE_REGISTRATION = 256;
+    EditText textLogin;
+    EditText textPass;
+    public static User user;
+    SharedPreferences.Editor prefsEditor ;
+    SharedPreferences mPrefs;
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
-        final EditText textLogin;
-        final EditText textPass;
         TextView textReg;
         Button logIn;
+        auth = false;
         view = inflater.inflate(R.layout.page_user, container, false);
-        textLogin = (EditText) view.findViewById(R.id.loginLog);
-        textPass = (EditText) view.findViewById(R.id.passwordLog);
-        logIn = (Button) view.findViewById(R.id.logInButton);
-        textReg = (TextView) view.findViewById(R.id.registration);
+        textLogin = view.findViewById(R.id.loginLog);
+        textPass = view.findViewById(R.id.passwordLog);
+        logIn = view.findViewById(R.id.logInButton);
+        textReg = view.findViewById(R.id.registration);
         textLogin.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textLogin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus){
-//                    v.setBackground(getActivity().getDrawable(R.drawable.edittext_back_focus));
-//                }
-//                else {
-//                    v.setBackground(getActivity().getDrawable(R.drawable.edittext_back));
-//                }
-                if (hasFocus){
-                    textLogin.getBackground().clearColorFilter();
-                }
-                else {
-                    textLogin.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textLogin.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textLogin.getBackground().clearColorFilter();
+            } else {
+                textLogin.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
-
         });
         textPass.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    textPass.getBackground().clearColorFilter();
-                }
-                else {
-                    textPass.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textPass.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textPass.getBackground().clearColorFilter();
+            } else {
+                textPass.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
-        logIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(((ViewGroup)getView().getParent()).getId(), new AuthoUser()).addToBackStack(null).commit();
-            }
-        });
-        textReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), RegistrationUser.class);
-//                getActivity().startActivity(intent);
-                Intent intent = new Intent(getActivity(), RegistrationUser.class);
-                startActivityForResult(intent, REQUEST_CODE_REGISTRATION);
-            }
+        logIn.setOnClickListener(v -> SignIn());
+        textReg.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), RegistrationUser.class);
+            startActivityForResult(intent, REQUEST_CODE_REGISTRATION);
         });
         return view;
     }
@@ -91,17 +91,104 @@ public class UserPage extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // запишем в лог значения requestCode и resultCode
-        // если пришло ОК
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_CODE_REGISTRATION){
+            if (requestCode == REQUEST_CODE_REGISTRATION) {
+                //pass token
+                authoUser = new AuthoUser();
+                User user = (User) data.getExtras().getSerializable("PERSONREGINFO");
+                Person person = user.getUser();
+                PersonalActivity.allPlayers.add(person);
+                PersonalActivity.people.add(person);
+                PersonalActivity.AllPeople.add(person);
+                PlayersPage.adapter.notifyDataSetChanged();
+//                AuthoUser authoUser = new AuthoUser();
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("person", user);
+//                authoUser.setArguments(bundle);
+                SaveSharedPreference.setLoggedIn(getActivity().getApplicationContext(), true);
+                SaveSharedPreference.saveObject(user);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(((ViewGroup)getView().getParent()).getId(), new AuthoUser()).addToBackStack(null).commit();
+//                fragmentManager.beginTransaction().add(R.id.pageContainer, authoUser).hide(PersonalActivity.active).show(authoUser).commit();
+                fragmentManager.beginTransaction().add(R.id.pageContainer, authoUser, "AUTHOUSERPAGE").hide(this).show(authoUser).commit();
+                PersonalActivity.active = authoUser;
+//                auth = true;
+//                fragmentManager.beginTransaction().replace(((ViewGroup)getView().getParent()).getId(), new AuthoUser()).addToBackStack(null).commit();
 //                int color = data.getIntExtra("color", Color.WHITE);
             }
         } else {
             log.error("ERROR: onActivityResult");
         }
     }
+
+
+    //    public Boolean SignIn(){
+    public void SignIn() {
+        String login = textLogin.getText().toString();
+        String password = textPass.getText().toString();
+        Call<User> call = Controller.getApi().signIn(new SignIn(login, password));
+        log.info("INFO: load and parse json-file");
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                log.info("INFO: check response");
+                if (response.isSuccessful()) {
+                    log.info("INFO: response isSuccessful");
+                    if (response.body() == null) {
+                        log.error("ERROR: body is null");
+                    } else {
+                        String token = response.body().getToken();
+                        check = true;
+                        log.info("INFO: body is not null");
+
+                        //all is ok
+//                        Person person = response.body().getUser();
+                        user = response.body();
+                        person = response.body().getUser();
+                        try {
+                            authoUser = new AuthoUser();
+//                            Bundle bundle = new Bundle();
+//                            bundle.putSerializable("person", user);
+//                            authoUser.setArguments(bundle);
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            fragmentManager.beginTransaction().add(R.id.pageContainer, authoUser).hide(PersonalActivity.active).show(authoUser).commit();
+                            PersonalActivity.active = authoUser;
+//                            auth = true;
+                            SaveSharedPreference.setLoggedIn(getActivity().getApplicationContext(), true);
+                            SaveSharedPreference.saveObject(user);
+//                            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+////                            SharedPreferences.Editor prefsEditor = settings.edit();
+////                            prefsEditor.putString("userId", user.getToken());
+////                            prefsEditor.commit();
+
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity(), "Ошибка!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+                else {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        String str = "Ошибка! ";
+                        str += jsonObject.getString("message");
+                        Toast.makeText(getActivity(), str, Toast.LENGTH_LONG).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                //for getting error in network put here Toast, so get the error on network
+                log.error("ERROR: SignIn() onResponse ", t);
+                Toast.makeText(getActivity(), "Ошибка сервера.", Toast.LENGTH_SHORT).show();
+                getActivity().finishAndRemoveTask();
+            }
+        });
+
+//        return check;
+    }
+
+
 
 }

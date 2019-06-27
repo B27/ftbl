@@ -12,12 +12,25 @@ import android.widget.AbsListView;
 import android.widget.TextView;
 
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.PlayerEvent;
 import com.example.user.secondfootballapp.user.activity.MatchEvents;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class RVMatchEventsAdapter extends RecyclerView.Adapter<RVMatchEventsAdapter.ViewHolder>{
+    Logger log = LoggerFactory.getLogger(MatchEvents.class);
     MatchEvents context;
-    public RVMatchEventsAdapter(Activity context){
+    private HashMap<Integer, String> halves;
+    private List<PlayerEvent> playerAllEvents;
+    public RVMatchEventsAdapter(Activity context, HashMap<Integer, String> halves, List<PlayerEvent> playerAllEvents){
         this.context = (MatchEvents) context;
+        this.halves = halves;
+        this.playerAllEvents = playerAllEvents;
     }
     @NonNull
     @Override
@@ -29,43 +42,23 @@ public class RVMatchEventsAdapter extends RecyclerView.Adapter<RVMatchEventsAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int count = position + 1;
-        String str = String.valueOf(count);
-        holder.textHalf.setText("Тайм " + str);
-        RVEventsAdapter adapter = new RVEventsAdapter(context);
+        String half = halves.get(position);
+        holder.textHalf.setText(half);
+        List<PlayerEvent> playerEvents = new ArrayList<>();
+        for (PlayerEvent playerEvent : playerAllEvents){
+            if (playerEvent.getEvent().getTime().equals(half)){
+                playerEvents.add(playerEvent);
+            }
+        }
+        RVEventsAdapter adapter = new RVEventsAdapter(context, playerEvents);
         holder.recyclerView.setAdapter(adapter);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-
-
-
-//        holder.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                MatchEvents.fab.hide();
-//            }
-//
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                    MatchEvents.fab.show();
-//                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-//                    MatchEvents.fab.hide();
-//                }
-//                if (MatchEvents.scrollStatus) {
-//                    MatchEvents.fab.hide();
-//                }
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//        });
-
 
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return halves.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,8 +66,8 @@ public class RVMatchEventsAdapter extends RecyclerView.Adapter<RVMatchEventsAdap
         RecyclerView recyclerView;
         public ViewHolder(View item) {
             super(item);
-            textHalf = (TextView) item.findViewById(R.id.matchEventsHalf);
-            recyclerView = (RecyclerView) item.findViewById(R.id.recyclerViewHalfEvents);
+            textHalf = item.findViewById(R.id.matchEventsHalf);
+            recyclerView = item.findViewById(R.id.recyclerViewHalfEvents);
         }
     }
 }

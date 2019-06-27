@@ -89,17 +89,7 @@
             android:scaleType="centerCrop"
             android:layout_width="85dp"
             android:layout_height="85dp"
-            android:src="@drawable/ic_member"/>
-        <TextView
-            android:id="@+id/userStatus"
-            android:paddingBottom="8dp"
-            android:fontFamily="@font/manrope_regular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textSize="15sp"
-            android:textColor="@color/colorBottomNavigationUnChecked"
-            android:text="@string/title_players"/>
+            android:src="@drawable/ic_add_photo"/>
         <View
             android:layout_width="match_parent"
             android:layout_marginBottom="30dp"
@@ -122,7 +112,7 @@
             android:layout_height="wrap_content"
             style="@style/MyEditText"
             android:hint="@string/name"
-            android:inputType="text"/>
+            android:inputType="text|textCapWords"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,7 +128,7 @@
             android:layout_height="wrap_content"
             style="@style/MyEditText"
             android:hint="@string/surname"
-            android:inputType="text"/>
+            android:inputType="text|textCapWords"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,7 +144,7 @@
             android:layout_height="wrap_content"
             style="@style/MyEditText"
             android:hint="@string/patronymic"
-            android:inputType="text"/>
+            android:inputType="text|textCapWords"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -190,15 +180,15 @@
             android:fontFamily="@font/manrope_regular"
             android:textAllCaps="false"
             android:textSize="15sp"
-            android:textColor="@color/colorLightGrayForText"
+            android:textColor="@color/colorBottomNavigationUnChecked"
             android:text="@string/DOB"/>
         <View
             android:layout_width="match_parent"
             android:paddingStart="5sp"
             android:paddingEnd="5sp"
             android:layout_marginTop="4sp"
-            android:layout_marginBottom="5dp"
             android:layout_height="1dp"
+            android:layout_marginBottom="25sp"
             android:background="@color/colorLightGray"
             />
 

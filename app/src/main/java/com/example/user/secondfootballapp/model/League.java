@@ -1,53 +1,73 @@
 package com.example.user.secondfootballapp.model;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class League {
-
+public class League implements Serializable {
+    @SerializedName("status")
+    @Expose
+    private String status;
     @SerializedName("matches")
     @Expose
-    private List<Object> matches = null;
+    private List<String> matches = null;
     @SerializedName("_id")
     @Expose
     private String id;
-    @SerializedName("name")
-    @Expose
-    private String name;
     @SerializedName("tourney")
     @Expose
     private String tourney;
+    @SerializedName("name")
+    @Expose
+    private String name;
     @SerializedName("beginDate")
     @Expose
     private String beginDate;
     @SerializedName("endDate")
     @Expose
     private String endDate;
+    @SerializedName("transferBegin")
+    @Expose
+    private String transferBegin;
+    @SerializedName("transferEnd")
+    @Expose
+    private String transferEnd;
+    @SerializedName("playersMin")
+    @Expose
+    private Integer playersMin;
+    @SerializedName("playersMax")
+    @Expose
+    private Integer playersMax;
+    @SerializedName("playersCapacity")
+    @Expose
+    private Integer playersCapacity;
+    @SerializedName("ageAllowedMin")
+    @Expose
+    private Integer ageAllowedMin;
+    @SerializedName("ageAllowedMax")
+    @Expose
+    private Integer ageAllowedMax;
     @SerializedName("maxTeams")
     @Expose
     private Integer maxTeams;
-    @SerializedName("status")
-    @Expose
-    private String status;
     @SerializedName("teams")
     @Expose
     private List<Team> teams = null;
-    @SerializedName("players")
-    @Expose
-    private List<Player> players = null;
-    @SerializedName("__v")
-    @Expose
-    private Integer v;
-    @SerializedName("document")
-    @Expose
-    private String document;
 
-    public List<Object> getMatches() {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<String> getMatches() {
         return matches;
     }
 
-    public void setMatches(List<Object> matches) {
+    public void setMatches(List<String> matches) {
         this.matches = matches;
     }
 
@@ -59,20 +79,20 @@ public class League {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getTourney() {
         return tourney;
     }
 
     public void setTourney(String tourney) {
         this.tourney = tourney;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBeginDate() {
@@ -91,20 +111,68 @@ public class League {
         this.endDate = endDate;
     }
 
+    public String getTransferBegin() {
+        return transferBegin;
+    }
+
+    public void setTransferBegin(String transferBegin) {
+        this.transferBegin = transferBegin;
+    }
+
+    public String getTransferEnd() {
+        return transferEnd;
+    }
+
+    public void setTransferEnd(String transferEnd) {
+        this.transferEnd = transferEnd;
+    }
+
+    public Integer getPlayersMin() {
+        return playersMin;
+    }
+
+    public void setPlayersMin(Integer playersMin) {
+        this.playersMin = playersMin;
+    }
+
+    public Integer getPlayersMax() {
+        return playersMax;
+    }
+
+    public void setPlayersMax(Integer playersMax) {
+        this.playersMax = playersMax;
+    }
+
+    public Integer getPlayersCapacity() {
+        return playersCapacity;
+    }
+
+    public void setPlayersCapacity(Integer playersCapacity) {
+        this.playersCapacity = playersCapacity;
+    }
+
+    public Integer getAgeAllowedMin() {
+        return ageAllowedMin;
+    }
+
+    public void setAgeAllowedMin(Integer ageAllowedMin) {
+        this.ageAllowedMin = ageAllowedMin;
+    }
+
+    public Integer getAgeAllowedMax() {
+        return ageAllowedMax;
+    }
+
+    public void setAgeAllowedMax(Integer ageAllowedMax) {
+        this.ageAllowedMax = ageAllowedMax;
+    }
+
     public Integer getMaxTeams() {
         return maxTeams;
     }
 
     public void setMaxTeams(Integer maxTeams) {
         this.maxTeams = maxTeams;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public List<Team> getTeams() {
@@ -114,29 +182,4 @@ public class League {
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
-    public Integer getV() {
-        return v;
-    }
-
-    public void setV(Integer v) {
-        this.v = v;
-    }
-
-    public String getDocument() {
-        return document;
-    }
-
-    public void setDocument(String document) {
-        this.document = document;
-    }
-
 }

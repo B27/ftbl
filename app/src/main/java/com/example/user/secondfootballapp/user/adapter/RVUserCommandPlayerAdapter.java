@@ -1,6 +1,7 @@
 package com.example.user.secondfootballapp.user.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,15 +17,31 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.CheckName;
+import com.example.user.secondfootballapp.FullScreenImage;
+import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.SaveSharedPreference;
+import com.example.user.secondfootballapp.model.Person;
+import com.example.user.secondfootballapp.model.Player;
+import com.example.user.secondfootballapp.user.activity.AuthoUser;
 import com.example.user.secondfootballapp.user.activity.UserCommandInfo;
 
-public class RVUserCommandPlayerAdapter extends RecyclerView.Adapter<RVUserCommandPlayerAdapter.ViewHolder> {
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 
+import static com.example.user.secondfootballapp.Controller.BASE_URL;
+
+public class RVUserCommandPlayerAdapter extends RecyclerView.Adapter<RVUserCommandPlayerAdapter.ViewHolder> {
+    List<Player> players;
     UserCommandInfo context;
-    public RVUserCommandPlayerAdapter (Activity context){
+
+    public RVUserCommandPlayerAdapter(Activity context, List<Player> players) {
         this.context = (UserCommandInfo) context;
+        this.players = players;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,37 +51,88 @@ public class RVUserCommandPlayerAdapter extends RecyclerView.Adapter<RVUserComma
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         int count = position + 1;
 //        String str = Integer.toString(count);
         String str = String.valueOf(count);
         holder.textNum.setText(str);
-        holder.textName.setText("Иванов В.В.");
-        Glide.with(context)
-                .asBitmap()
-                .load(R.drawable.ic_member)
-                .apply(new RequestOptions()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .priority(Priority.HIGH))
-                .into(holder.image);
-        if (position==4){
-            holder.line.setVisibility(View.INVISIBLE);}
-            holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
+        Person player = null;
+        for (Person person : PersonalActivity.people) {
+            if (person.getId().equals(players.get(position).getPlayerId())){
+                player = person;
+                break;
+            }
+        }
+        CheckName checkName = new CheckName();
+        str = checkName.check(player.getSurname(), player.getName(), player.getLastname());
+        holder.textName.setText(str);
+        str = players.get(position).getNumber();
+        try {
+            holder.editNum.setText(str);
+        }catch (Exception e){}
+        try {
+
+            String uriPic = BASE_URL;
+            uriPic += "/" + player.getPhoto();
+            URL url = new URL(uriPic);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.optionalCircleCrop();
+            requestOptions.format(DecodeFormat.PREFER_ARGB_8888);
+            requestOptions.error(R.drawable.ic_logo2);
+            requestOptions.override(500, 500);
+            requestOptions.priority(Priority.HIGH);
+            Glide.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .apply(requestOptions)
+                    .into(holder.image);
+            final String finalUriPic = uriPic;
+            holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //post
-                    int newPosition = holder.getAdapterPosition();
-                    notifyItemRemoved(newPosition);
+                    if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                        Intent intent = new Intent(context, FullScreenImage.class);
+                        intent.putExtra("player_photo", finalUriPic);
+                        context.startActivity(intent);
+                    }
+
                 }
             });
+        } catch (MalformedURLException e) {
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.optionalCircleCrop();
+            requestOptions.format(DecodeFormat.PREFER_ARGB_8888);
+            requestOptions.error(R.drawable.ic_logo2);
+            requestOptions.override(500, 500);
+            requestOptions.priority(Priority.HIGH);
+            Glide.with(context)
+                    .asBitmap()
+                    .load(R.drawable.ic_logo2)
+                    .apply(requestOptions)
+                    .into(holder.image);
+        }
+
+        if (position == (players.size() - 1)) {
+            holder.line.setVisibility(View.INVISIBLE);
+        }
+        if (player.getId().equals(SaveSharedPreference.getObject().getUser().getId())){
+            holder.buttonDelete.setVisibility(View.INVISIBLE);
+        }
+        holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //post
+                UserCommandInfo.players.remove(players.get(position));
+                UserCommandInfo.adapter.notifyDataSetChanged();
+            }
+        });
         holder.editNum.getBackground().setColorFilter(context.getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
         holder.editNum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     holder.editNum.getBackground().clearColorFilter();
-                }
-                else {
+                } else {
                     holder.editNum.getBackground().setColorFilter(context.getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
                 }
             }
@@ -73,7 +141,7 @@ public class RVUserCommandPlayerAdapter extends RecyclerView.Adapter<RVUserComma
 
     @Override
     public int getItemCount() {
-        return 5;
+        return players.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -83,6 +151,7 @@ public class RVUserCommandPlayerAdapter extends RecyclerView.Adapter<RVUserComma
         EditText editNum;
         ImageButton buttonDelete;
         View line;
+
         public ViewHolder(View item) {
             super(item);
             textNum = (TextView) item.findViewById(R.id.userCommandPlayerTextNum);

@@ -9,21 +9,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.home.activity.MainPage;
+import com.example.user.secondfootballapp.home.activity.NewsAndAds;
 import com.example.user.secondfootballapp.home.activity.NewsPage;
+import com.example.user.secondfootballapp.model.News_;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class RecyclerViewMainNewsAdapter extends RecyclerView.Adapter<RecyclerViewMainNewsAdapter.ViewHolder> {
-    MainPage context;
-    PersonalActivity activity;
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    public RecyclerViewMainNewsAdapter(Activity activity, MainPage context){
+    private List<News_> news;
+    private NewsAndAds context;
+    private PersonalActivity activity;
+    public RecyclerViewMainNewsAdapter(Activity activity, NewsAndAds context, List<News_> news){
+        this.news = news;
         this.activity = (PersonalActivity) activity;
         this.context = context;
     }
@@ -36,38 +43,57 @@ public class RecyclerViewMainNewsAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.textTitle.setText("В мире футбола чето там изменилось. Вау. Как неожиданно.");
-//        holder.textDate.setText("27.01.18");
-        holder.imageButtonShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                log.info("INFO: hello from RecyclerViewHomeAdapter");
-                Intent intent = new Intent(activity, NewsPage.class);
-                String title = "Some title";
-                Bundle bundle = new Bundle();
-                bundle.putString("NEWSTITLE", title);
-                intent.putExtra("NEWSTITLE", bundle);
-                context.startActivity(intent);
-            }
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        String str = news.get(position).getCaption();
+        holder.textTitle.setText(str);
+        DateToString dateToString = new DateToString();
+        str = news.get(position).getCreatedAt();
+        holder.textDate.setText(dateToString.ChangeDate(str));
+        holder.imageButtonShow.setOnClickListener(v -> {
+            Intent intent = new Intent(activity, NewsPage.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("NEWS" ,news.get(position));
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
+        if (news.size()>=2 && position==2){
+            holder.line.setVisibility(View.INVISIBLE);
+        }
+        if (news.size()==1 && position==1){
+            holder.line.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        int count = 0;
+        if (news.size()>=2){
+            count=2;
+        }
+        if (news.size()==1){
+            count=1;
+        }
+        return count;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textDate;
         TextView textTitle;
-        ImageButton imageButtonShow;
+        LinearLayout imageButtonShow;
+        View line;
         public ViewHolder(View itemView) {
             super(itemView);
-            textDate = (TextView) itemView.findViewById(R.id.newsDate);
-            textTitle = (TextView) itemView.findViewById(R.id.newsTitle);
-            imageButtonShow = (ImageButton) itemView.findViewById(R.id.newsButtonShow);
+            textDate = itemView.findViewById(R.id.newsDate);
+            textTitle = itemView.findViewById(R.id.newsTitle);
+            imageButtonShow = itemView.findViewById(R.id.newsButtonShow);
+            line = itemView.findViewById(R.id.newsLine);
         }
+    }
+
+    public void dataChanged(List<News_> allPlayers1) {
+        news.clear();
+        news.addAll(allPlayers1);
+        notifyDataSetChanged();
     }
 }
 

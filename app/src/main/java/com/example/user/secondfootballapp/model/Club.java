@@ -1,14 +1,15 @@
 package com.example.user.secondfootballapp.model;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Club {
+public class Club implements Serializable {
 
-    @SerializedName("teams")
+    @SerializedName("info")
     @Expose
-    private List<ClubTeam> teams = null;
+    private String info;
     @SerializedName("addLogo")
     @Expose
     private String addLogo;
@@ -21,16 +22,23 @@ public class Club {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("owner")
+    @Expose
+    private Owner owner;
+//    private Person owner;
+    @SerializedName("logo")
+    @Expose
+    private String logo;
     @SerializedName("__v")
     @Expose
     private Integer v;
 
-    public List<ClubTeam> getTeams() {
-        return teams;
+    public String getInfo() {
+        return info;
     }
 
-    public void setTeams(List<ClubTeam> teams) {
-        this.teams = teams;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     public String getAddLogo() {
@@ -65,6 +73,22 @@ public class Club {
         this.name = name;
     }
 
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
     public Integer getV() {
         return v;
     }
@@ -72,5 +96,6 @@ public class Club {
     public void setV(Integer v) {
         this.v = v;
     }
+
 
 }

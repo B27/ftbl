@@ -2,6 +2,7 @@ package com.example.user.secondfootballapp.club.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,27 +14,62 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.Controller;
+import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.SaveSharedPreference;
+import com.example.user.secondfootballapp.model.AddClub;
+import com.example.user.secondfootballapp.model.Club;
+import com.example.user.secondfootballapp.model.DataClub;
+import com.example.user.secondfootballapp.model.Person;
+import com.example.user.secondfootballapp.model.ServerResponse;
+import com.example.user.secondfootballapp.model.User;
+import com.example.user.secondfootballapp.user.activity.AddEvent;
+import com.example.user.secondfootballapp.user.activity.AuthoUser;
+import com.example.user.secondfootballapp.user.activity.NewCommand;
+import com.example.user.secondfootballapp.user.activity.PersonalInfo;
+import com.example.user.secondfootballapp.user.activity.RegistrationUser;
+import com.example.user.secondfootballapp.user.activity.UserPage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.CAMERA;
 
 public class NewClub extends AppCompatActivity {
+    Logger log = LoggerFactory.getLogger(NewClub.class);
     Bitmap myBitmap;
     Uri picUri;
     ImageButton buttonLogo;
@@ -41,28 +77,25 @@ public class NewClub extends AppCompatActivity {
     private ArrayList permissionsRejected = new ArrayList();
     private ArrayList permissions = new ArrayList();
     private final static int ALL_PERMISSIONS_RESULT = 107;
+    EditText textDesc;
+    EditText textTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final EditText textDesc;
-        final EditText textTitle;
         ImageButton imageClose;
         ImageButton imageSave;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_club);
-        imageClose = (ImageButton) findViewById(R.id.createClubClose);
-        imageSave = (ImageButton) findViewById(R.id.createClubSave);
-        buttonLogo = (ImageButton) findViewById(R.id.createClubPhoto);
-        textDesc = (EditText) findViewById(R.id.createClubDesc);
-        textTitle = (EditText) findViewById(R.id.createClubTitle);
-        textDesc.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
+        imageClose = findViewById(R.id.createClubClose);
+        imageSave = findViewById(R.id.createClubSave);
+        buttonLogo = findViewById(R.id.createClubPhoto);
+        textDesc = findViewById(R.id.createClubDesc);
+        textTitle = findViewById(R.id.createClubTitle);
+//        textDesc.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
         textDesc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus){
                     textDesc.getBackground().clearColorFilter();
-                }
-                else {
-                    textDesc.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
                 }
             }
         });
@@ -78,6 +111,20 @@ public class NewClub extends AppCompatActivity {
                 }
             }
         });
+        textDesc.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (v.getId() == R.id.userEditClubDesc) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_UP:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
         imageClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +134,9 @@ public class NewClub extends AppCompatActivity {
         imageSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); //post
+                if (check()) {
+                    createClub();
+                }
             }
         });
 
@@ -105,11 +154,103 @@ public class NewClub extends AppCompatActivity {
         }
     }
 
+    private Boolean check(){
+        Boolean check = false;
+        String title = textTitle.getText().toString();
+        String desc = textDesc.getText().toString();
+        Boolean count = false;
+        if (!desc.equals("") && !title.equals("") && myBitmap != null){
+            check = true;
+        }else {
+            Toast.makeText(this, "Введите название клуба, описание и логотип.", Toast.LENGTH_SHORT).show();
+        }
 
+        return check;
+    }
+    public void createClub(){
+        //session check
+//        try{
+        String title = textTitle.getText().toString();
+        String desc = textDesc.getText().toString();
+//        String id = UserPage.person.getId();
+//        Person person = AuthoUser.user.getUser();
+        Person person = SaveSharedPreference.getObject().getUser();
+        String id = person.getId();
+        Map<String, RequestBody> map = new HashMap<>();
+        Bitmap photo = myBitmap;
+        RequestBody request = RequestBody.create(MediaType.parse("text/plain"), title);
+        map.put("name", request);
+        request = RequestBody.create(MediaType.parse("text/plain"), desc);
+        map.put("info", request);
+        request = RequestBody.create(MediaType.parse("text/plain"), id);
+        map.put("owner", request);
+        try {
+            //create a file to write bitmap data
+            File file = new File(getCacheDir(), "photo");
+            file.createNewFile();
+            //Convert bitmap to byte array
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.JPEG, 80 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+            //write the bytes in file
+            final FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+            RequestBody requestFile =
+                    RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
+            MultipartBody.Part body =
+                    MultipartBody.Part.createFormData("logo", file.getName(), requestFile);
+            String token = SaveSharedPreference.getObject().getToken();
+            Call<DataClub> call = Controller.getApi().addClub(token, map, body);
+            call.enqueue(new Callback<DataClub>() {
+                @Override
+                public void onResponse(Call<DataClub> call, Response<DataClub> response) {
+                    log.info("INFO: check response");
+                    if (response.isSuccessful()) {
+                        log.info("INFO: response isSuccessful");
+                        if (response.body() != null) {
+                            try{
+                                Club club =  response.body().getResultClub();
+                                Intent intent = new Intent();
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("CREATECLUBRESULT", club);
+                                intent.putExtras(bundle);
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            }
+                            catch (Exception t) {
+                                log.error("ERROR: ", t);
+                            }
+//                        }
+                        }
+                    }
+                    else {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                            String str = "Ошибка! ";
+                            str += jsonObject.getString("message");
+                            Toast.makeText(NewClub.this, str, Toast.LENGTH_LONG).show();
+                            finish();
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
 
-
-
+                @Override
+                public void onFailure(Call<DataClub> call, Throwable t) {
+                    log.error("ERROR: ", t);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        }catch (NullPointerException e){
+//            Toast.makeText(this, "Необходимо авторизоваться.", Toast.LENGTH_SHORT).show();
+//        }
+    }
 
 
     public Intent getPickImageChooserIntent() {
@@ -187,13 +328,11 @@ public class NewClub extends AppCompatActivity {
                 try {
                     myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), picUri);
 //                    myBitmap = rotateImageIfRequired(myBitmap, picUri);
-                    myBitmap = getResizedBitmap(myBitmap, 500);
+//                    myBitmap = getResizedBitmap(myBitmap, 500);
 
-//                    CircleImageView croppedImageView = (CircleImageView) findViewById(R.id.img_profile);
-//                    croppedImageView.setImageBitmap(myBitmap);
-//                    buttonPhoto.setImageBitmap(myBitmap);
+                    Bitmap newBitmap = getResizedBitmap(myBitmap, 500);
                     Glide.with(this)
-                            .load(myBitmap)
+                            .load(newBitmap)
                             .apply(new RequestOptions()
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
@@ -207,9 +346,9 @@ public class NewClub extends AppCompatActivity {
 
                     bitmap = (Bitmap) data.getExtras().get("data");
                     myBitmap = bitmap;
-                    myBitmap = getResizedBitmap(myBitmap, 500);
+                    Bitmap newBitmap = getResizedBitmap(myBitmap, 500);
                     Glide.with(this)
-                            .load(myBitmap)
+                            .load(newBitmap)
                             .apply(new RequestOptions()
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
@@ -242,7 +381,7 @@ public class NewClub extends AppCompatActivity {
     public Uri getPickImageResultUri(Intent data) {
         boolean isCamera = true;
         if (android.os.Build.VERSION.SDK_INT >= 23) {
-            isCamera = (data != null && data.getClipData() != null) ? false : true;
+            isCamera = data == null || data.getClipData() == null;
         } else {
             if (data != null) {
                 String action = data.getAction();

@@ -1,39 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--xmlns:tools="http://schemas.android.com/tools"-->
-<!--android:orientation="vertical"-->
-<!--android:background="@color/colorWhite"-->
-<!--android:focusable="true"-->
-<!--android:focusableInTouchMode="true"-->
-<!--tools:context=".user.activity.UserEditClub">-->
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    tools:context=".user.activity.EditTimeTable"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    tools:context=".user.activity.EditTimeTable">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/refereeEditMatchAppbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbarRefereeEditMatch"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorLightGray2"
             android:layout_gravity="top"
+            android:background="@color/colorLightGray2"
             android:minHeight="?attr/actionBarSize"
             app:layout_collapseMode="pin"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -58,8 +50,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/manrope_regular"
-                    android:textColor="@color/colorBottomNavigationUnChecked"
                     android:text="@string/refereeSettings"
+                    android:textColor="@color/colorBottomNavigationUnChecked"
                     android:textSize="16sp" />
 
                 <ImageButton
@@ -79,108 +71,162 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
- <LinearLayout
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20sp"
+
+                android:paddingEnd="6dp"
+                android:orientation="vertical"
+                android:paddingStart="18dp">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/manrope_semibold"
-                android:text="@string/referees"
-                android:textColor="@color/colorBottomNavigationUnChecked"
-                android:textSize="14sp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_regular"
-                android:paddingStart="4sp"
-                android:gravity="start"
-                android:textColor="@color/colorLightGrayForText"
-                android:textSize="12sp"
-                android:text="@string/referee1"/>
-            <Spinner
-                android:id="@+id/refereeEditMatchSpinnerReferee1"
-                android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
-                android:spinnerMode="dialog"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_regular"
-                android:layout_marginTop="8sp"
-                android:paddingStart="4sp"
-                android:gravity="start"
-                android:textColor="@color/colorLightGrayForText"
-                android:textSize="12sp"
-                android:text="@string/referee2"/>
-            <Spinner
-                android:id="@+id/refereeEditMatchSpinnerReferee2"
-                android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
-                android:spinnerMode="dialog"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_regular"
-                android:paddingStart="4sp"
-                android:layout_marginTop="8sp"
-                android:gravity="start"
-                android:textColor="@color/colorLightGrayForText"
-                android:textSize="12sp"
-                android:text="@string/referee3"/>
-            <Spinner
-                android:id="@+id/refereeEditMatchSpinnerReferee3"
-                android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
-                android:spinnerMode="dialog"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_regular"
-                android:paddingStart="4sp"
-                android:layout_marginTop="8sp"
-                android:gravity="start"
-                android:textColor="@color/colorLightGrayForText"
-                android:textSize="12sp"
-                android:text="@string/referee4"/>
-            <Spinner
-                android:id="@+id/refereeEditMatchSpinnerReferee4"
-                android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:background="@drawable/spinner_shape"
-                android:layout_marginBottom="25sp"
-                android:spinnerMode="dialog"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="start"
+                    android:paddingStart="4sp"
+                    android:text="@string/referee1"
+                    android:textColor="@color/colorLightGrayForText"
+                    android:textSize="12sp" />
 
-     <Button
-         android:id="@+id/buttonMainRefereeShowProtocol"
-         style="@style/Widget.AppCompat.Button.Borderless"
-         android:layout_gravity="bottom|end"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:fontFamily="@font/manrope_semibold"
-         android:textColor="@color/colorPrimary"
-         android:text="@string/protocol"/>
+                <Spinner
+                    android:id="@+id/refereeEditMatchSpinnerReferee1"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:padding="0dp"
+                    android:layout_marginEnd="4dp"
+                    android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:spinnerMode="dialog"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="6sp"
+                    android:layout_marginEnd="18sp"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="20sp"
+                    android:background="@color/colorLightGray"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8sp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="start"
+                    android:paddingStart="4sp"
+                    android:text="@string/referee2"
+                    android:textColor="@color/colorLightGrayForText"
+                    android:textSize="12sp" />
+
+                <Spinner
+                    android:id="@+id/refereeEditMatchSpinnerReferee2"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:padding="0dp"
+                    android:layout_marginEnd="4dp"
+                    android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:spinnerMode="dialog"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="6sp"
+                    android:layout_marginEnd="18sp"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="20sp"
+                    android:background="@color/colorLightGray"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8sp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="start"
+                    android:paddingStart="4sp"
+                    android:text="@string/referee3"
+                    android:textColor="@color/colorLightGrayForText"
+                    android:textSize="12sp" />
+
+                <Spinner
+                    android:id="@+id/refereeEditMatchSpinnerReferee3"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:padding="0dp"
+                    android:layout_marginEnd="4dp"
+                    android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:spinnerMode="dialog"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="6sp"
+                    android:layout_marginEnd="18sp"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="20sp"
+                    android:background="@color/colorLightGray"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8sp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="start"
+                    android:paddingStart="4sp"
+                    android:text="@string/referee4"
+                    android:textColor="@color/colorLightGrayForText"
+                    android:textSize="12sp" />
+
+                <Spinner
+                    android:id="@+id/refereeEditMatchSpinnerReferee4"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:padding="0dp"
+                    android:layout_marginEnd="4dp"
+                    android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:spinnerMode="dialog"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="6sp"
+                    android:layout_marginEnd="18sp"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="20sp"
+                    android:background="@color/colorLightGray"
+                    />
+
+                <!--<Button-->
+                <!--android:id="@+id/buttonMainRefereeShowProtocol"-->
+                <!--style="@style/Widget.AppCompat.Button.Borderless"-->
+                <!--android:layout_gravity="bottom|end"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:fontFamily="@font/manrope_semibold"-->
+                <!--android:textColor="@color/colorPrimary"-->
+                <!--android:text="@string/protocol"/>-->
 
 
-</LinearLayout>
+            </LinearLayout>
 
 
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
-    <!--</LinearLayout>-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonMainRefereeShowProtocol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_document"
+        app:backgroundTint="@color/colorPrimary" />
+</android.support.design.widget.CoordinatorLayout><!--</LinearLayout>-->

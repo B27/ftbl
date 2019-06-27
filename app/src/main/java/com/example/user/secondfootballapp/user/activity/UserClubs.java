@@ -1,9 +1,11 @@
 package com.example.user.secondfootballapp.user.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,154 +25,100 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.SaveSharedPreference;
 import com.example.user.secondfootballapp.home.activity.NewsPage;
+import com.example.user.secondfootballapp.model.Club;
+import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.user.adapter.RVUserClubInvAdapter;
 import com.example.user.secondfootballapp.user.adapter.RVUserCommandAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UserClubs extends Fragment{
+import java.net.URL;
+
+import static com.example.user.secondfootballapp.Controller.BASE_URL;
+
+public class UserClubs extends Fragment {
     Logger log = LoggerFactory.getLogger(UserClubs.class);
-    boolean scrollStatus;
+    String uriPic;
+    FloatingActionButton fab;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        fab = getActivity().findViewById(R.id.buttonEditClub);
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
-//        final FloatingActionButton fab;
-        RecyclerView recyclerViewCommand;
-        RecyclerView recyclerViewClubInv;
-        TextView textCommandListStatus;
-        TextView textClubListStatus;
-        TextView textClubTitle;
-//        TextView textClub;
-        TextView textClubInv;
-        NestedScrollView scroller;
-        ImageButton buttonShowClubInfo;
-        ImageView imageClub;
-        RelativeLayout relativeLayout;
-        boolean check = true;
+        TextView textDesc;
+        TextView textTitle;
+        ImageView imageLogo;
+        Club club;
+        LinearLayout linearLayout;
+        LinearLayout linearLayoutClubInfo;
         view = inflater.inflate(R.layout.user_clubs, container, false);
-//        fab = (FloatingActionButton) view.findViewById(R.id.addCommandButton);
-        relativeLayout = (RelativeLayout) view.findViewById(R.id.userClubRelativeLayout);
-        scroller = (NestedScrollView) view.findViewById(R.id.userClubScroll);
-        buttonShowClubInfo = (ImageButton) view.findViewById(R.id.userClubButtonShow);
-        imageClub = (ImageView) view.findViewById(R.id.userClubLogo);
-        textCommandListStatus = (TextView) view.findViewById(R.id.userCommandListStatus);
-        textClubListStatus = (TextView) view.findViewById(R.id.userClubListStatus);
-        textClubTitle = (TextView) view.findViewById(R.id.userClubTitle);
-        recyclerViewClubInv = (RecyclerView) view.findViewById(R.id.recyclerViewClubInv);
-        RVUserClubInvAdapter adapterClub = new RVUserClubInvAdapter(this);
-        recyclerViewClubInv.setAdapter(adapterClub);
-        recyclerViewClubInv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerViewCommand = (RecyclerView) view.findViewById(R.id.recyclerViewUserCommand);
-        RVUserCommandAdapter adapterCommand = new RVUserCommandAdapter(getActivity(),this);
-        recyclerViewCommand.setAdapter(adapterCommand);
-        recyclerViewCommand.setLayoutManager(new LinearLayoutManager(getActivity()));
-        scrollStatus = false;
-
-        scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {}
-                if (scrollY < oldScrollY) {
-                    scrollStatus = false;
-                }
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    scrollStatus = true;
-                    AuthoUser.fab.hide();
+        linearLayout = view.findViewById(R.id.emptyClub);
+        linearLayoutClubInfo = view.findViewById(R.id.userClub);
+        textDesc = view.findViewById(R.id.userClubInfoDesc);
+        textTitle = view.findViewById(R.id.userClubInfoTitle);
+        imageLogo = view.findViewById(R.id.userClubInfoLogo);
+        club = null;
+        try {
+            Person person = SaveSharedPreference.getObject().getUser();
+            String str = person.getClub();
+            for (Club club1 : PersonalActivity.allClubs) {
+                if (club1.getId().equals(str)) {
+                    club = club1;
                 }
             }
-        });
 
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.optionalCircleCrop();
+            requestOptions.format(DecodeFormat.PREFER_ARGB_8888);
+            RequestOptions.errorOf(R.drawable.ic_logo2);
+            requestOptions.override(500, 500); // resizing
+            requestOptions.priority(Priority.HIGH);
 
+            if (club != null) {
+                linearLayout.setVisibility(View.GONE);
+                str = club.getName();
+                textTitle.setText(str);
+                str = club.getInfo();
+                textDesc.setText(str);
+                uriPic = BASE_URL;
 
-        //if club.members != null
-        if (!check){
-            textClubListStatus.setVisibility(View.VISIBLE);
-            textCommandListStatus.setVisibility(View.VISIBLE);
-        }else {
-            buttonShowClubInfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    log.info("INFO: ======================================================================");
-                    Intent intent = new Intent(getActivity(), UserClubInfo.class);
-                    String title = "Some title";
-                    Bundle bundle = new Bundle();
-                    bundle.putString("NEWSTITLE", title);
-                    intent.putExtra("NEWSTITLE", bundle);
-                    startActivity(intent);
+                try {
+                    uriPic += "/" + club.getLogo();
+                    URL url = new URL(uriPic);
+                    Glide.with(this)
+                            .asBitmap()
+                            .load(url)
+                            .apply(requestOptions)
+                            .into(imageLogo);
+                } catch (Exception e) {
+                    Glide.with(this)
+                            .asBitmap()
+                            .load(R.drawable.ic_logo2)
+                            .apply(requestOptions)
+                            .into(imageLogo);
                 }
-            });
-            Glide.with(this)
-                    .asBitmap()
-                    .load(R.drawable.ic_football)
-                    .apply(new RequestOptions()
-                            .circleCropTransform()
-                            .format(DecodeFormat.PREFER_ARGB_8888)
-                            .priority(Priority.HIGH))
-                    .into(imageClub);
-//            textClubTitle.setText();
-            recyclerViewClubInv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//nothing to do
-                }
-
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        AuthoUser.fab.show();
-                    } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                        AuthoUser.fab.hide();
-                    }
-                    if (scrollStatus) {
-                        AuthoUser.fab.hide();
-                    }
-                    super.onScrollStateChanged(recyclerView, newState);
-                }
-            });
-//            textClub = (TextView) view.findViewById(R.id.currentClub);
-//            textClub.setVisibility(View.VISIBLE);
-            relativeLayout.setVisibility(View.VISIBLE);
+            } else {
+                linearLayoutClubInfo.setVisibility(View.GONE);
+            }
+        } catch (NullPointerException e) {
         }
 
-        //есть приглашения
-        if (check){
-            textClubInv = (TextView) view.findViewById(R.id.clubInv) ;
-            textClubInv.setVisibility(View.VISIBLE);
-        }
-
-        recyclerViewCommand.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//nothing to do
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    AuthoUser.fab.show();
-                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    AuthoUser.fab.hide();
-                }
-                if (scrollStatus) {
-                    AuthoUser.fab.hide();
-                }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-
-        AuthoUser.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //add command
-                Intent intent = new Intent(getActivity(), NewCommand.class);
-                startActivity(intent);
-                //сделать видимым, если тренер
-            }
-        });
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        log.info("INFO: UserClubs onDestroy");
+        fab.setVisibility(View.INVISIBLE);
+        super.onDestroy();
     }
 }

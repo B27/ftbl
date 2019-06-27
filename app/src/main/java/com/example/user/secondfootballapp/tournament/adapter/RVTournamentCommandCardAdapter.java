@@ -14,21 +14,36 @@ import android.widget.TextView;
 
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.League;
+import com.example.user.secondfootballapp.model.LeagueInfo;
+import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.tournament.activity.CommandInfoActivity;
 import com.example.user.secondfootballapp.tournament.activity.TournamentCommandFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+import java.util.List;
+
 public class RVTournamentCommandCardAdapter extends RecyclerView.Adapter<RVTournamentCommandCardAdapter.ViewHolder> {
-    TournamentCommandFragment context;
-    PersonalActivity activity;
-//    CommandInfoFragment commandInfoFragment = new CommandInfoFragment();
+    private TournamentCommandFragment context;
+    private PersonalActivity activity;
+    //    CommandInfoFragment commandInfoFragment = new CommandInfoFragment();
     Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    public RVTournamentCommandCardAdapter(Activity activity, TournamentCommandFragment context){
+
+    private List<Team> teams;
+    private String group;
+    private LeagueInfo leagueInfo;
+    public RVTournamentCommandCardAdapter(Activity activity, TournamentCommandFragment context, List<Team> teams, String group,
+                                          LeagueInfo leagueInfo) {
         this.activity = (PersonalActivity) activity;
         this.context = context;
+        this.teams = teams;
+        this.group = group;
+        this.leagueInfo = leagueInfo;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,56 +55,54 @@ public class RVTournamentCommandCardAdapter extends RecyclerView.Adapter<RVTourn
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textNum.setText("1");
-//        holder.textTitle.setText("SomeTitle");
-        holder.btnTitle.setText("SomeTitle");
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        String str = String.valueOf(position+1);
+        holder.textNum.setText(str);
+        str = teams.get(position).getName();
+        holder.btnTitle.setText(str);
         holder.btnTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent intent = new Intent(activity, CommandInfoActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("COMMANDTITLE1", "SomeText");
-                intent.putExtra("COMMANDTITLE", bundle);
-//                intent.putExtra("COMMANDTITLE", "SomeText");
+                bundle.putSerializable("TOURNAMENTMATCHCOMMANDINFO", teams.get(position));
+                bundle.putSerializable("TOURNAMENTMATCHCOMMANDINFOMATCHES", (Serializable) leagueInfo.getMatches());
+                intent.putExtras( bundle);
                 activity.startActivity(intent);
-//                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-//                fragmentManager.beginTransaction().replace(R.id.tournamentInfoFragment, commandInfoFragment).commit();
-
-
-//                fragmentManager.beginTransaction().replace(R.id.tournamentInfoFragment, commandInfoFragment).commit();
 
             }
         });
-
-        holder.textGame.setText("3");
-        holder.textDifference.setText("4");
-        holder.textPoint.setText("5");
-
+        int count;
+        count = teams.get(position).getDraws() + teams.get(position).getWins() + teams.get(position).getLosses();
+        str = String.valueOf(count);
+        holder.textGame.setText(str);
+        count = teams.get(position).getGoals() - teams.get(position).getGoalsReceived();
+        str = String.valueOf(count);
+        holder.textDifference.setText(str);
+        str = String.valueOf(teams.get(position).getGroupScore());
+        holder.textPoint.setText(str);
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return teams.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textNum;
-//        TextView textTitle;
-        Button btnTitle;
+        //        TextView textTitle;
+        TextView btnTitle;
         TextView textGame;
         TextView textDifference;
         TextView textPoint;
         public ViewHolder(View item) {
             super(item);
-            textNum = (TextView) item.findViewById(R.id.commandNum);
-            btnTitle = (Button) item.findViewById(R.id.commandTitle);
+            textNum = item.findViewById(R.id.commandNum);
+            btnTitle = item.findViewById(R.id.commandTitle);
 //            textTitle = (TextView) item.findViewById(R.id.commandTitle);
-            textGame = (TextView) item.findViewById(R.id.commandScoreGame);
-            textDifference = (TextView) item.findViewById(R.id.commandScoreDifference);
-            textPoint = (TextView) item.findViewById(R.id.commandScorePoint);
+            textGame = item.findViewById(R.id.commandScoreGame);
+            textDifference = item.findViewById(R.id.commandScoreDifference);
+            textPoint = item.findViewById(R.id.commandScorePoint);
         }
     }
 }

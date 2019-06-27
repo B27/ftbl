@@ -1,59 +1,108 @@
 package com.example.user.secondfootballapp.home.activity;
 
-import android.graphics.Typeface;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.user.secondfootballapp.CheckError;
+import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.home.adapter.RecyclerViewHomeAdapter;
+import com.example.user.secondfootballapp.model.ActiveMatch;
+import com.example.user.secondfootballapp.model.News;
+import com.example.user.secondfootballapp.model.News_;
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomePage extends Fragment {
-//    DialogFragment dialogFragment;
-//AdvertisingFragment dialogFragment;
-
+    Logger log = LoggerFactory.getLogger(HomePage.class);
+    List<News_> allNews = new ArrayList<>();
+    RecyclerView recyclerView;
+    NestedScrollView scroller;
+    RecyclerViewHomeAdapter adapter;
+    int count = 0;
+    int limit = 5;
+    int offset = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         final View view;
-        Toolbar toolbar;
         view = inflater.inflate(R.layout.page_home, container, false);
-//        TextView textView = (TextView) view.findViewById(R.id.textView);
-
-//        dialogFragment = new AdvertisingFragment().newInstance();
-
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("Новости");
-        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
-        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/manrope_regular.otf");
-        collapsingToolbar.setExpandedTitleTypeface(tf);
-        collapsingToolbar.setCollapsedTitleTypeface(tf);
-        toolbar = (Toolbar) view.findViewById(R.id.toolbarHome);
-//        toolbar.setTitle("Новости");
-//        collapsingToolbar.setTitleEnabled(false);
-
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewHome);
-        RecyclerViewHomeAdapter adapter = new RecyclerViewHomeAdapter(getActivity(),this);
-        recyclerView.setAdapter(adapter);
+        scroller = view.findViewById(R.id.scrollerNews);
+        checkConnection();
+        recyclerView = view.findViewById(R.id.recyclerViewHome);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
-
-//        dialogFragment.show(fragmentManager, "AdvertisingFragment");
-
-
-
-
-//        dialogFragment.show(getFragmentManager(), "dialogFragment");
-
+        try {
+            adapter = new RecyclerViewHomeAdapter(getActivity(),HomePage.this , allNews);
+            recyclerView.setAdapter(adapter);
+        }catch (Exception e){}
+        scroller.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                offset++;
+                int temp = limit*offset;
+                if (temp<=count) {
+                    String str = String.valueOf(temp);
+                    GetAllNews("5", str);
+                }
+            }
+        });
         return view;
+    }
+
+    @SuppressLint("CheckResult")
+    private void checkConnection() {
+        ReactiveNetwork
+                .observeNetworkConnectivity(getActivity().getApplicationContext())
+                .flatMapSingle(connectivity -> ReactiveNetwork.checkInternetConnectivity())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(isConnected -> {
+                    // isConnected can be true or false
+                    if (isConnected){
+                        GetAllNews("5", "0");
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    public void GetAllNews(String limit, String offset){
+        Controller.getApi().getAllNews(limit, offset)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
+                .subscribe(matches -> saveData(matches)
+                        ,
+                        error -> {
+                            CheckError checkError = new CheckError();
+                            checkError.checkError(getActivity(), error);
+                        }
+                );
+
+    }
+
+    private void saveData(News matches) {
+        count = matches.getCount();
+        allNews.addAll(allNews.size(), matches.getNews());
+        List<News_> list = new ArrayList<>(allNews);
+        adapter.dataChanged(list);
     }
 }

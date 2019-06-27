@@ -15,16 +15,25 @@ import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.user.adapter.RVOngoingTournamentAdapter;
 import com.example.user.secondfootballapp.user.adapter.RVRefereesAdapter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class RefereeFragment extends Fragment{
+    Logger log = LoggerFactory.getLogger(RefereeFragment.class);
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
         RecyclerView recyclerView;
-        boolean check = true;
         view = inflater.inflate(R.layout.user_referees, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewReferees);
-        RVRefereesAdapter adapter = new RVRefereesAdapter(getActivity(),this);
+        recyclerView = view.findViewById(R.id.recyclerViewReferees);
+        recyclerView.setNestedScrollingEnabled(false);
+        RVRefereesAdapter adapter = new RVRefereesAdapter(getActivity(),this, AuthoUser.allReferees);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return view;
+    }
+    @Override
+    public void onDestroy() {
+        log.info("INFO: RefereeFragment onDestroy");
+        super.onDestroy();
     }
 }

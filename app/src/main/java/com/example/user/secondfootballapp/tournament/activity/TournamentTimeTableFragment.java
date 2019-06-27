@@ -9,14 +9,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
+import com.example.user.secondfootballapp.model.League;
+import com.example.user.secondfootballapp.model.LeagueInfo;
+import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.tournament.adapter.RecyclerViewTournamentTimeTableAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class TournamentTimeTableFragment extends Fragment {
     Logger log = LoggerFactory.getLogger(TournamentTimeTableFragment.class);
@@ -27,32 +33,37 @@ public class TournamentTimeTableFragment extends Fragment {
         final View view;
         RecyclerView recyclerView;
         NestedScrollView scroller;
-        log.info("INFO: TournamentTimeTableFragment onCreateView 1");
+        LinearLayout layout;
+        Bundle arguments = getArguments();
+        LeagueInfo league = (LeagueInfo) arguments.getSerializable("TOURNAMENTINFOMATCHESLEAGUE");
+        List<Match> matches = league.getMatches();
         view = inflater.inflate(R.layout.tournament_info_tab_timetable, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.tournamentInfoTabTimetable);
-        scroller = (NestedScrollView) view.findViewById(R.id.tournamentInfoTimetableScroll);
+        recyclerView = view.findViewById(R.id.tournamentInfoTabTimetable);
+        recyclerView.setNestedScrollingEnabled(false);
+        scroller = view.findViewById(R.id.tournamentInfoTimetableScroll);
+        layout = view.findViewById(R.id.tournamentInfoTabTimetableEmpty);
+        if (matches.size()!=0){
+            layout.setVisibility(View.GONE);
+        }
         scrollStatus = false;
-        RecyclerViewTournamentTimeTableAdapter adaptet = new RecyclerViewTournamentTimeTableAdapter(getActivity(), this);
-        recyclerView.setAdapter(adaptet);
+        RecyclerViewTournamentTimeTableAdapter adapter = new RecyclerViewTournamentTimeTableAdapter(getActivity(), matches, league);
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        scroller.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 
-                if (scrollY > oldScrollY) {
-                    log.info("INFO: RecyclerView scrolled: scroll down!");
-                    PersonalActivity.navigation.animate().translationY(PersonalActivity.navigation.getHeight());
+            if (scrollY > oldScrollY) {
+                log.info("INFO: RecyclerView scrolled: scroll down!");
+//                    PersonalActivity.navigation.animate().translationY(PersonalActivity.navigation.getHeight());
 
-                }
-                if (scrollY < oldScrollY) {
-                    log.info("INFO: RecyclerView scrolled: scroll up!");
-                    PersonalActivity.navigation.animate().translationY(0);
-                    scrollStatus = false;
-                }
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    log.info("INFO: RecyclerView scrolled: bottom scroll!");
-                    scrollStatus = true;
-                }
+            }
+            if (scrollY < oldScrollY) {
+                log.info("INFO: RecyclerView scrolled: scroll up!");
+//                    PersonalActivity.navigation.animate().translationY(0);
+                scrollStatus = false;
+            }
+            if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                log.info("INFO: RecyclerView scrolled: bottom scroll!");
+                scrollStatus = true;
             }
         });
         return view;

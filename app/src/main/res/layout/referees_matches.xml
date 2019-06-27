@@ -30,14 +30,14 @@
                 android:visibility="visible">
 
                 <ImageButton
+                    android:id="@+id/refereesMatchesSave"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_tick"
-                    android:visibility="invisible"/>
+                    app:srcCompat="@drawable/ic_tick"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/manrope_regular"
-                    android:text="@string/matches"
+                    android:text="@string/refereeSettings2"
                     android:textColor="@color/colorBottomNavigationUnChecked"
                     android:textSize="16sp" />
 
@@ -57,12 +57,12 @@
                     android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_arrow_back" />
+                    app:srcCompat="@drawable/ic_close8" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/userClubScroll"
+        android:id="@+id/scrollerRefereesMatches"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -73,11 +73,44 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
+            <LinearLayout
+                android:id="@+id/emptyRefereesMatch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="65sp"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_marginTop="45sp"
+                    android:layout_marginBottom="45sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:src="@drawable/ic_empty1"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="15sp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:textColor="@color/colorBottomNavigationUnChecked"
+                    android:text="@string/empty"
+                    android:layout_gravity="center_horizontal"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="25sp"
+                    android:paddingStart="25sp"
+                    android:gravity="center_horizontal"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorLightGrayForText"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@string/not_matches"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewRefereesMatches"
-                    android:layout_marginTop="15sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />

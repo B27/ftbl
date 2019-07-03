@@ -3,20 +3,17 @@ package com.example.user.secondfootballapp.players.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -41,7 +38,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -79,9 +75,9 @@ public class PlayersPage extends Fragment {
         theTextArea.setTypeface(tf);
         theTextArea.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
         searchView.setQueryHint(Html.fromHtml("<font color = #63666F>" + getResources().getString(R.string.search) + "</font>"));
-        ImageView icon = searchView.findViewById(android.support.v7.appcompat.R.id.search_button);
+        ImageView icon = searchView.findViewById(androidx.appcompat.R.id.search_button);
         icon.setColorFilter(getResources().getColor(R.color.colorLightGrayForText), PorterDuff.Mode.SRC_ATOP);
-        ImageView searchViewClose = searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        ImageView searchViewClose = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
         searchViewClose.setColorFilter(getResources().getColor(R.color.colorLightGrayForText), PorterDuff.Mode.SRC_ATOP);
         scroller.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {

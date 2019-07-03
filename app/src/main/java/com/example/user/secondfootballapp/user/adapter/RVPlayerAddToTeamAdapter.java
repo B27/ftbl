@@ -2,10 +2,9 @@ package com.example.user.secondfootballapp.user.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import com.example.user.secondfootballapp.CheckName;
 import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.FullScreenImage;
-import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.SaveSharedPreference;
 import com.example.user.secondfootballapp.model.League;
@@ -30,10 +28,6 @@ import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.PersonTeams;
 import com.example.user.secondfootballapp.model.ServerResponse;
 import com.example.user.secondfootballapp.model.Team;
-import com.example.user.secondfootballapp.model.User;
-import com.example.user.secondfootballapp.players.activity.Player;
-import com.example.user.secondfootballapp.players.activity.PlayerInv;
-import com.example.user.secondfootballapp.players.activity.PlayersPage;
 import com.example.user.secondfootballapp.user.activity.AuthoUser;
 import com.example.user.secondfootballapp.user.activity.PlayerAddToTeam;
 import com.example.user.secondfootballapp.user.activity.UserCommandInfo;
@@ -46,15 +40,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -63,7 +51,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.app.Activity.RESULT_OK;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVPlayerAddToTeamAdapter extends RecyclerView.Adapter<RVPlayerAddToTeamAdapter.ViewHolder> {

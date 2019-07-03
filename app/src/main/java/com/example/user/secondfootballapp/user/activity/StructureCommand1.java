@@ -1,15 +1,14 @@
 package com.example.user.secondfootballapp.user.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.model.ActiveMatch;
 import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.Player;

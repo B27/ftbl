@@ -1,16 +1,14 @@
 package com.example.user.secondfootballapp.club.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,21 +22,13 @@ import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.club.activity.Club;
 import com.example.user.secondfootballapp.club.activity.ClubPage;
-import com.example.user.secondfootballapp.model.Person;
-import com.example.user.secondfootballapp.players.activity.Player;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 

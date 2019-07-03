@@ -2,10 +2,9 @@ package com.example.user.secondfootballapp.tournament.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,41 +14,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.SetImage;
 import com.example.user.secondfootballapp.TimeToString;
 import com.example.user.secondfootballapp.model.Club;
-import com.example.user.secondfootballapp.model.Event;
-import com.example.user.secondfootballapp.model.League;
 import com.example.user.secondfootballapp.model.LeagueInfo;
 import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.model.Player;
 import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.tournament.activity.ShowProtocol;
-import com.example.user.secondfootballapp.tournament.activity.TournamentTimeTableFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import q.rorbin.badgeview.QBadgeView;
-
-import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RecyclerViewTournamentTimeTableAdapter extends RecyclerView.Adapter<RecyclerViewTournamentTimeTableAdapter.ViewHolder> {
     Logger log = LoggerFactory.getLogger(PersonalActivity.class);

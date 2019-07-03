@@ -1,16 +1,15 @@
 package com.example.user.secondfootballapp.user.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.model.Player;
 import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.user.adapter.RVProtocolCommand1Adapter;
@@ -19,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 

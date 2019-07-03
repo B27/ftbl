@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +21,6 @@ import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.SaveSharedPreference;
-import com.example.user.secondfootballapp.club.activity.ClubPage;
 import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.SignIn;
 import com.example.user.secondfootballapp.model.User;

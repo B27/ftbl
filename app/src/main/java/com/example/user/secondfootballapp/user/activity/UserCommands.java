@@ -1,15 +1,14 @@
 package com.example.user.secondfootballapp.user.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,27 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.user.secondfootballapp.CheckError;
-import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.SaveSharedPreference;
-import com.example.user.secondfootballapp.model.GetLeagueInfo;
-import com.example.user.secondfootballapp.model.Person;
-import com.example.user.secondfootballapp.model.PersonTeams;
-import com.example.user.secondfootballapp.model.Team;
-import com.example.user.secondfootballapp.model.User;
-import com.example.user.secondfootballapp.players.activity.PlayerInv;
-import com.example.user.secondfootballapp.tournament.activity.TournamentTimeTableFragment;
-import com.example.user.secondfootballapp.user.adapter.RVUserCommandAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 

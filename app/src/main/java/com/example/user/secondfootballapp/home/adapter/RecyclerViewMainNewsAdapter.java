@@ -3,25 +3,20 @@ package com.example.user.secondfootballapp.home.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.home.activity.MainPage;
 import com.example.user.secondfootballapp.home.activity.NewsAndAds;
 import com.example.user.secondfootballapp.home.activity.NewsPage;
 import com.example.user.secondfootballapp.model.News_;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 

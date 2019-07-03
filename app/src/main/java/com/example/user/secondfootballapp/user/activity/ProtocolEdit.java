@@ -1,9 +1,9 @@
 package com.example.user.secondfootballapp.user.activity;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -11,10 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
@@ -42,8 +38,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,8 +45,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class ProtocolEdit extends AppCompatActivity {
     public static List<Integer> items;

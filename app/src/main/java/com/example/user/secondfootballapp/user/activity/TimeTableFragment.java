@@ -1,14 +1,14 @@
 package com.example.user.secondfootballapp.user.activity;
 
 import android.annotation.SuppressLint;
-import android.arch.paging.PagedList;
+import androidx.paging.PagedList;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +19,13 @@ import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.model.ActiveMatch;
 import com.example.user.secondfootballapp.model.ActiveMatches;
-import com.example.user.secondfootballapp.model.Match;
-import com.example.user.secondfootballapp.user.adapter.MyPositionalDataSource;
 import com.example.user.secondfootballapp.user.adapter.RVTimeTableAdapter;
-import com.example.user.secondfootballapp.user.adapter.RVTimeTablePagAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

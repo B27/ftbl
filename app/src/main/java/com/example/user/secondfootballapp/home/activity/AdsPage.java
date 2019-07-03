@@ -2,11 +2,11 @@ package com.example.user.secondfootballapp.home.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +17,6 @@ import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.home.adapter.RecyclerViewAdsAdapter;
 import com.example.user.secondfootballapp.model.Announce;
 import com.example.user.secondfootballapp.model.Announces;
-import com.example.user.secondfootballapp.model.News;
-import com.example.user.secondfootballapp.model.News_;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 
 import org.slf4j.Logger;
@@ -30,9 +28,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AdsPage extends Fragment {
     Logger log = LoggerFactory.getLogger(AdsPage.class);

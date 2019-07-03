@@ -249,7 +249,7 @@
                             android:textColor="@color/colorBottomNavigationUnChecked"
                             android:textSize="14sp" />
 
-                        <android.support.v7.widget.SwitchCompat
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/refereesMatchSwitch1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -302,7 +302,7 @@
                             android:textColor="@color/colorBottomNavigationUnChecked"
                             android:textSize="14sp" />
 
-                        <android.support.v7.widget.SwitchCompat
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/refereesMatchSwitch2"
                             android:layout_marginTop="2sp"
                             android:layout_marginBottom="2sp"
@@ -355,7 +355,7 @@
                             android:textColor="@color/colorBottomNavigationUnChecked"
                             android:textSize="14sp" />
 
-                        <android.support.v7.widget.SwitchCompat
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/refereesMatchSwitch3"
                             android:layout_marginTop="2sp"
                             android:layout_marginBottom="2sp"
@@ -405,7 +405,7 @@
                                 android:textColor="@color/colorBottomNavigationUnChecked"
                                 android:textSize="14sp" />
 
-                            <android.support.v7.widget.SwitchCompat
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/refereesMatchSwitch4"
                                 android:layout_marginTop="2sp"
                                 android:layout_marginBottom="2sp"

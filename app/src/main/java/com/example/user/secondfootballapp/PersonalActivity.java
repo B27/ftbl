@@ -4,59 +4,39 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.Fragment;
+
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 
 import com.example.user.secondfootballapp.club.activity.ClubPage;
-import com.example.user.secondfootballapp.club.adapter.RecyclerViewClubAdapter;
 import com.example.user.secondfootballapp.controller.BottomNavigationViewHelper;
 import com.example.user.secondfootballapp.controller.CustomTypefaceSpan;
-import com.example.user.secondfootballapp.home.activity.ComingMatches;
 import com.example.user.secondfootballapp.home.activity.MainPage;
-import com.example.user.secondfootballapp.home.activity.NewsAndAds;
 import com.example.user.secondfootballapp.model.Advertisings;
 import com.example.user.secondfootballapp.model.Club;
 import com.example.user.secondfootballapp.model.Clubs;
 import com.example.user.secondfootballapp.model.League;
-import com.example.user.secondfootballapp.model.News;
-import com.example.user.secondfootballapp.model.News_;
 import com.example.user.secondfootballapp.model.People;
 import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.Tournaments;
-import com.example.user.secondfootballapp.model.User;
 import com.example.user.secondfootballapp.players.activity.PlayersPage;
-import com.example.user.secondfootballapp.players.adapter.RecyclerViewPlayersAdapter;
 import com.example.user.secondfootballapp.tournament.activity.Tournament;
 import com.example.user.secondfootballapp.tournament.activity.TournamentPage;
-import com.example.user.secondfootballapp.tournament.adapter.RecyclerViewTournamentAdapter;
-import com.example.user.secondfootballapp.tournament.adapter.ViewPagerTournamentInfoAdapter;
 import com.example.user.secondfootballapp.user.activity.AuthoUser;
-import com.example.user.secondfootballapp.user.activity.ConfirmProtocol;
-import com.example.user.secondfootballapp.user.activity.NewCommand;
-import com.example.user.secondfootballapp.user.activity.PersonalInfo;
 import com.example.user.secondfootballapp.user.activity.UserPage;
-import com.github.pwittchen.reactivenetwork.library.rx2.ConnectivityPredicate;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 
 import org.slf4j.Logger;
@@ -67,26 +47,13 @@ import java.lang.reflect.Field;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.HttpException;
-import retrofit2.Response;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PersonalActivity extends AppCompatActivity {
 
@@ -111,7 +78,7 @@ public class PersonalActivity extends AppCompatActivity {
     public static Fragment fragmentUser = new UserPage();
     Fragment fragment = (Tournament) getSupportFragmentManager().findFragmentByTag("tornamentTAG");
 
-    android.support.v4.app.FragmentManager fragmentManager = this.getSupportFragmentManager();
+    FragmentManager fragmentManager = this.getSupportFragmentManager();
     //    Fragment active = fragmentHome;
     public static Fragment active = fragmentMain;
 
@@ -439,7 +406,9 @@ public class PersonalActivity extends AppCompatActivity {
             for (int i = 0; i < menuView.getChildCount(); i++) {
                 BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
                 //noinspection RestrictedApi
+                /* TODO: after migrate to AndroidX is commented
                 item.setShiftingMode(false);
+                */
                 item.setPadding(0, 25, 0, 0);
                 // set once again checked value, so view will be updated
                 //noinspection RestrictedApi

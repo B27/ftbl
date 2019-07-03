@@ -1,6 +1,6 @@
 package com.example.user.secondfootballapp.user.adapter;
 
-import android.arch.paging.PositionalDataSource;
+import androidx.paging.PositionalDataSource;
 
 import com.example.user.secondfootballapp.model.Match;
 

@@ -2,10 +2,9 @@ package com.example.user.secondfootballapp.user.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,8 +19,6 @@ import com.example.user.secondfootballapp.SetImage;
 import com.example.user.secondfootballapp.model.ActiveMatch;
 import com.example.user.secondfootballapp.model.Club;
 import com.example.user.secondfootballapp.model.Event;
-import com.example.user.secondfootballapp.model.League;
-import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.Player;
 import com.example.user.secondfootballapp.model.PlayerEvent;
@@ -37,12 +34,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 public class ConfirmProtocol extends AppCompatActivity {
     Logger log = LoggerFactory.getLogger(ConfirmProtocol.class);

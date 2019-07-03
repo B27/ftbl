@@ -7,13 +7,13 @@
     tools:context=".user.activity.RegistrationUser"
     android:orientation="vertical"
     android:background="@color/colorWhite">
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorLightGray2"
@@ -60,8 +60,8 @@
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/ic_close8" />
             </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
     <FrameLayout
         android:id="@+id/registrationViewPager"
         android:layout_width="match_parent"

@@ -1,8 +1,8 @@
 package com.example.user.secondfootballapp.tournament.adapter;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +18,6 @@ import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.model.Club;
-import com.example.user.secondfootballapp.model.Event;
 import com.example.user.secondfootballapp.model.League;
 import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.model.Player;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.spec.ECField;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,7 +8,7 @@
     tools:context=".PersonalActivity"
     >
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarAdsPage"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -16,7 +16,7 @@
         android:fitsSystemWindows="true"
         >
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarAdsPage"
                 app:titleTextAppearance="@style/Widget.AppCompat.Toolbar"
                 android:layout_width="match_parent"
@@ -43,13 +43,13 @@
                         android:textSize="16sp" />
 
                 </RelativeLayout>
-            </android.support.v7.widget.Toolbar>
+            </androidx.appcompat.widget.Toolbar>
 
 
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollerAds"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,7 +62,7 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewAds"
                 android:paddingTop="8sp"
                 android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                 tools:layout_editor_absoluteY="26dp" />
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

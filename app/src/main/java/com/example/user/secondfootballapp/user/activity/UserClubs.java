@@ -1,24 +1,19 @@
 package com.example.user.secondfootballapp.user.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.Fragment;
+import androidx.core.widget.NestedScrollView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,11 +23,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.SaveSharedPreference;
-import com.example.user.secondfootballapp.home.activity.NewsPage;
 import com.example.user.secondfootballapp.model.Club;
 import com.example.user.secondfootballapp.model.Person;
-import com.example.user.secondfootballapp.user.adapter.RVUserClubInvAdapter;
-import com.example.user.secondfootballapp.user.adapter.RVUserCommandAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

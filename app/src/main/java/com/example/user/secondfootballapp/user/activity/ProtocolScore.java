@@ -1,44 +1,29 @@
 package com.example.user.secondfootballapp.user.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.SetImage;
-import com.example.user.secondfootballapp.model.ActiveMatch;
-import com.example.user.secondfootballapp.model.Event;
 import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.model.PlayerEvent;
 import com.example.user.secondfootballapp.model.TeamTitleClubLogoMatchEvents;
-import com.example.user.secondfootballapp.user.adapter.RVProtocolEditAdapter;
 import com.example.user.secondfootballapp.user.adapter.RVScoreFoulsAdapter;
 import com.example.user.secondfootballapp.user.adapter.RVScoreHalfAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-
-import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class ProtocolScore extends AppCompatActivity{
     Logger log = LoggerFactory.getLogger(ProtocolMatchScore.class);

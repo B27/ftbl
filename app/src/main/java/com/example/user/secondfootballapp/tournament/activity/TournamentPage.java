@@ -1,41 +1,31 @@
 package com.example.user.secondfootballapp.tournament.activity;
 
 import android.annotation.SuppressLint;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 
 import com.example.user.secondfootballapp.CheckError;
 import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.home.activity.HomePage;
 import com.example.user.secondfootballapp.home.activity.NewsPage;
-import com.example.user.secondfootballapp.home.adapter.RecyclerViewHomeAdapter;
 import com.example.user.secondfootballapp.model.GetLeagueInfo;
 import com.example.user.secondfootballapp.model.League;
 import com.example.user.secondfootballapp.model.LeagueInfo;
-import com.example.user.secondfootballapp.model.News;
 import com.example.user.secondfootballapp.model.People;
 import com.example.user.secondfootballapp.model.Person;
-import com.example.user.secondfootballapp.model.PlayerEvent;
 import com.example.user.secondfootballapp.model.Tournaments;
 import com.example.user.secondfootballapp.tournament.adapter.RecyclerViewTournamentAdapter;
-import com.example.user.secondfootballapp.user.adapter.RVProtocolEditAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,9 +36,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 @SuppressLint("ValidFragment")
 public class TournamentPage extends Fragment {
@@ -56,7 +43,7 @@ public class TournamentPage extends Fragment {
     public static List<Person> referees = new ArrayList<>();
     Logger log = LoggerFactory.getLogger(NewsPage.class);
     RecyclerView recyclerView;
-    android.support.v4.app.FragmentManager fragmentManager;
+    FragmentManager fragmentManager;
     ProgressBar progressBar;
     NestedScrollView scroller;
     List<League> tournaments= new ArrayList<>();
@@ -64,7 +51,7 @@ public class TournamentPage extends Fragment {
     int offset = 0;
     int limit = 5;
     @SuppressLint("ValidFragment")
-    public TournamentPage(android.support.v4.app.FragmentManager fragmentManager) {
+    public TournamentPage(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
     }
 

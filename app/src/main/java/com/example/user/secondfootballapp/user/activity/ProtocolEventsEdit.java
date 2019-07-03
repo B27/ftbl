@@ -1,16 +1,16 @@
 package com.example.user.secondfootballapp.user.activity;
 
 import android.content.Intent;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.appbar.AppBarLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -26,7 +26,6 @@ import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.Player;
 import com.example.user.secondfootballapp.model.PlayerEvent;
 import com.example.user.secondfootballapp.model.Team;
-import com.example.user.secondfootballapp.user.adapter.RVEventsIconAdapter;
 import com.example.user.secondfootballapp.user.adapter.RVProtocolEditAdapter;
 
 import org.slf4j.Logger;

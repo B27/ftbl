@@ -1,9 +1,9 @@
 package com.example.user.secondfootballapp.controller;
 
 import android.annotation.SuppressLint;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.user.secondfootballapp.PersonalActivity;
 
 import org.slf4j.Logger;
@@ -24,7 +24,9 @@ public class BottomNavigationViewHelper {
             for (int i = 0; i < menuView.getChildCount(); i++) {
                 BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
                 //noinspection RestrictedApi
+                /* TODO: after migrate to AndroidX is commented
                 item.setShiftingMode(false);
+                */
                 item.setPadding(0, 15, 0, 0);
                 // set once again checked value, so view will be updated
                 //noinspection RestrictedApi

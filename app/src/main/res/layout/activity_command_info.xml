@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,13 +14,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="top"
@@ -69,15 +69,15 @@
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_arrow_back" />
                 </RelativeLayout>
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorLightGray" />
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/commandInfoTab"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -86,18 +86,18 @@
             app:tabTextAppearance="@style/CustomTabTextSize"
             app:tabTextColor="@color/colorLightGrayForText">
 
-            <android.support.design.widget.TabItem
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Left" />
 
-            <android.support.design.widget.TabItem
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Center" />
-        </android.support.design.widget.TabLayout>
+        </com.google.android.material.tabs.TabLayout>
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/commandInfoViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -106,7 +106,7 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/commandInfoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,4 +115,4 @@
         android:layout_marginEnd="20dp"
         android:src="@drawable/ic_question"
         app:backgroundTint="@color/colorPrimary" />
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

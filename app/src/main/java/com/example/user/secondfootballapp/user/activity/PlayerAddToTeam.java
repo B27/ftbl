@@ -5,14 +5,13 @@ import android.app.ProgressDialog;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
 import android.text.Html;
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -77,9 +76,9 @@ public class PlayerAddToTeam extends AppCompatActivity {
         theTextArea.setTypeface(tf);
         theTextArea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         searchView.setQueryHint(Html.fromHtml("<font color = #63666F>" + getResources().getString(R.string.search) + "</font>"));
-        ImageView icon = searchView.findViewById(android.support.v7.appcompat.R.id.search_button);
+        ImageView icon = searchView.findViewById(androidx.appcompat.R.id.search_button);
         icon.setColorFilter(getResources().getColor(R.color.colorLightGrayForText), PorterDuff.Mode.SRC_ATOP);
-        ImageView searchViewClose = searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        ImageView searchViewClose = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
         searchViewClose.setColorFilter(getResources().getColor(R.color.colorLightGrayForText), PorterDuff.Mode.SRC_ATOP);
         scroller.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {

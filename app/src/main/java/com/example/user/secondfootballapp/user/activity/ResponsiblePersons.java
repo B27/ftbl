@@ -2,13 +2,12 @@ package com.example.user.secondfootballapp.user.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,23 +19,16 @@ import com.example.user.secondfootballapp.CheckError;
 import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.SaveSharedPreference;
-import com.example.user.secondfootballapp.model.League;
 import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.model.Matches;
 import com.example.user.secondfootballapp.model.Person;
-import com.example.user.secondfootballapp.model.Referee;
 import com.example.user.secondfootballapp.model.RefereeRequest;
 import com.example.user.secondfootballapp.model.RefereeRequestList;
-import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.user.adapter.SpinnerRefereeAdapter;
-import com.example.user.secondfootballapp.user.adapter.SpinnerTournamentAdapter;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +37,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 

@@ -1,9 +1,7 @@
 package com.example.user.secondfootballapp.tournament.adapter;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +12,9 @@ import android.widget.TextView;
 import com.example.user.secondfootballapp.CheckName;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.model.LeagueInfo;
-import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.Player;
-import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.tournament.activity.CommandInfoActivity;
-import com.example.user.secondfootballapp.tournament.activity.TournamentTimeTableFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

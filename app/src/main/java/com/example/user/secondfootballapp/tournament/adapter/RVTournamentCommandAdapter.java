@@ -1,9 +1,9 @@
 package com.example.user.secondfootballapp.tournament.adapter;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,6 @@ import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.model.LeagueInfo;
 import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.tournament.GroupTeamPlaceComparator;
-import com.example.user.secondfootballapp.tournament.PlayerYCComparator;
 import com.example.user.secondfootballapp.tournament.activity.TournamentCommandFragment;
 
 import org.slf4j.Logger;

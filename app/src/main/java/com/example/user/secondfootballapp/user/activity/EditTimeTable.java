@@ -1,14 +1,12 @@
 package com.example.user.secondfootballapp.user.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -28,28 +26,14 @@ import com.example.user.secondfootballapp.user.adapter.SpinnerRefereeAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.exceptions.Exceptions;
-import io.reactivex.functions.Consumer;
-import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.HttpException;
-import retrofit2.Response;
 
 public class EditTimeTable extends AppCompatActivity {
     List<String> countReferees;

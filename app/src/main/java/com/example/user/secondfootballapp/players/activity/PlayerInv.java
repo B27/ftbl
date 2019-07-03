@@ -1,48 +1,28 @@
 package com.example.user.secondfootballapp.players.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageButton;
-import android.widget.Spinner;
-import android.widget.Toast;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.user.secondfootballapp.Controller;
+import android.widget.ImageButton;
+
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.SaveSharedPreference;
 import com.example.user.secondfootballapp.model.League;
-import com.example.user.secondfootballapp.model.People;
 import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.PersonTeams;
-import com.example.user.secondfootballapp.model.ServerResponse;
 import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.players.adapter.RVPlayerInvAdapter;
-import com.example.user.secondfootballapp.players.adapter.SpinnerCommandAdapter;
 import com.example.user.secondfootballapp.user.activity.AuthoUser;
-import com.example.user.secondfootballapp.user.activity.NewCommand;
-import com.example.user.secondfootballapp.user.activity.UserCommands;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PlayerInv extends AppCompatActivity {
     Logger log = LoggerFactory.getLogger(PlayerInv.class);

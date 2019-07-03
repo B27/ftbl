@@ -2,14 +2,11 @@ package com.example.user.secondfootballapp.user.activity;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+
+import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.example.user.secondfootballapp.AdvertisingFragment;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
 import com.ycuwq.datepicker.date.DatePickerDialogFragment;
@@ -17,12 +14,9 @@ import com.ycuwq.datepicker.date.DatePickerDialogFragment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 public class DatePicker extends DatePickerDialogFragment {
 //public class DatePicker extends DialogFragment {

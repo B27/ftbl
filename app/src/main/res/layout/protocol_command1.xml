@@ -9,7 +9,7 @@
 <!--android:focusable="true"-->
 <!--android:focusableInTouchMode="true"-->
 <!--tools:context=".user.activity.UserEditClub">-->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/editProtocolCoordinatorLayout"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,12 +19,12 @@
     tools:context=".user.activity.ProtocolCommand1"
     android:focusable="true"
     android:focusableInTouchMode="true">
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorLightGray2"
@@ -75,10 +75,10 @@
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/ic_close8" />
             </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -121,7 +121,7 @@
                 <!--android:spinnerMode="dialog"/>-->
 
             <!--android:layout_marginTop="5sp"-->
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
 
                 android:id="@+id/recyclerViewProtocolCommand1"
                 android:layout_width="match_parent"
@@ -131,7 +131,7 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
     <!--</LinearLayout>-->

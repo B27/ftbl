@@ -1,28 +1,20 @@
 package com.example.user.secondfootballapp.user.adapter;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.user.secondfootballapp.CheckError;
 import com.example.user.secondfootballapp.CheckName;
-import com.example.user.secondfootballapp.Controller;
 import com.example.user.secondfootballapp.DateToString;
 import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
@@ -30,33 +22,22 @@ import com.example.user.secondfootballapp.SetImage;
 import com.example.user.secondfootballapp.TimeToString;
 import com.example.user.secondfootballapp.model.ActiveMatch;
 import com.example.user.secondfootballapp.model.Club;
-import com.example.user.secondfootballapp.model.GetLeagueInfo;
-import com.example.user.secondfootballapp.model.League;
 import com.example.user.secondfootballapp.model.LeagueInfo;
-import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.Player;
 import com.example.user.secondfootballapp.model.Referee;
 import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.user.activity.AuthoUser;
 import com.example.user.secondfootballapp.user.activity.EditTimeTable;
-import com.example.user.secondfootballapp.user.activity.ResponsiblePersons;
 import com.example.user.secondfootballapp.user.activity.TimeTableFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import q.rorbin.badgeview.QBadgeView;
-
-import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVTimeTableAdapter extends RecyclerView.Adapter<RVTimeTableAdapter.ViewHolder> {
     TimeTableFragment context;

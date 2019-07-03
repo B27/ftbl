@@ -1,9 +1,9 @@
 package com.example.user.secondfootballapp;
 
 import android.app.Dialog;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,11 +15,6 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.user.secondfootballapp.model.Ad;
-import com.example.user.secondfootballapp.model.News;
-import com.example.user.secondfootballapp.model.News_;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.List;

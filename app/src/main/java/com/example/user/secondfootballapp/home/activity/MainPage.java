@@ -1,58 +1,19 @@
 package com.example.user.secondfootballapp.home.activity;
 
-import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.user.secondfootballapp.CheckError;
-import com.example.user.secondfootballapp.Controller;
-import com.example.user.secondfootballapp.PersonalActivity;
 import com.example.user.secondfootballapp.R;
-import com.example.user.secondfootballapp.home.adapter.RecyclerViewMainAdsAdapter;
-import com.example.user.secondfootballapp.home.adapter.RecyclerViewMainNewsAdapter;
-import com.example.user.secondfootballapp.model.LeagueInfo;
-import com.example.user.secondfootballapp.model.News;
-import com.example.user.secondfootballapp.model.News_;
-import com.example.user.secondfootballapp.model.Team;
-import com.example.user.secondfootballapp.tournament.activity.AbbreviationDialogFragment;
-import com.example.user.secondfootballapp.tournament.activity.CommandAbbrev;
-import com.example.user.secondfootballapp.tournament.activity.TournamentCommandFragment;
-import com.example.user.secondfootballapp.tournament.activity.TournamentPlayersFragment;
-import com.example.user.secondfootballapp.tournament.activity.TournamentTimeTableFragment;
 import com.example.user.secondfootballapp.tournament.adapter.ViewPagerTournamentInfoAdapter;
-import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainPage extends Fragment {
     TabLayout tabLayout;

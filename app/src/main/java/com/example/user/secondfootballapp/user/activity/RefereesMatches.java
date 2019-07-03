@@ -1,11 +1,11 @@
 package com.example.user.secondfootballapp.user.activity;
 
 import android.annotation.SuppressLint;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -17,7 +17,6 @@ import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.SaveSharedPreference;
 import com.example.user.secondfootballapp.model.ActiveMatch;
 import com.example.user.secondfootballapp.model.ActiveMatches;
-import com.example.user.secondfootballapp.model.Match;
 import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.Referee;
 import com.example.user.secondfootballapp.model.RefereeRequest;

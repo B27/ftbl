@@ -43,6 +43,7 @@ public class AdsPage extends Fragment {
     int count = 0;
     int limit = 5;
     int offset = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
@@ -52,15 +53,17 @@ public class AdsPage extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewAds);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        try{
-            adapter = new RecyclerViewAdsAdapter(getActivity(),AdsPage.this , allNews);
+        try {
+            adapter = new RecyclerViewAdsAdapter(getActivity(), AdsPage.this, allNews);
             recyclerView.setAdapter(adapter);
-        }catch (Exception e){log.error("ERROR: " , e);}
+        } catch (Exception e) {
+            log.error("ERROR: ", e);
+        }
         scroller.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                 offset++;
-                int temp = limit*offset;
-                if (temp<=count) {
+                int temp = limit * offset;
+                if (temp <= count) {
                     String str = String.valueOf(temp);
                     GetAllAds("5", str);
                 }
@@ -78,16 +81,16 @@ public class AdsPage extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(isConnected -> {
                     // isConnected can be true or false
-                    if (isConnected){
+                    if (isConnected) {
                         GetAllAds("5", "0");
                     }
                 });
     }
 
     @SuppressLint("CheckResult")
-    public void GetAllAds(String limit, String offset){
+    public void GetAllAds(String limit, String offset) {
         Controller.getApi().getAllAnnounce(limit, offset)
-        .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
                 .subscribe(matches -> saveData(matches)

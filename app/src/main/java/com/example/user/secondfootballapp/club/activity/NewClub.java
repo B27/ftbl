@@ -58,16 +58,16 @@ import retrofit2.Response;
 import static android.Manifest.permission.CAMERA;
 
 public class NewClub extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(NewClub.class);
-    Bitmap myBitmap;
-    Uri picUri;
-    ImageButton buttonLogo;
+    private final Logger log = LoggerFactory.getLogger(NewClub.class);
+    private Bitmap myBitmap;
+    private Uri picUri;
+    private ImageButton buttonLogo;
     private ArrayList permissionsToRequest;
-    private ArrayList permissionsRejected = new ArrayList();
-    private ArrayList permissions = new ArrayList();
+    private final ArrayList permissionsRejected = new ArrayList();
+    private final ArrayList permissions = new ArrayList();
     private final static int ALL_PERMISSIONS_RESULT = 107;
-    EditText textDesc;
-    EditText textTitle;
+    private EditText textDesc;
+    private EditText textTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ImageButton imageClose;
@@ -80,61 +80,37 @@ public class NewClub extends AppCompatActivity {
         textDesc = findViewById(R.id.createClubDesc);
         textTitle = findViewById(R.id.createClubTitle);
 //        textDesc.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textDesc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    textDesc.getBackground().clearColorFilter();
-                }
+        textDesc.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus){
+                textDesc.getBackground().clearColorFilter();
             }
         });
         textTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    textTitle.getBackground().clearColorFilter();
-                }
-                else {
-                    textTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textTitle.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus){
+                textTitle.getBackground().clearColorFilter();
+            }
+            else {
+                textTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
-        textDesc.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (v.getId() == R.id.userEditClubDesc) {
-                    v.getParent().requestDisallowInterceptTouchEvent(true);
-                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                        case MotionEvent.ACTION_UP:
-                            v.getParent().requestDisallowInterceptTouchEvent(false);
-                            break;
-                    }
+        textDesc.setOnTouchListener((v, event) -> {
+            if (v.getId() == R.id.userEditClubDesc) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
                 }
-                return false;
             }
+            return false;
         });
-        imageClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        imageSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (check()) {
-                    createClub();
-                }
+        imageClose.setOnClickListener(v -> finish());
+        imageSave.setOnClickListener(v -> {
+            if (check()) {
+                createClub();
             }
         });
 
-        buttonLogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(getPickImageChooserIntent(), 200);
-            }
-        });
+        buttonLogo.setOnClickListener(v -> startActivityForResult(getPickImageChooserIntent(), 200));
         permissions.add(CAMERA);
         permissionsToRequest = findUnAskedPermissions(permissions);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -144,7 +120,7 @@ public class NewClub extends AppCompatActivity {
     }
 
     private Boolean check(){
-        Boolean check = false;
+        boolean check = false;
         String title = textTitle.getText().toString();
         String desc = textDesc.getText().toString();
         Boolean count = false;
@@ -156,7 +132,7 @@ public class NewClub extends AppCompatActivity {
 
         return check;
     }
-    public void createClub(){
+    private void createClub(){
         //session check
 //        try{
         String title = textTitle.getText().toString();
@@ -242,7 +218,7 @@ public class NewClub extends AppCompatActivity {
     }
 
 
-    public Intent getPickImageChooserIntent() {
+    private Intent getPickImageChooserIntent() {
 
         // Determine Uri of camera image to save.
         Uri outputFileUri = getCaptureImageOutputUri();
@@ -322,7 +298,7 @@ public class NewClub extends AppCompatActivity {
                     Bitmap newBitmap = getResizedBitmap(myBitmap, 500);
                     Glide.with(this)
                             .load(newBitmap)
-                            .apply(new RequestOptions()
+                            .apply(RequestOptions
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
                                     .priority(Priority.HIGH))
@@ -338,7 +314,7 @@ public class NewClub extends AppCompatActivity {
                     Bitmap newBitmap = getResizedBitmap(myBitmap, 500);
                     Glide.with(this)
                             .load(newBitmap)
-                            .apply(new RequestOptions()
+                            .apply(RequestOptions
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
                                     .priority(Priority.HIGH))
@@ -352,7 +328,7 @@ public class NewClub extends AppCompatActivity {
 
     }
 
-    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+    private Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
 
@@ -367,7 +343,7 @@ public class NewClub extends AppCompatActivity {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
-    public Uri getPickImageResultUri(Intent data) {
+    private Uri getPickImageResultUri(Intent data) {
         boolean isCamera = true;
         if (android.os.Build.VERSION.SDK_INT >= 23) {
             isCamera = data == null || data.getClipData() == null;
@@ -401,7 +377,7 @@ public class NewClub extends AppCompatActivity {
     }
 
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
 
         for (String perm : wanted) {
             if (!hasPermission(perm)) {
@@ -439,42 +415,38 @@ public class NewClub extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
-        switch (requestCode) {
+        if (requestCode == ALL_PERMISSIONS_RESULT) {
+            for (Object perms : permissionsToRequest) {
+                if (hasPermission(perms.toString())) {
 
-            case ALL_PERMISSIONS_RESULT:
-                for (Object perms : permissionsToRequest) {
-                    if (hasPermission(perms.toString())) {
+                } else {
 
-                    } else {
-
-                        permissionsRejected.add(perms);
-                    }
+                    permissionsRejected.add(perms);
                 }
+            }
 
-                if (permissionsRejected.size() > 0) {
+            if (permissionsRejected.size() > 0) {
 
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (shouldShowRequestPermissionRationale((String) permissionsRejected.get(0))) {
-                            showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (shouldShowRequestPermissionRationale((String) permissionsRejected.get(0))) {
+                        showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                                                //Log.d("API123", "permisionrejected " + permissionsRejected.size());
+                                            //Log.d("API123", "permisionrejected " + permissionsRejected.size());
 
-                                                requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
-                                            }
+                                            requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
                                         }
-                                    });
-                            return;
-                        }
+                                    }
+                                });
+                        return;
                     }
-
                 }
 
-                break;
+            }
         }
 
     }

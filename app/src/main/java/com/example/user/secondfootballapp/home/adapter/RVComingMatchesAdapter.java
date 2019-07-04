@@ -32,9 +32,9 @@ import java.util.List;
 import q.rorbin.badgeview.QBadgeView;
 
 public class RVComingMatchesAdapter extends RecyclerView.Adapter<RVComingMatchesAdapter.ViewHolder> {
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    private PersonalActivity activity;
-    private List<ActiveMatch> matches;
+    private final Logger log = LoggerFactory.getLogger(PersonalActivity.class);
+    private final PersonalActivity activity;
+    private final List<ActiveMatch> matches;
 
     public RVComingMatchesAdapter(Activity activity, List<ActiveMatch> matches) {
         this.activity = (PersonalActivity) activity;
@@ -45,8 +45,7 @@ public class RVComingMatchesAdapter extends RecyclerView.Adapter<RVComingMatches
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.timetable_fragment, parent, false);
-        RVComingMatchesAdapter.ViewHolder holder = new RVComingMatchesAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -176,22 +175,22 @@ public class RVComingMatchesAdapter extends RecyclerView.Adapter<RVComingMatches
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textCommandTitle1;
-        TextView textCommandTitle2;
-        ImageView imgCommandLogo1;
-        ImageView imgCommandLogo2;
-        TextView textStadium;
-        TextView textDate;
-        TextView textTime;
-        TextView textTour;
-        TextView textLastScore;
-        TextView textPenalty;
+        final TextView textCommandTitle1;
+        final TextView textCommandTitle2;
+        final ImageView imgCommandLogo1;
+        final ImageView imgCommandLogo2;
+        final TextView textStadium;
+        final TextView textDate;
+        final TextView textTime;
+        final TextView textTour;
+        final TextView textLastScore;
+        final TextView textPenalty;
         //        TextView textTournamentTitle;
-        TextView textScore;
-        RelativeLayout layout;
-        View line;
+        final TextView textScore;
+        final RelativeLayout layout;
+        final View line;
 
-        public ViewHolder(View item) {
+        ViewHolder(View item) {
             super(item);
             textCommandTitle1 = item.findViewById(R.id.timetableCommandTitle1);
             textCommandTitle2 = item.findViewById(R.id.timetableCommandTitle2);

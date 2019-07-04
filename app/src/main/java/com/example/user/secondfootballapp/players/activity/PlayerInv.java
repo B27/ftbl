@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerInv extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(PlayerInv.class);
+    final Logger log = LoggerFactory.getLogger(PlayerInv.class);
     Team itemTeam;
     List<PersonTeams> teams;
     public static String personId;

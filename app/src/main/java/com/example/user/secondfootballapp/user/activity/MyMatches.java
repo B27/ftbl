@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyMatches extends Fragment {
-    Logger log = LoggerFactory.getLogger(MyMatches.class);
+    private final Logger log = LoggerFactory.getLogger(MyMatches.class);
     static RVMyMatchesAdapter adapter;
     public static List<Match> matches;
 

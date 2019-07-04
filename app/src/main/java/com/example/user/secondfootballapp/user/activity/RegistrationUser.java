@@ -41,12 +41,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegistrationUser extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(RegistrationUser.class);
+    private final Logger log = LoggerFactory.getLogger(RegistrationUser.class);
     Fragment authoUser = new AuthoUser();
-    boolean check = false;
-    public static ImageButton imageSave;
-    PersonalInfo personalInfo = new PersonalInfo();
-    FragmentManager fragmentManager = this.getSupportFragmentManager();
+    private boolean check = false;
+    private static ImageButton imageSave;
+    private final PersonalInfo personalInfo = new PersonalInfo();
+    private final FragmentManager fragmentManager = this.getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public class RegistrationUser extends AppCompatActivity {
     }
 
 
-    public void SignUp() {
+    private void SignUp() {
         String name = PersonalInfo.textName.getText().toString();
         String surName = PersonalInfo.textSurname.getText().toString();
         String patronymic = PersonalInfo.textPatronymic.getText().toString();

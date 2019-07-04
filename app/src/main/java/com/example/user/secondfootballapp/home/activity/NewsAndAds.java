@@ -36,17 +36,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class NewsAndAds extends Fragment {
-    Logger log = LoggerFactory.getLogger(MainPage.class);
-    HomePage homePage = new HomePage();
-    AdsPage adsPage = new AdsPage();
-    RecyclerView recyclerViewNews;
-    RecyclerView recyclerViewAds;
-    List<News_> allNews = new ArrayList<>();
-    List<Announce> announces = new ArrayList<>();
-    RelativeLayout relativeLayout;
-    RelativeLayout relativeLayoutAds;
-    RecyclerViewMainNewsAdapter adapter;
-    RecyclerViewMainAdsAdapter adapterAds;
+    private final Logger log = LoggerFactory.getLogger(MainPage.class);
+    private final HomePage homePage = new HomePage();
+    private final AdsPage adsPage = new AdsPage();
+    private RecyclerView recyclerViewNews;
+    private RecyclerView recyclerViewAds;
+    private List<News_> allNews = new ArrayList<>();
+    private final List<Announce> announces = new ArrayList<>();
+    private RelativeLayout relativeLayout;
+    private RelativeLayout relativeLayoutAds;
+    private RecyclerViewMainNewsAdapter adapter;
+    private RecyclerViewMainAdsAdapter adapterAds;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -112,7 +112,7 @@ public class NewsAndAds extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(matches -> saveAds(matches)
+                .subscribe(this::saveAds
                         ,
                         error -> {
                             CheckError checkError = new CheckError();
@@ -128,13 +128,13 @@ public class NewsAndAds extends Fragment {
     }
 
     @SuppressLint("CheckResult")
-    public void GetAllNews() {
+    private void GetAllNews() {
         allNews = new ArrayList<>();
         Controller.getApi().getAllNews("2", "0")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(matches -> saveData(matches)
+                .subscribe(this::saveData
                         ,
                         error -> {
                             CheckError checkError = new CheckError();

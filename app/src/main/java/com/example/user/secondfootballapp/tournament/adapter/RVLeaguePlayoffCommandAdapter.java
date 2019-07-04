@@ -25,13 +25,13 @@ import java.io.Serializable;
 import java.util.List;
 
 public class RVLeaguePlayoffCommandAdapter extends RecyclerView.Adapter<RVLeaguePlayoffCommandAdapter.ViewHolder> {
-    private TournamentCommandFragment context;
-    private PersonalActivity activity;
+    private final TournamentCommandFragment context;
+    private final PersonalActivity activity;
     //    CommandInfoFragment commandInfoFragment = new CommandInfoFragment();
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
+    private final Logger log = LoggerFactory.getLogger(PersonalActivity.class);
 
-    private List<Team> teams;
-    private LeagueInfo leagueInfo;
+    private final List<Team> teams;
+    private final LeagueInfo leagueInfo;
 
     public RVLeaguePlayoffCommandAdapter(Activity activity, TournamentCommandFragment context, List<Team> teams,
                                          LeagueInfo leagueInfo) {
@@ -47,8 +47,7 @@ public class RVLeaguePlayoffCommandAdapter extends RecyclerView.Adapter<RVLeague
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.tournament_info_command, parent, false);
-        RVLeaguePlayoffCommandAdapter.ViewHolder holder = new RVLeaguePlayoffCommandAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -116,15 +115,15 @@ public class RVLeaguePlayoffCommandAdapter extends RecyclerView.Adapter<RVLeague
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout layout;
-        TextView textNum;
+        final LinearLayout layout;
+        final TextView textNum;
         //        TextView textTitle;
-        TextView btnTitle;
-        TextView textGame;
-        TextView textDifference;
-        TextView textPoint;
+        final TextView btnTitle;
+        final TextView textGame;
+        final TextView textDifference;
+        final TextView textPoint;
 
-        public ViewHolder(View item) {
+        ViewHolder(View item) {
             super(item);
             layout = item.findViewById(R.id.playoffLayout);
             textNum = item.findViewById(R.id.commandNum);

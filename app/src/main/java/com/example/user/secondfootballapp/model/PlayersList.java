@@ -3,7 +3,7 @@ package com.example.user.secondfootballapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PlayersList {
+class PlayersList {
 
     @SerializedName("_id")
     @Expose

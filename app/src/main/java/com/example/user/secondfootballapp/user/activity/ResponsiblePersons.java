@@ -41,9 +41,9 @@ import io.reactivex.schedulers.Schedulers;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class ResponsiblePersons extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(ResponsiblePersons.class);
-    List<String> countReferees;
-    Match match;
+    private final Logger log = LoggerFactory.getLogger(ResponsiblePersons.class);
+    private List<String> countReferees;
+    private Match match;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +178,7 @@ public class ResponsiblePersons extends AppCompatActivity {
     }
 
     @SuppressLint("CheckResult")
-    public void refereeRequest() {
+    private void refereeRequest() {
         List<RefereeRequest> list = new ArrayList<>();
         for (int i = 0; i < countReferees.size(); i++) {
             RefereeRequest refereeRequest = new RefereeRequest();
@@ -262,9 +262,7 @@ public class ResponsiblePersons extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(matches -> saveData( matches.body())
                         ,
-                        error -> {
-                            checkError.checkError(this, error);
-                        }
+                        error -> checkError.checkError(this, error)
                 );
 
     }

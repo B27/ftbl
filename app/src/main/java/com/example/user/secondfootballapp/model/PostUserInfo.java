@@ -2,14 +2,14 @@ package com.example.user.secondfootballapp.model;
 
 import okhttp3.MultipartBody;
 
-public class PostUserInfo {
-    String surname;
-    String name;
-    String lastname;
-    String login;
-    String birthdate;
-    String password;
-    MultipartBody.Part photo;
+class PostUserInfo {
+    private String surname;
+    private String name;
+    private String lastname;
+    private String login;
+    private String birthdate;
+    private String password;
+    private MultipartBody.Part photo;
 
     public PostUserInfo(String surname, String name, String lastname, String login, String password, String birthdate, MultipartBody.Part photo) {
         this.surname = surname;

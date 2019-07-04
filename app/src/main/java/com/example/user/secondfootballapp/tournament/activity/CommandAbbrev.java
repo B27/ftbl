@@ -12,8 +12,7 @@ import com.example.user.secondfootballapp.R;
 
 public class CommandAbbrev extends DialogFragment{
     public static CommandAbbrev newInstance() {
-        CommandAbbrev f = new CommandAbbrev();
-        return f;
+        return new CommandAbbrev();
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,12 +24,7 @@ public class CommandAbbrev extends DialogFragment{
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.abbrev_comand, null);
         Button button = view.findViewById(R.id.commandAbbrevCloseButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDialog().dismiss();
-            }
-        });
+        button.setOnClickListener(v -> getDialog().dismiss());
         builder.setView(view);
         return builder.create();
     }

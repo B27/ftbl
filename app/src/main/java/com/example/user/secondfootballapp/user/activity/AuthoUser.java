@@ -63,41 +63,41 @@ import io.reactivex.schedulers.Schedulers;
 import static android.app.Activity.RESULT_OK;
 
 public class AuthoUser extends Fragment {
-    static final Logger log = LoggerFactory.getLogger(AuthoUser.class);
-    DrawerLayout drawer;
-    Person person;
+    private static final Logger log = LoggerFactory.getLogger(AuthoUser.class);
+    private DrawerLayout drawer;
+    private Person person;
     public static FloatingActionButton fab;
     //adapters
     public static RVInvitationAdapter adapterInv;
     public static RVUserCommandAdapter adapterCommand;
     public static RVOwnCommandAdapter adapterOwnCommand;
 
-    public static TextView invBadge;
-    List<PersonTeams> personTeams;
-    public static List<Person> allReferees = new ArrayList<>();
+    private static TextView invBadge;
+    private List<PersonTeams> personTeams;
+    public static final List<Person> allReferees = new ArrayList<>();
     public static List<PersonTeams> personOngoingLeagues;
     public static List<PersonTeams> personOwnCommand;
     public static List<PersonTeams> personCommand;
-    List<PendingTeamInvite> pendingTeamInvites;
+    private List<PendingTeamInvite> pendingTeamInvites;
     public static List<PendingTeamInvite> pendingTeamInvitesList;
-    Toolbar toolbar;
-    public static TextView categoryTitle;
+    private Toolbar toolbar;
+    private static TextView categoryTitle;
     public static ImageButton buttonOpenProfile;
     public static TextView textName;
-    InvitationFragment firstFragment = new InvitationFragment();
-    OngoingTournamentFragment defaultFragment = new OngoingTournamentFragment();
-    UserClubs secondFragment = new UserClubs();
-    TimeTableFragment timeTableFragment = new TimeTableFragment();
-    RefereeFragment refereeFragment = new RefereeFragment();
-    MyMatches myMatches = new MyMatches();
-    UserCommands commands = new UserCommands();
-    User user;
-    Menu m;
-    public NavigationView nvDrawer;
-    FloatingActionButton fab1;
-    FragmentTransaction fm;
-    final int REQUEST_CODE_CLUBEDIT = 276;
-    int clubOldIndex;
+    private final InvitationFragment firstFragment = new InvitationFragment();
+    private final OngoingTournamentFragment defaultFragment = new OngoingTournamentFragment();
+    private final UserClubs secondFragment = new UserClubs();
+    private final TimeTableFragment timeTableFragment = new TimeTableFragment();
+    private final RefereeFragment refereeFragment = new RefereeFragment();
+    private final MyMatches myMatches = new MyMatches();
+    private final UserCommands commands = new UserCommands();
+    private User user;
+    private Menu m;
+    private NavigationView nvDrawer;
+    private FloatingActionButton fab1;
+    private FragmentTransaction fm;
+    private final int REQUEST_CODE_CLUBEDIT = 276;
+    private int clubOldIndex;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -261,10 +261,9 @@ public class AuthoUser extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawer.openDrawer(GravityCompat.START);
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            drawer.openDrawer(GravityCompat.START);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -278,7 +277,7 @@ public class AuthoUser extends Fragment {
                 });
     }
 
-    public void selectDrawerItem(MenuItem menuItem) {
+    private void selectDrawerItem(MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
             case R.id.nav_default_fragment:
@@ -442,7 +441,7 @@ public class AuthoUser extends Fragment {
             Controller.getApi().getAllTournaments("32575", "0")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(tournaments1 -> PersonalActivity.saveData(tournaments1)
+                    .subscribe(PersonalActivity::saveData
                             ,
                             error ->{
                         CheckError checkError = new CheckError();
@@ -454,7 +453,7 @@ public class AuthoUser extends Fragment {
 
 
     @SuppressLint("CheckResult")
-    public void getUserCommands(String leagueId, String teamId, PersonTeams team){
+    private void getUserCommands(String leagueId, String teamId, PersonTeams team){
 
         Controller.getApi().getLeagueInfo(leagueId)
                 .subscribeOn(Schedulers.io())
@@ -499,11 +498,6 @@ public class AuthoUser extends Fragment {
                 invBadge.setText(String.valueOf(position));
             }
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     @Override
@@ -576,7 +570,7 @@ public class AuthoUser extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(people -> saveReferees(people),
+                .subscribe(this::saveReferees,
                         error -> {
                             CheckError checkError = new CheckError();
                             checkError.checkError(getActivity(), error);
@@ -618,7 +612,7 @@ public class AuthoUser extends Fragment {
         }
     }
 
-    public void setItemColor(int itemColor) {
+    private void setItemColor(int itemColor) {
             MenuItem mi = m.getItem(itemColor);
             try {
                     SpannableString s = new SpannableString(mi.getTitle());

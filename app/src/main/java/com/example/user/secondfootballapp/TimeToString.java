@@ -17,13 +17,13 @@ public class TimeToString {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date1);
                 if (String.valueOf(cal.get(Calendar.HOUR)).length()==1){
-                    dateDOB += "0" + String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                    dateDOB += "0" + cal.get(Calendar.HOUR) + ":";
                 }
                 else {
-                    dateDOB += String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                    dateDOB += cal.get(Calendar.HOUR) + ":";
                 }
                 if ((String.valueOf(cal.get(Calendar.MINUTE) + 1).length()==1)){
-                    dateDOB += "0" + String.valueOf(cal.get(Calendar.MINUTE) + 1);
+                    dateDOB += "0" + (cal.get(Calendar.MINUTE) + 1);
                 }
                 else{
                     dateDOB += String.valueOf(cal.get(Calendar.MINUTE) + 1);
@@ -37,13 +37,13 @@ public class TimeToString {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(date1);
                     if (String.valueOf(cal.get(Calendar.HOUR)).length()==1){
-                        dateDOB += "0" + String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                        dateDOB += "0" + cal.get(Calendar.HOUR) + ":";
                     }
                     else {
-                        dateDOB += String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                        dateDOB += cal.get(Calendar.HOUR) + ":";
                     }
                     if ((String.valueOf(cal.get(Calendar.MINUTE) + 1).length()==1)){
-                        dateDOB += "0" + String.valueOf(cal.get(Calendar.MINUTE) + 1);
+                        dateDOB += "0" + (cal.get(Calendar.MINUTE) + 1);
                     }
                     else{
                         dateDOB += String.valueOf(cal.get(Calendar.MINUTE) + 1);

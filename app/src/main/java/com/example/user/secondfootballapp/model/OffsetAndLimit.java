@@ -1,8 +1,8 @@
 package com.example.user.secondfootballapp.model;
 
 public class OffsetAndLimit {
-    private int offset;
-    private int limit;
+    private final int offset;
+    private final int limit;
 
     public OffsetAndLimit(int offset, int limit) {
         this.offset = offset;

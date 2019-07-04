@@ -28,11 +28,11 @@ import java.util.List;
 
 
 public class RecyclerViewTournamentAdapter extends RecyclerView.Adapter<RecyclerViewTournamentAdapter.ViewHolder>{
-    private Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    private TournamentPage context;
-    private List<League> tournaments;
-    private PersonalActivity activity;
-    private ListAdapterListener mListener;
+    private final Logger log = LoggerFactory.getLogger(PersonalActivity.class);
+    private final TournamentPage context;
+    private final List<League> tournaments;
+    private final PersonalActivity activity;
+    private final ListAdapterListener mListener;
     private ProgressBar progressBar;
     //    public RecyclerViewTournamentAdapter(Context context){
     public RecyclerViewTournamentAdapter(Activity activity, TournamentPage context, List<League> tournaments, ListAdapterListener mListener){
@@ -50,8 +50,7 @@ public class RecyclerViewTournamentAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tournament, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -117,14 +116,14 @@ public class RecyclerViewTournamentAdapter extends RecyclerView.Adapter<Recycler
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textTitle;
-        TextView textDate;
-        TextView textCommandNum;
-        TextView textStatusFinish;
-        ImageView imageView;
-        View view;
-        RelativeLayout imageButton;
-        public ViewHolder(View itemView) {
+        final TextView textTitle;
+        final TextView textDate;
+        final TextView textCommandNum;
+        final TextView textStatusFinish;
+        final ImageView imageView;
+        final View view;
+        final RelativeLayout imageButton;
+        ViewHolder(View itemView) {
             super(itemView);
             view = itemView.findViewById(R.id.tournamentLine);
 //            view.setOnClickListener(new View.OnClickListener() {

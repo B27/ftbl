@@ -14,7 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Controller {
-    public static String BASE_URL = "http://footballapi.ibb.su";
+    public static final String BASE_URL = "http://footballapi.ibb.su";
 
     public Logger log = LoggerFactory.getLogger(Controller.class);
 
@@ -40,8 +40,7 @@ public class Controller {
                 .build();
 
 
-        FootballApi testApi = retrofit.create(FootballApi.class);
-        return testApi;
+        return retrofit.create(FootballApi.class);
     }
 
 

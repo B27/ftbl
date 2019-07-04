@@ -23,8 +23,7 @@ public class DatePicker extends DatePickerDialogFragment {
 
     Logger log = LoggerFactory.getLogger(PersonalActivity.class);
     public static DatePicker newInstance() {
-        DatePicker f = new DatePicker();
-        return f;
+        return new DatePicker();
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,8 +34,8 @@ public class DatePicker extends DatePickerDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.date_picker, null);
-        final com.ycuwq.datepicker.date.DatePicker datePicker = (com.ycuwq.datepicker.date.DatePicker) view.findViewById(R.id.datePicker);
-        HashMap<String, Integer> months = new HashMap<String, Integer>();
+        final com.ycuwq.datepicker.date.DatePicker datePicker = view.findViewById(R.id.datePicker);
+        HashMap<String, Integer> months = new HashMap<>();
         months.put("янв.", 1);
         months.put("февр.", 2);
         months.put("марта", 3);
@@ -89,37 +88,25 @@ public class DatePicker extends DatePickerDialogFragment {
         Date minDate = cal.getTime();
         datePicker.setMinDate(minDate.getTime());
 
-        datePicker.setOnDateSelectedListener(new com.ycuwq.datepicker.date.DatePicker.OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(int year, int month, int day) {
-                int e = year;
-                String str = Integer.toString(e);
+        datePicker.setOnDateSelectedListener((year, month, day) -> {
+            String str = Integer.toString(year);
 //                Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
-            }
         });
 
 
-        mCancelButton = (Button) view.findViewById(R.id.datePickerClose);
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        mDecideButton = (Button) view.findViewById(R.id.datePickerOk);
-        mDecideButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String str = datePicker.getDate();
+        mCancelButton = view.findViewById(R.id.datePickerClose);
+        mCancelButton.setOnClickListener(v -> dismiss());
+        mDecideButton = view.findViewById(R.id.datePickerOk);
+        mDecideButton.setOnClickListener(v -> {
+            String str = datePicker.getDate();
 //                Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
-                try{
-                    UserInfo.buttonDOB.setText(str);
-                }catch (Exception e){
-                    PersonalInfo.textDOB.setText(str);
-                }
-
-                dismiss();
+            try{
+                UserInfo.buttonDOB.setText(str);
+            }catch (Exception e){
+                PersonalInfo.textDOB.setText(str);
             }
+
+            dismiss();
         });
 
 

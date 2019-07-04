@@ -17,9 +17,9 @@ import java.util.List;
 
 public class RecyclerViewMainAdsAdapter extends RecyclerView.Adapter<RecyclerViewMainAdsAdapter.ViewHolder> {
 
-    private List<Announce> announces;
-    private NewsAndAds context;
-    private PersonalActivity activity;
+    private final List<Announce> announces;
+    private final NewsAndAds context;
+    private final PersonalActivity activity;
     public RecyclerViewMainAdsAdapter(Activity activity, NewsAndAds context, List<Announce> announces){
         this.announces = announces;
         this.activity = (PersonalActivity) activity;
@@ -29,8 +29,7 @@ public class RecyclerViewMainAdsAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ads, parent, false);
-        RecyclerViewMainAdsAdapter.ViewHolder holder = new RecyclerViewMainAdsAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -59,10 +58,10 @@ public class RecyclerViewMainAdsAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textTitle;
-        TextView textDate;
-        View line;
-        public ViewHolder(View item) {
+        final TextView textTitle;
+        final TextView textDate;
+        final View line;
+        ViewHolder(View item) {
             super(item);
             textDate = item.findViewById(R.id.adsDate);
             textTitle = item.findViewById(R.id.adsTitle);

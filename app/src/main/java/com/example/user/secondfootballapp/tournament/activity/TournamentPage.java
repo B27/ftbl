@@ -39,17 +39,17 @@ import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("ValidFragment")
 public class TournamentPage extends Fragment {
-    public static RecyclerViewTournamentAdapter adapter;
-    public static List<Person> referees = new ArrayList<>();
-    Logger log = LoggerFactory.getLogger(NewsPage.class);
-    RecyclerView recyclerView;
-    FragmentManager fragmentManager;
-    ProgressBar progressBar;
-    NestedScrollView scroller;
-    List<League> tournaments= new ArrayList<>();
-    int count = 0;
-    int offset = 0;
-    int limit = 5;
+    private static RecyclerViewTournamentAdapter adapter;
+    public static final List<Person> referees = new ArrayList<>();
+    private final Logger log = LoggerFactory.getLogger(NewsPage.class);
+    private RecyclerView recyclerView;
+    private final FragmentManager fragmentManager;
+    private ProgressBar progressBar;
+    private NestedScrollView scroller;
+    private final List<League> tournaments= new ArrayList<>();
+    private int count = 0;
+    private int offset = 0;
+    private final int limit = 5;
     @SuppressLint("ValidFragment")
     public TournamentPage(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
@@ -67,12 +67,7 @@ public class TournamentPage extends Fragment {
             recyclerView = view.findViewById(R.id.recyclerViewTournament);
             recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new RecyclerViewTournamentAdapter(getActivity(), TournamentPage.this, PersonalActivity.tournaments, new RecyclerViewTournamentAdapter.ListAdapterListener() {
-                @Override
-                public void onClickSwitch(String  leagueId) {
-                    showTournamentInfo(leagueId);
-                }
-            });
+            adapter = new RecyclerViewTournamentAdapter(getActivity(), TournamentPage.this, PersonalActivity.tournaments, leagueId -> showTournamentInfo(leagueId));
             recyclerView.setAdapter(adapter);
         } catch (Exception e) {
             log.error("ERROR: ", e);
@@ -95,7 +90,7 @@ public class TournamentPage extends Fragment {
         Controller.getApi().getAllTournaments(limit, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(tournaments1 -> saveAllData(tournaments1)
+                .subscribe(this::saveAllData
                         ,
                         error -> {
                             CheckError checkError = new CheckError();
@@ -112,13 +107,13 @@ public class TournamentPage extends Fragment {
     }
 
     @SuppressLint("CheckResult")
-    public void showTournamentInfo(String leagueId){
+    private void showTournamentInfo(String leagueId){
         Controller.getApi().getLeagueInfo(leagueId)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(__ -> progressBarShow())
 //                .doOnTerminate(()->progressBarHide())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(getLeagueInfo -> saveData(getLeagueInfo)
+                .subscribe(this::saveData
                         ,
                         error -> {
                             CheckError checkError = new CheckError();
@@ -151,7 +146,7 @@ public class TournamentPage extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(people -> saveReferees(people),
+                .subscribe(this::saveReferees,
                         error -> {
                             CheckError checkError = new CheckError();
                             checkError.checkError(getActivity(), error);
@@ -167,12 +162,8 @@ public class TournamentPage extends Fragment {
     private void progressBarShow(){
         progressBar.setVisibility(View.VISIBLE);
     }
-    protected void progressBarHide(){
+    private void progressBarHide(){
         progressBar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 }

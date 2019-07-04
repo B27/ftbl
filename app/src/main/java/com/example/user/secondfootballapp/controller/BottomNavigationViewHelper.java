@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 
 public class BottomNavigationViewHelper {
-    static Logger log = LoggerFactory.getLogger(PersonalActivity.class);
+    private static final Logger log = LoggerFactory.getLogger(PersonalActivity.class);
     @SuppressLint("RestrictedApi")
     public static void removeShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);

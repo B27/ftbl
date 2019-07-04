@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class TournamentTimeTableFragment extends Fragment {
-    Logger log = LoggerFactory.getLogger(TournamentTimeTableFragment.class);
-    boolean scrollStatus;
+class TournamentTimeTableFragment extends Fragment {
+    private final Logger log = LoggerFactory.getLogger(TournamentTimeTableFragment.class);
+    private boolean scrollStatus;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

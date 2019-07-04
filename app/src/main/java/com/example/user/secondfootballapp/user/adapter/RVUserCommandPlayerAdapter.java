@@ -33,8 +33,8 @@ import java.util.List;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVUserCommandPlayerAdapter extends RecyclerView.Adapter<RVUserCommandPlayerAdapter.ViewHolder> {
-    List<Player> players;
-    UserCommandInfo context;
+    private final List<Player> players;
+    private final UserCommandInfo context;
 
     public RVUserCommandPlayerAdapter(Activity context, List<Player> players) {
         this.context = (UserCommandInfo) context;
@@ -45,8 +45,7 @@ public class RVUserCommandPlayerAdapter extends RecyclerView.Adapter<RVUserComma
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.command_player, parent, false);
-        RVUserCommandPlayerAdapter.ViewHolder holder = new RVUserCommandPlayerAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -86,16 +85,13 @@ public class RVUserCommandPlayerAdapter extends RecyclerView.Adapter<RVUserComma
                     .apply(requestOptions)
                     .into(holder.image);
             final String finalUriPic = uriPic;
-            holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
-                        Intent intent = new Intent(context, FullScreenImage.class);
-                        intent.putExtra("player_photo", finalUriPic);
-                        context.startActivity(intent);
-                    }
-
+            holder.image.setOnClickListener(v -> {
+                if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                    Intent intent = new Intent(context, FullScreenImage.class);
+                    intent.putExtra("player_photo", finalUriPic);
+                    context.startActivity(intent);
                 }
+
             });
         } catch (MalformedURLException e) {
             RequestOptions requestOptions = new RequestOptions();
@@ -117,23 +113,17 @@ public class RVUserCommandPlayerAdapter extends RecyclerView.Adapter<RVUserComma
         if (player.getId().equals(SaveSharedPreference.getObject().getUser().getId())){
             holder.buttonDelete.setVisibility(View.INVISIBLE);
         }
-        holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //post
-                UserCommandInfo.players.remove(players.get(position));
-                UserCommandInfo.adapter.notifyDataSetChanged();
-            }
+        holder.buttonDelete.setOnClickListener(v -> {
+            //post
+            UserCommandInfo.players.remove(players.get(position));
+            UserCommandInfo.adapter.notifyDataSetChanged();
         });
         holder.editNum.getBackground().setColorFilter(context.getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        holder.editNum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    holder.editNum.getBackground().clearColorFilter();
-                } else {
-                    holder.editNum.getBackground().setColorFilter(context.getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        holder.editNum.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                holder.editNum.getBackground().clearColorFilter();
+            } else {
+                holder.editNum.getBackground().setColorFilter(context.getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
     }
@@ -144,21 +134,21 @@ public class RVUserCommandPlayerAdapter extends RecyclerView.Adapter<RVUserComma
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textNum;
-        ImageView image;
-        TextView textName;
-        EditText editNum;
-        ImageButton buttonDelete;
-        View line;
+        final TextView textNum;
+        final ImageView image;
+        final TextView textName;
+        final EditText editNum;
+        final ImageButton buttonDelete;
+        final View line;
 
-        public ViewHolder(View item) {
+        ViewHolder(View item) {
             super(item);
-            textNum = (TextView) item.findViewById(R.id.userCommandPlayerTextNum);
-            image = (ImageView) item.findViewById(R.id.userCommandPlayerLogo);
-            textName = (TextView) item.findViewById(R.id.userCommandPlayerName);
-            editNum = (EditText) item.findViewById(R.id.userCommandPlayerNum);
-            buttonDelete = (ImageButton) item.findViewById(R.id.userCommandPlayerDelete);
-            line = (View) item.findViewById(R.id.userCommandPlayerLine);
+            textNum = item.findViewById(R.id.userCommandPlayerTextNum);
+            image = item.findViewById(R.id.userCommandPlayerLogo);
+            textName = item.findViewById(R.id.userCommandPlayerName);
+            editNum = item.findViewById(R.id.userCommandPlayerNum);
+            buttonDelete = item.findViewById(R.id.userCommandPlayerDelete);
+            line = item.findViewById(R.id.userCommandPlayerLine);
         }
     }
 }

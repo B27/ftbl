@@ -34,7 +34,7 @@ import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class Player extends Fragment {
     boolean scrollStatus;
-    Logger log = LoggerFactory.getLogger(Player.class);
+    final Logger log = LoggerFactory.getLogger(Player.class);
     final int REQUEST_CODE_PLAYERINV = 286;
     Person person;
     public static FloatingActionButton fab;

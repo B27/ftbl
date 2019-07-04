@@ -31,13 +31,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class HomePage extends Fragment {
     Logger log = LoggerFactory.getLogger(HomePage.class);
-    List<News_> allNews = new ArrayList<>();
-    RecyclerView recyclerView;
-    NestedScrollView scroller;
-    RecyclerViewHomeAdapter adapter;
-    int count = 0;
-    int limit = 5;
-    int offset = 0;
+    private final List<News_> allNews = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private NestedScrollView scroller;
+    private RecyclerViewHomeAdapter adapter;
+    private int count = 0;
+    private final int limit = 5;
+    private int offset = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         final View view;
@@ -80,12 +80,12 @@ public class HomePage extends Fragment {
     }
 
     @SuppressLint("CheckResult")
-    public void GetAllNews(String limit, String offset){
+    private void GetAllNews(String limit, String offset){
         Controller.getApi().getAllNews(limit, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(matches -> saveData(matches)
+                .subscribe(this::saveData
                         ,
                         error -> {
                             CheckError checkError = new CheckError();

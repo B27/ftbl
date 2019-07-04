@@ -21,8 +21,7 @@ public class RVTimeTablePagAdapter extends PagedListAdapter<Match, MatchViewHold
     @Override
     public MatchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.timetable, parent, false);
-        MatchViewHolder holder = new MatchViewHolder(view);
-        return holder;
+        return new MatchViewHolder(view);
     }
 
     @Override

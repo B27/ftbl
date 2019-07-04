@@ -26,13 +26,13 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class UserCommands extends Fragment {
-    Logger log = LoggerFactory.getLogger(UserClubs.class);
-    final int REQUEST_CODE_NEWCOMMAND = 286;
-    int num;
-    boolean scrollStatus;
-    View line;
-    TextView textView;
-    TextView textView2;
+    private final Logger log = LoggerFactory.getLogger(UserClubs.class);
+    private final int REQUEST_CODE_NEWCOMMAND = 286;
+    private int num;
+    private boolean scrollStatus;
+    private View line;
+    private TextView textView;
+    private TextView textView2;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -11,8 +11,7 @@ import com.example.user.secondfootballapp.R;
 
 public class Abbrev extends DialogFragment {
     public static Abbrev newInstance() {
-        Abbrev f = new Abbrev();
-        return f;
+        return new Abbrev();
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {

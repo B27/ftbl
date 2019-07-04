@@ -26,11 +26,11 @@ import java.util.List;
 
 public class Tournament extends Fragment {
 
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    TabLayout tabLayout;
+    private final Logger log = LoggerFactory.getLogger(PersonalActivity.class);
+    private TabLayout tabLayout;
 
-    FloatingActionButton fabCommand;
-    FloatingActionButton fabPlayers;
+    private FloatingActionButton fabCommand;
+    private FloatingActionButton fabPlayers;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,7 +112,7 @@ public class Tournament extends Fragment {
     }
 
 
-    public void setCustomFont() {
+    private void setCustomFont() {
 
         ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
@@ -169,7 +169,7 @@ public class Tournament extends Fragment {
         super.onDestroy();
     }
 
-    TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+    private final TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             animateFab(tab.getPosition());
@@ -186,7 +186,7 @@ public class Tournament extends Fragment {
         }
     };
 
-    ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+    private final ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

@@ -28,9 +28,9 @@ import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVOngoingTournamentAdapter extends RecyclerView.Adapter<RVOngoingTournamentAdapter.ViewHolder> {
     Logger log = LoggerFactory.getLogger(OngoingTournamentFragment.class);
-    OngoingTournamentFragment context;
-    List<PersonTeams> leagues;
-    String uriPic;
+    private final OngoingTournamentFragment context;
+    private final List<PersonTeams> leagues;
+    private String uriPic;
     public RVOngoingTournamentAdapter(OngoingTournamentFragment context, List<PersonTeams> leagues){
         this.context =  context;
         this.leagues = leagues;
@@ -39,8 +39,7 @@ public class RVOngoingTournamentAdapter extends RecyclerView.Adapter<RVOngoingTo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_tournament, parent, false);
-        RVOngoingTournamentAdapter.ViewHolder holder = new RVOngoingTournamentAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -89,12 +88,12 @@ public class RVOngoingTournamentAdapter extends RecyclerView.Adapter<RVOngoingTo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView image;
-        TextView textTitle;
-        TextView textDate;
-        TextView textCommand;
-        View line;
-        public ViewHolder(View item) {
+        final ImageView image;
+        final TextView textTitle;
+        final TextView textDate;
+        final TextView textCommand;
+        final View line;
+        ViewHolder(View item) {
             super(item);
             image = item.findViewById(R.id.userTournamentLogo);
             textTitle = item.findViewById(R.id.userTournamentTitle);

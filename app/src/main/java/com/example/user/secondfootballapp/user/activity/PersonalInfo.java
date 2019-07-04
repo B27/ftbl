@@ -37,14 +37,14 @@ import java.util.List;
 
 import static android.Manifest.permission.CAMERA;
 
-public class PersonalInfo extends Fragment {
+class PersonalInfo extends Fragment {
     public static TextView textDOB;
-    public static ImageButton buttonPhoto;
+    private static ImageButton buttonPhoto;
     public static Bitmap myBitmap;
-    public static Uri picUri;
+    private static Uri picUri;
     private ArrayList permissionsToRequest;
-    private ArrayList permissionsRejected = new ArrayList();
-    private ArrayList permissions = new ArrayList();
+    private final ArrayList permissionsRejected = new ArrayList();
+    private final ArrayList permissions = new ArrayList();
     private final static int ALL_PERMISSIONS_RESULT = 107;
 
     public static EditText textLogin;
@@ -55,84 +55,61 @@ public class PersonalInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
         view = inflater.inflate(R.layout.personal_info, container, false);
-        buttonPhoto = (ImageButton) view.findViewById(R.id.registrationInfoPhoto);
-        textName = (EditText) view.findViewById(R.id.registrationInfoName);
-        textSurname = (EditText) view.findViewById(R.id.registrationInfoSurname);
-        textPatronymic = (EditText) view.findViewById(R.id.registrationInfoPatronymic);
-        textLogin = (EditText) view.findViewById(R.id.registrationInfoLogin);
-        textPassword = (EditText) view.findViewById(R.id.registrationInfoPassword);
-        textDOB = (TextView) view.findViewById(R.id.registrationInfoDOB);
+        buttonPhoto = view.findViewById(R.id.registrationInfoPhoto);
+        textName = view.findViewById(R.id.registrationInfoName);
+        textSurname = view.findViewById(R.id.registrationInfoSurname);
+        textPatronymic = view.findViewById(R.id.registrationInfoPatronymic);
+        textLogin = view.findViewById(R.id.registrationInfoLogin);
+        textPassword = view.findViewById(R.id.registrationInfoPassword);
+        textDOB = view.findViewById(R.id.registrationInfoDOB);
         textName.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textName.getBackground().clearColorFilter();
-                } else {
-                    textName.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textName.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textName.getBackground().clearColorFilter();
+            } else {
+                textName.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
         textSurname.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textSurname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textSurname.getBackground().clearColorFilter();
-                } else {
-                    textSurname.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textSurname.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textSurname.getBackground().clearColorFilter();
+            } else {
+                textSurname.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
 
         textPatronymic.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textPatronymic.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textPatronymic.getBackground().clearColorFilter();
-                } else {
-                    textPatronymic.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textPatronymic.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textPatronymic.getBackground().clearColorFilter();
+            } else {
+                textPatronymic.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
         textLogin.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textLogin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textLogin.getBackground().clearColorFilter();
-                } else {
-                    textLogin.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textLogin.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textLogin.getBackground().clearColorFilter();
+            } else {
+                textLogin.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
         textPassword.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textPassword.getBackground().clearColorFilter();
-                } else {
-                    textPassword.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textPassword.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textPassword.getBackground().clearColorFilter();
+            } else {
+                textPassword.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
-        textDOB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textDOB.setTextColor(getResources().getColor(R.color.colorBottomNavigationUnChecked));
-                com.example.user.secondfootballapp.user.activity.DatePicker datePicker1 = new com.example.user.secondfootballapp.user.activity.DatePicker();
-                datePicker1.show(getActivity().getSupportFragmentManager(), "DatePickerDialogFragment");
-            }
+        textDOB.setOnClickListener(v -> {
+            textDOB.setTextColor(getResources().getColor(R.color.colorBottomNavigationUnChecked));
+            DatePicker datePicker1 = new DatePicker();
+            datePicker1.show(getActivity().getSupportFragmentManager(), "DatePickerDialogFragment");
         });
 
-        buttonPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(getPickImageChooserIntent(), 200);
-            }
-        });
+        buttonPhoto.setOnClickListener(v -> startActivityForResult(getPickImageChooserIntent(), 200));
         permissions.add(CAMERA);
         permissionsToRequest = findUnAskedPermissions(permissions);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -146,7 +123,7 @@ public class PersonalInfo extends Fragment {
     }
 
 
-    public Intent getPickImageChooserIntent() {
+    private Intent getPickImageChooserIntent() {
 
         // Determine Uri of camera image to save.
         Uri outputFileUri = getCaptureImageOutputUri();
@@ -233,7 +210,7 @@ public class PersonalInfo extends Fragment {
                     Glide.with(this)
 //                            .load(myBitmap)
                             .load(newBitmap)
-                            .apply(new RequestOptions()
+                            .apply(RequestOptions
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
                                     .priority(Priority.HIGH))
@@ -267,7 +244,7 @@ public class PersonalInfo extends Fragment {
                     Glide.with(this)
                             .load(newBitmap)
 //                            .load(myBitmap)
-                            .apply(new RequestOptions()
+                            .apply(RequestOptions
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
                                     .priority(Priority.HIGH))
@@ -281,7 +258,7 @@ public class PersonalInfo extends Fragment {
 
     }
 
-    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+    private Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
 
@@ -296,11 +273,11 @@ public class PersonalInfo extends Fragment {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
-    public Uri getPickImageResultUri(Intent data) {
+    private Uri getPickImageResultUri(Intent data) {
         boolean isCamera = true;
 
         if (android.os.Build.VERSION.SDK_INT >= 23) {
-            isCamera = (data != null && data.getClipData() != null) ? false : true;
+            isCamera = data == null || data.getClipData() == null;
         } else {
             if (data != null) {
                 String action = data.getAction();
@@ -336,7 +313,7 @@ public class PersonalInfo extends Fragment {
 //    }
 
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
 
         for (String perm : wanted) {
             if (!hasPermission(perm)) {
@@ -383,42 +360,38 @@ public class PersonalInfo extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
-        switch (requestCode) {
+        if (requestCode == ALL_PERMISSIONS_RESULT) {
+            for (Object perms : permissionsToRequest) {
+                if (hasPermission(perms.toString())) {
 
-            case ALL_PERMISSIONS_RESULT:
-                for (Object perms : permissionsToRequest) {
-                    if (hasPermission(perms.toString())) {
+                } else {
 
-                    } else {
-
-                        permissionsRejected.add(perms);
-                    }
+                    permissionsRejected.add(perms);
                 }
+            }
 
-                if (permissionsRejected.size() > 0) {
+            if (permissionsRejected.size() > 0) {
 
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (shouldShowRequestPermissionRationale((String) permissionsRejected.get(0))) {
-                            showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (shouldShowRequestPermissionRationale((String) permissionsRejected.get(0))) {
+                        showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                                                //Log.d("API123", "permisionrejected " + permissionsRejected.size());
+                                            //Log.d("API123", "permisionrejected " + permissionsRejected.size());
 
-                                                requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
-                                            }
+                                            requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
                                         }
-                                    });
-                            return;
-                        }
+                                    }
+                                });
+                        return;
                     }
-
                 }
 
-                break;
+            }
         }
     }
 }

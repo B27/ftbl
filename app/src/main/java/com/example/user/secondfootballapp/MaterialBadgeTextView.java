@@ -149,7 +149,7 @@ public class MaterialBadgeTextView extends androidx.appcompat.widget.AppCompatTe
     public void setBadgeCount(String count){
         setBadgeCount(count, false);
     }
-    public void setBadgeCount(String count, boolean goneWhenZero) {
+    private void setBadgeCount(String count, boolean goneWhenZero) {
         int temp = -1;
         try {
             temp = Integer.parseInt(count);
@@ -161,10 +161,10 @@ public class MaterialBadgeTextView extends androidx.appcompat.widget.AppCompatTe
         }
     }
 
-    public void setBadgeCount(int count){
+    private void setBadgeCount(int count){
         setBadgeCount(count, true);
     }
-    public void setBadgeCount(int count, boolean goneWhenZero){
+    private void setBadgeCount(int count, boolean goneWhenZero){
         if(count >0 && count <= 99){
             setText(String.valueOf(count));
             setVisibility(View.VISIBLE);
@@ -198,7 +198,7 @@ public class MaterialBadgeTextView extends androidx.appcompat.widget.AppCompatTe
      *
      * @param isDisplayInToolbarMenu
      */
-    public void setHighLightMode(boolean isDisplayInToolbarMenu){
+    private void setHighLightMode(boolean isDisplayInToolbarMenu){
         isHighLightMode = true;
         ViewGroup.LayoutParams params = getLayoutParams();
         params.width = dp2px(getContext(), 8);
@@ -227,11 +227,11 @@ public class MaterialBadgeTextView extends androidx.appcompat.widget.AppCompatTe
     }
 
     private class OvalShadow extends OvalShape {
-        private RadialGradient mRadialGradient;
-        private Paint mShadowPaint;
-        private int mCircleDiameter;
+        private final RadialGradient mRadialGradient;
+        private final Paint mShadowPaint;
+        private final int mCircleDiameter;
 
-        public OvalShadow(int shadowRadius, int circleDiameter) {
+        OvalShadow(int shadowRadius, int circleDiameter) {
             super();
             mShadowPaint = new Paint();
             mShadowRadius = shadowRadius;
@@ -256,11 +256,11 @@ public class MaterialBadgeTextView extends androidx.appcompat.widget.AppCompatTe
         private final Paint mPaint;
         private RectF rectF;
 
-        public Paint getPaint() {
+        Paint getPaint() {
             return mPaint;
         }
 
-        public SemiCircleRectDrawable() {
+        SemiCircleRectDrawable() {
             mPaint = new Paint();
             mPaint.setAntiAlias(true);
         }
@@ -300,7 +300,7 @@ public class MaterialBadgeTextView extends androidx.appcompat.widget.AppCompatTe
         }
     }
 
-    public static int dp2px(Context context, float dpValue) {
+    private static int dp2px(Context context, float dpValue) {
         try {
             final float scale = context.getResources().getDisplayMetrics().density;
             return (int) (dpValue * scale + 0.5f);

@@ -30,11 +30,11 @@ import java.util.Objects;
 
 public class AddEvent extends AppCompatActivity {
     //    EditText textMinutes;
-    EditText textHalf;
-    int eventPosition = 100;
-    Logger log = LoggerFactory.getLogger(AddEvent.class);
+    private EditText textHalf;
+    private int eventPosition = 100;
+    private final Logger log = LoggerFactory.getLogger(AddEvent.class);
     public static List<Boolean> list2;
-    Person person;
+    private Person person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,31 +75,18 @@ public class AddEvent extends AppCompatActivity {
 //            }
 //        });
         textHalf.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textHalf.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textHalf.getBackground().clearColorFilter();
-                } else {
-                    textHalf.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textHalf.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textHalf.getBackground().clearColorFilter();
+            } else {
+                textHalf.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
 
-        buttonClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        buttonClose.setOnClickListener(v -> finish());
 
 
-        RVEventsIconAdapter adapter = new RVEventsIconAdapter(this, list, list2, new RVEventsIconAdapter.ListAdapterListener() {
-            @Override
-            public void onClickSwitch(int position) {
-                eventPosition = position;
-            }
-        });
+        RVEventsIconAdapter adapter = new RVEventsIconAdapter(this, list, list2, position -> eventPosition = position);
         recyclerView.setAdapter(adapter);
         layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -127,51 +114,48 @@ public class AddEvent extends AppCompatActivity {
                 }
             });
 
-            buttonSave.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String str = textHalf.getText().toString();
+            buttonSave.setOnClickListener(v -> {
+                String str = textHalf.getText().toString();
 
-                    if (!str.equals("")) {
-                        if (eventPosition == 100) {
-                            Toast.makeText(AddEvent.this, "Выберите событие.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            str += " тайм";
-                            event.setTime(str);
-                            switch (eventPosition) {
-                                case 0:
-                                    str = "goal";
-                                    break;
-                                case 1:
-                                    str = "yellowCard";
-                                    break;
-                                case 2:
-                                    str = "redCard";
-                                    break;
-                                case 3:
-                                    str = "foul";
-                                    break;
-                                case 4:
-                                    str = "autoGoal";
-                                    break;
-                                case 5:
-                                    str = "penalty";
-                                    break;
-                            }
-                            event.setEventType(str);
-                            Intent intent = new Intent();
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("ADDEVENT", event);
-                            bundle.putSerializable("ADDEVENTPERSON", person);
-                            intent.putExtras(bundle);
-                            setResult(RESULT_OK, intent);
-                            finish();
-                        }
+                if (!str.equals("")) {
+                    if (eventPosition == 100) {
+                        Toast.makeText(AddEvent.this, "Выберите событие.", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(AddEvent.this, "Укажите тайм", Toast.LENGTH_SHORT).show();
+                        str += " тайм";
+                        event.setTime(str);
+                        switch (eventPosition) {
+                            case 0:
+                                str = "goal";
+                                break;
+                            case 1:
+                                str = "yellowCard";
+                                break;
+                            case 2:
+                                str = "redCard";
+                                break;
+                            case 3:
+                                str = "foul";
+                                break;
+                            case 4:
+                                str = "autoGoal";
+                                break;
+                            case 5:
+                                str = "penalty";
+                                break;
+                        }
+                        event.setEventType(str);
+                        Intent intent = new Intent();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("ADDEVENT", event);
+                        bundle.putSerializable("ADDEVENTPERSON", person);
+                        intent.putExtras(bundle);
+                        setResult(RESULT_OK, intent);
+                        finish();
                     }
-
+                } else {
+                    Toast.makeText(AddEvent.this, "Укажите тайм", Toast.LENGTH_SHORT).show();
                 }
+
             });
 
         } catch (Exception e) {

@@ -16,7 +16,7 @@ import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.tournament.adapter.ViewPagerTournamentInfoAdapter;
 
 public class MainPage extends Fragment {
-    TabLayout tabLayout;
+    private TabLayout tabLayout;
 
 
     @Override
@@ -48,7 +48,7 @@ public class MainPage extends Fragment {
     }
 
 
-    public void setCustomFont() {
+    private void setCustomFont() {
 
         ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();

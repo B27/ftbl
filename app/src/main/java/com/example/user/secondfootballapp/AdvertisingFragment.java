@@ -23,8 +23,7 @@ import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class AdvertisingFragment extends DialogFragment{
     public static AdvertisingFragment newInstance() {
-        AdvertisingFragment f = new AdvertisingFragment();
-        return f;
+        return new AdvertisingFragment();
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,9 +71,7 @@ public class AdvertisingFragment extends DialogFragment{
                     .into(image);
         }
         ImageButton imageButton = view.findViewById(R.id.advertisingCloseButton);
-        imageButton.setOnClickListener(v -> {
-            getDialog().dismiss();
-        });
+        imageButton.setOnClickListener(v -> getDialog().dismiss());
         builder.setView(view);
         // Create the AlertDialog object and return it
         return builder.create();

@@ -18,16 +18,16 @@ public class DateToString {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date1);
             if (String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).length()==1){
-                dateDOB += "0" + String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + ".";
+                dateDOB += "0" + cal.get(Calendar.DAY_OF_MONTH) + ".";
             }
             else {
-                dateDOB += String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + ".";
+                dateDOB += cal.get(Calendar.DAY_OF_MONTH) + ".";
             }
             if ((String.valueOf(cal.get(Calendar.MONTH) + 1).length()==1)){
-                dateDOB += "0" + String.valueOf(cal.get(Calendar.MONTH) + 1) + ".";
+                dateDOB += "0" + (cal.get(Calendar.MONTH) + 1) + ".";
             }
             else{
-                dateDOB += String.valueOf(cal.get(Calendar.MONTH) + 1) + ".";
+                dateDOB += (cal.get(Calendar.MONTH) + 1) + ".";
             }
             dateDOB += String.valueOf(cal.get(Calendar.YEAR));
 //            holder.textTournamentDate.setText(dateDOB);
@@ -40,16 +40,16 @@ public class DateToString {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date1);
                 if (String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).length()==1){
-                    dateDOB += "0" + String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + ".";
+                    dateDOB += "0" + cal.get(Calendar.DAY_OF_MONTH) + ".";
                 }
                 else {
-                    dateDOB += String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + ".";
+                    dateDOB += cal.get(Calendar.DAY_OF_MONTH) + ".";
                 }
                 if ((String.valueOf(cal.get(Calendar.MONTH) + 1).length()==1)){
-                    dateDOB += "0" + String.valueOf(cal.get(Calendar.MONTH) + 1) + ".";
+                    dateDOB += "0" + (cal.get(Calendar.MONTH) + 1) + ".";
                 }
                 else{
-                    dateDOB += String.valueOf(cal.get(Calendar.MONTH) + 1) + ".";
+                    dateDOB += (cal.get(Calendar.MONTH) + 1) + ".";
                 }
                 dateDOB += String.valueOf(cal.get(Calendar.YEAR));
             }catch (ParseException t) {
@@ -60,14 +60,14 @@ public class DateToString {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(date);
                     if (String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).length() == 1) {
-                        dateDOB = "0" + String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + ".";
+                        dateDOB = "0" + cal.get(Calendar.DAY_OF_MONTH) + ".";
                     } else {
-                        dateDOB = String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + ".";
+                        dateDOB = cal.get(Calendar.DAY_OF_MONTH) + ".";
                     }
                     if ((String.valueOf(cal.get(Calendar.MONTH) + 1).length() == 1)) {
-                        dateDOB += "0" + String.valueOf(cal.get(Calendar.MONTH) + 1) + ".";
+                        dateDOB += "0" + (cal.get(Calendar.MONTH) + 1) + ".";
                     } else {
-                        dateDOB += String.valueOf(cal.get(Calendar.MONTH) + 1) + ".";
+                        dateDOB += (cal.get(Calendar.MONTH) + 1) + ".";
                     }
                     dateDOB += String.valueOf(cal.get(Calendar.YEAR));
                 } catch (ParseException q) {}
@@ -84,14 +84,14 @@ public class DateToString {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date);
                 if (String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).length() == 1) {
-                    dateDOB = "0" + String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + ".";
+                    dateDOB = "0" + cal.get(Calendar.DAY_OF_MONTH) + ".";
                 } else {
-                    dateDOB = String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + ".";
+                    dateDOB = cal.get(Calendar.DAY_OF_MONTH) + ".";
                 }
                 if ((String.valueOf(cal.get(Calendar.MONTH) + 1).length() == 1)) {
-                    dateDOB += "0" + String.valueOf(cal.get(Calendar.MONTH) + 1) + ".";
+                    dateDOB += "0" + (cal.get(Calendar.MONTH) + 1) + ".";
                 } else {
-                    dateDOB += String.valueOf(cal.get(Calendar.MONTH) + 1) + ".";
+                    dateDOB += (cal.get(Calendar.MONTH) + 1) + ".";
                 }
                 dateDOB += String.valueOf(cal.get(Calendar.YEAR));
             } catch (ParseException q) {

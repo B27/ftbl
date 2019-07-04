@@ -38,9 +38,9 @@ import java.util.List;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVProtocolCommand1Adapter extends RecyclerView.Adapter<RVProtocolCommand1Adapter.ViewHolder> {
-    private ProtocolCommand1 context;
-    private List<Player> players;
-    private List<String> playerList;
+    private final ProtocolCommand1 context;
+    private final List<Player> players;
+    private final List<String> playerList;
     Logger log = LoggerFactory.getLogger(ProtocolCommand1.class);
 
     public RVProtocolCommand1Adapter(Activity context, List<Player> players, List<String> playerList, ListAdapterListener mListener) {
@@ -50,7 +50,7 @@ public class RVProtocolCommand1Adapter extends RecyclerView.Adapter<RVProtocolCo
         this.mListener = mListener;
     }
 
-    private ListAdapterListener mListener;
+    private final ListAdapterListener mListener;
 
     public interface ListAdapterListener {
         void onClickSwitch(int position, String personId, Boolean check);
@@ -59,8 +59,7 @@ public class RVProtocolCommand1Adapter extends RecyclerView.Adapter<RVProtocolCo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_command1, parent, false);
-        RVProtocolCommand1Adapter.ViewHolder holder = new RVProtocolCommand1Adapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -74,14 +73,11 @@ public class RVProtocolCommand1Adapter extends RecyclerView.Adapter<RVProtocolCo
             }
         }
         holder.editNum.getBackground().setColorFilter(context.getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        holder.editNum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    holder.editNum.getBackground().clearColorFilter();
-                } else {
-                    holder.editNum.getBackground().setColorFilter(context.getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        holder.editNum.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                holder.editNum.getBackground().clearColorFilter();
+            } else {
+                holder.editNum.getBackground().setColorFilter(context.getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
         String str;
@@ -104,16 +100,13 @@ public class RVProtocolCommand1Adapter extends RecyclerView.Adapter<RVProtocolCo
                     .into(holder.image);
 
             final String finalUriPic = uriPic;
-            holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
-                        Intent intent = new Intent(context, FullScreenImage.class);
-                        intent.putExtra("player_photo", finalUriPic);
-                        context.startActivity(intent);
-                    }
-
+            holder.image.setOnClickListener(v -> {
+                if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                    Intent intent = new Intent(context, FullScreenImage.class);
+                    intent.putExtra("player_photo", finalUriPic);
+                    context.startActivity(intent);
                 }
+
             });
         } catch (MalformedURLException e) {
             Glide.with(context)
@@ -126,25 +119,19 @@ public class RVProtocolCommand1Adapter extends RecyclerView.Adapter<RVProtocolCo
             holder.layout.setBackgroundResource(R.color.colorBadgeScale);
             holder.layout.setVisibility(View.GONE);
         }
-        Boolean check = false;
+        boolean check = false;
         holder.switchCompat.setChecked(check);
         final Person finalPlayer = player;
         holder.switchCompat.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
-                        // TODO: handle your switch toggling logic here
-                        mListener.onClickSwitch(position, finalPlayer.getId(), isChecked);
-                    }
+                (buttonView, isChecked) -> {
+                    // TODO: handle your switch toggling logic here
+                    mListener.onClickSwitch(position, finalPlayer.getId(), isChecked);
                 });
-        holder.switchCompat.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    holder.switchCompat.getParent().requestDisallowInterceptTouchEvent(true);
-                }
-                return false;
+        holder.switchCompat.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                holder.switchCompat.getParent().requestDisallowInterceptTouchEvent(true);
             }
+            return false;
         });
         if (position == (players.size() - 1)) {
             holder.line.setVisibility(View.INVISIBLE);
@@ -157,14 +144,14 @@ public class RVProtocolCommand1Adapter extends RecyclerView.Adapter<RVProtocolCo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout layout;
-        EditText editNum;
-        ImageView image;
-        TextView textName;
-        SwitchCompat switchCompat;
-        View line;
+        final LinearLayout layout;
+        final EditText editNum;
+        final ImageView image;
+        final TextView textName;
+        final SwitchCompat switchCompat;
+        final View line;
 
-        public ViewHolder(View item) {
+        ViewHolder(View item) {
             super(item);
             editNum = item.findViewById(R.id.playerCommand1Num);
             image = item.findViewById(R.id.playerCommand1Logo);

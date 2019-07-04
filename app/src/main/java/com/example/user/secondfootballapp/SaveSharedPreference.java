@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.User;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
@@ -18,9 +17,9 @@ public class SaveSharedPreference {
     public static User user;
     public static String id;
     public  static  final String ID = "ID";
-    public  static SharedPreferences sharedPreferences;
-    public  static SharedPreferences.Editor editor;
-    static SharedPreferences getPreferences(Context context) {
+    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor editor;
+    private static SharedPreferences getPreferences(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = sharedPreferences.edit();
         return PreferenceManager.getDefaultSharedPreferences(context);
@@ -50,8 +49,7 @@ public class SaveSharedPreference {
     public static User getObject(){
         Gson gson = new Gson();
         String json = sharedPreferences.getString("MyObject", "");
-        User obj = gson.fromJson(json, User.class);
-        return obj ;
+        return gson.fromJson(json, User.class);
     }
 
     public static void saveObject(User myobject){

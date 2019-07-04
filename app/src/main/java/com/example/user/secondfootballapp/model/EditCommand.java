@@ -6,6 +6,7 @@ import java.util.List;
 
 public class EditCommand {
     @SerializedName("_id")
+    private
     String id;
 
     public String getId() {
@@ -17,6 +18,7 @@ public class EditCommand {
     }
 
     @SerializedName("teamId")
+    private
     String teamId;
 
     public String getTeamId() {
@@ -28,6 +30,7 @@ public class EditCommand {
     }
 
     @SerializedName("players")
+    private
     List<Player> players;
 
     public List<Player> getPlayers() {

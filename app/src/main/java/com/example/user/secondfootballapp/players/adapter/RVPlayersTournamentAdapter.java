@@ -15,8 +15,8 @@ import java.util.List;
 
 
 public class RVPlayersTournamentAdapter extends RecyclerView.Adapter<RVPlayersTournamentAdapter.ViewHolder>{
-    private Player context;
-    private List<PastLeague> pastLeagues;
+    private final Player context;
+    private final List<PastLeague> pastLeagues;
     public RVPlayersTournamentAdapter(Player context, List<PastLeague> pastLeagues){
         this.context = context;
         this.pastLeagues = pastLeagues;
@@ -25,8 +25,7 @@ public class RVPlayersTournamentAdapter extends RecyclerView.Adapter<RVPlayersTo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_tournament, parent, false);
-        RVPlayersTournamentAdapter.ViewHolder holder = new RVPlayersTournamentAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -53,8 +52,8 @@ public class RVPlayersTournamentAdapter extends RecyclerView.Adapter<RVPlayersTo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        View view;
-        TextView textTournament;
+        final View view;
+        final TextView textTournament;
         public ViewHolder(View item) {
             super(item);
             textTournament = item.findViewById(R.id.tournamentPlayersTitle);

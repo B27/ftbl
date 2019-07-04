@@ -12,8 +12,7 @@ import com.example.user.secondfootballapp.R;
 
 public class AbbreviationDialogFragment extends DialogFragment{
     public static AbbreviationDialogFragment newInstance() {
-        AbbreviationDialogFragment f = new AbbreviationDialogFragment();
-        return f;
+        return new AbbreviationDialogFragment();
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {

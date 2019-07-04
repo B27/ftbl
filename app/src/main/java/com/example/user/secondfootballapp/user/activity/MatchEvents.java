@@ -26,9 +26,9 @@ import java.util.Objects;
 
 public class MatchEvents extends AppCompatActivity {
     Logger log = LoggerFactory.getLogger(MatchEvents.class);
-    HashMap<Integer, String> halves;
-    FloatingActionButton fab;
-    boolean scrollStatus;
+    private HashMap<Integer, String> halves;
+    private FloatingActionButton fab;
+    private boolean scrollStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -32,17 +32,17 @@ import java.util.List;
 import q.rorbin.badgeview.QBadgeView;
 
 public class RVRefereesMatchesAdapter extends RecyclerView.Adapter<RVRefereesMatchesAdapter.ViewHolder> {
-    RefereesMatches context;
-    private List<ActiveMatch> matches;
+    private final RefereesMatches context;
+    private final List<ActiveMatch> matches;
     private LeagueInfo leagueInfo;
-    private Person person;
+    private final Person person;
     public RVRefereesMatchesAdapter(RefereesMatches context, List<ActiveMatch> matches, Person person, ListAdapterListener mListener){
         this.context =  context;
         this.matches =  matches;
         this.person =  person;
         this.mListener = mListener;
     }
-    private ListAdapterListener mListener;
+    private final ListAdapterListener mListener;
 
     public interface ListAdapterListener {
         void onClickSwitch(String id, String personId, Boolean check, String type, int position);
@@ -51,8 +51,7 @@ public class RVRefereesMatchesAdapter extends RecyclerView.Adapter<RVRefereesMat
     @Override
     public RVRefereesMatchesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.referees_match, parent, false);
-        RVRefereesMatchesAdapter.ViewHolder holder = new RVRefereesMatchesAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -219,26 +218,26 @@ public class RVRefereesMatchesAdapter extends RecyclerView.Adapter<RVRefereesMat
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textTournamentTitle;
-        TextView textDate;
-        TextView textTime;
-        TextView textScore;
-        TextView textTour;
-        TextView textStadium;
-        TextView textCommandTitle1;
-        TextView textCommandTitle2;
-        ImageView image1;
-        ImageView image2;
-        TextView referee1;
-        TextView referee2;
-        TextView referee3;
-        TextView referee4;
-        SwitchCompat switch1;
-        SwitchCompat switch2;
-        SwitchCompat switch3;
-        SwitchCompat switch4;
-        View line;
-        public ViewHolder(View item) {
+        final TextView textTournamentTitle;
+        final TextView textDate;
+        final TextView textTime;
+        final TextView textScore;
+        final TextView textTour;
+        final TextView textStadium;
+        final TextView textCommandTitle1;
+        final TextView textCommandTitle2;
+        final ImageView image1;
+        final ImageView image2;
+        final TextView referee1;
+        final TextView referee2;
+        final TextView referee3;
+        final TextView referee4;
+        final SwitchCompat switch1;
+        final SwitchCompat switch2;
+        final SwitchCompat switch3;
+        final SwitchCompat switch4;
+        final View line;
+        ViewHolder(View item) {
             super(item);
             textTournamentTitle = item.findViewById(R.id.refereesMatchLeagueTitle);
             textDate = item.findViewById(R.id.refereesMatchDate);

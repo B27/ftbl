@@ -44,9 +44,9 @@ import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVCommandMatchAdapter extends RecyclerView.Adapter<RVCommandMatchAdapter.ViewHolder> {
     Logger log = LoggerFactory.getLogger(CommandInfoActivity.class);
-    private CommandMatchFragment context;
-    private CommandInfoActivity activity;
-    private List<Match> matches;
+    private final CommandMatchFragment context;
+    private final CommandInfoActivity activity;
+    private final List<Match> matches;
 
     public RVCommandMatchAdapter(Activity activity, CommandMatchFragment context, List<Match> matches) {
         this.activity = (CommandInfoActivity) activity;
@@ -58,8 +58,7 @@ public class RVCommandMatchAdapter extends RecyclerView.Adapter<RVCommandMatchAd
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.timetable_fragment, parent, false);
-        RVCommandMatchAdapter.ViewHolder holder = new RVCommandMatchAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -250,20 +249,20 @@ public class RVCommandMatchAdapter extends RecyclerView.Adapter<RVCommandMatchAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textCommandTitle1;
-        TextView textCommandTitle2;
-        ImageView imgCommandLogo1;
-        ImageView imgCommandLogo2;
-        TextView textStadium;
-        TextView textDate;
-        TextView textTime;
-        TextView textTour;
-        TextView textLastScore;
-        TextView textPenalty;
-        TextView textScore;
-        View line;
+        final TextView textCommandTitle1;
+        final TextView textCommandTitle2;
+        final ImageView imgCommandLogo1;
+        final ImageView imgCommandLogo2;
+        final TextView textStadium;
+        final TextView textDate;
+        final TextView textTime;
+        final TextView textTour;
+        final TextView textLastScore;
+        final TextView textPenalty;
+        final TextView textScore;
+        final View line;
 
-        public ViewHolder(View item) {
+        ViewHolder(View item) {
             super(item);
             textCommandTitle1 = item.findViewById(R.id.timetableCommandTitle1);
             textCommandTitle2 = item.findViewById(R.id.timetableCommandTitle2);
@@ -291,12 +290,12 @@ public class RVCommandMatchAdapter extends RecyclerView.Adapter<RVCommandMatchAd
             Calendar cal = Calendar.getInstance();
             cal.setTime(date1);
             if (String.valueOf(cal.get(Calendar.HOUR)).length() == 1) {
-                dateDOB += "0" + String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                dateDOB += "0" + cal.get(Calendar.HOUR) + ":";
             } else {
-                dateDOB += String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                dateDOB += cal.get(Calendar.HOUR) + ":";
             }
             if ((String.valueOf(cal.get(Calendar.MINUTE) + 1).length() == 1)) {
-                dateDOB += "0" + String.valueOf(cal.get(Calendar.MINUTE) + 1);
+                dateDOB += "0" + (cal.get(Calendar.MINUTE) + 1);
             } else {
                 dateDOB += String.valueOf(cal.get(Calendar.MINUTE) + 1);
             }
@@ -309,12 +308,12 @@ public class RVCommandMatchAdapter extends RecyclerView.Adapter<RVCommandMatchAd
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date1);
                 if (String.valueOf(cal.get(Calendar.HOUR)).length() == 1) {
-                    dateDOB += "0" + String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                    dateDOB += "0" + cal.get(Calendar.HOUR) + ":";
                 } else {
-                    dateDOB += String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                    dateDOB += cal.get(Calendar.HOUR) + ":";
                 }
                 if ((String.valueOf(cal.get(Calendar.MINUTE) + 1).length() == 1)) {
-                    dateDOB += "0" + String.valueOf(cal.get(Calendar.MINUTE) + 1);
+                    dateDOB += "0" + (cal.get(Calendar.MINUTE) + 1);
                 } else {
                     dateDOB += String.valueOf(cal.get(Calendar.MINUTE) + 1);
                 }

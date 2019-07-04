@@ -36,10 +36,10 @@ import java.util.List;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RecyclerViewPlayersAdapter extends RecyclerView.Adapter<RecyclerViewPlayersAdapter.ViewHolder> {
-    private Logger log = LoggerFactory.getLogger(PlayersPage.class);
-    private List<Person> allPlayers;
-    private PlayersPage context;
-    private PersonalActivity activity;
+    private final Logger log = LoggerFactory.getLogger(PlayersPage.class);
+    private final List<Person> allPlayers;
+    private final PlayersPage context;
+    private final PersonalActivity activity;
 
     public RecyclerViewPlayersAdapter(Activity activity, PlayersPage context, List<Person> allPlayers) {
         this.allPlayers = allPlayers;
@@ -52,8 +52,7 @@ public class RecyclerViewPlayersAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.player, parent, false);
-        RecyclerViewPlayersAdapter.ViewHolder holder = new RecyclerViewPlayersAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -83,16 +82,13 @@ public class RecyclerViewPlayersAdapter extends RecyclerView.Adapter<RecyclerVie
                         .into(holder.imageLogo);
 
                 final String finalUriPic = uriPic;
-                holder.imageLogo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
-                            Intent intent = new Intent(activity, FullScreenImage.class);
-                            intent.putExtra("player_photo", finalUriPic);
-                            context.startActivity(intent);
-                        }
-
+                holder.imageLogo.setOnClickListener(v -> {
+                    if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                        Intent intent = new Intent(activity, FullScreenImage.class);
+                        intent.putExtra("player_photo", finalUriPic);
+                        context.startActivity(intent);
                     }
+
                 });
             } catch (MalformedURLException e) {
                 Glide.with(activity)
@@ -129,11 +125,11 @@ public class RecyclerViewPlayersAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageLogo;
-        LinearLayout buttonShow2;
-        TextView textName;
-        TextView textDOB;
-        View line;
+        final ImageView imageLogo;
+        final LinearLayout buttonShow2;
+        final TextView textName;
+        final TextView textDOB;
+        final View line;
 
         public ViewHolder(View item) {
             super(item);

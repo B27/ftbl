@@ -41,15 +41,15 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class UserPage extends Fragment {
-    public static Person person;
+    private static Person person;
     public static boolean auth;
-    public static AuthoUser authoUser;
-    Logger log = LoggerFactory.getLogger(UserPage.class);
-    boolean check = false;
-    final int REQUEST_CODE_REGISTRATION = 256;
-    EditText textLogin;
-    EditText textPass;
-    public static User user;
+    private static AuthoUser authoUser;
+    private final Logger log = LoggerFactory.getLogger(UserPage.class);
+    private boolean check = false;
+    private final int REQUEST_CODE_REGISTRATION = 256;
+    private EditText textLogin;
+    private EditText textPass;
+    private static User user;
     SharedPreferences.Editor prefsEditor ;
     SharedPreferences mPrefs;
     @Override
@@ -121,7 +121,7 @@ public class UserPage extends Fragment {
 
 
     //    public Boolean SignIn(){
-    public void SignIn() {
+    private void SignIn() {
         String login = textLogin.getText().toString();
         String password = textPass.getText().toString();
         Call<User> call = Controller.getApi().signIn(new SignIn(login, password));

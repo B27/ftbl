@@ -18,9 +18,9 @@ import com.example.user.secondfootballapp.user.activity.ProtocolScore;
 import java.util.HashMap;
 
 public class RVScoreFoulsAdapter extends RecyclerView.Adapter<RVScoreFoulsAdapter.ViewHolder>{
-    ProtocolScore context;
-    private HashMap<Integer, String> halves;
-    private TeamTitleClubLogoMatchEvents playerEvents;
+    private final ProtocolScore context;
+    private final HashMap<Integer, String> halves;
+    private final TeamTitleClubLogoMatchEvents playerEvents;
     public RVScoreFoulsAdapter(Activity context, HashMap<Integer, String> halves,
                                TeamTitleClubLogoMatchEvents playerEvents){
         this.context = (ProtocolScore) context;
@@ -31,8 +31,7 @@ public class RVScoreFoulsAdapter extends RecyclerView.Adapter<RVScoreFoulsAdapte
     @Override
     public RVScoreFoulsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fouls, parent, false);
-        RVScoreFoulsAdapter.ViewHolder holder = new RVScoreFoulsAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -77,13 +76,13 @@ public class RVScoreFoulsAdapter extends RecyclerView.Adapter<RVScoreFoulsAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textHalf;
-        TextView textTitle1;
-        TextView textTitle2;
-        TextView textScore;
-        ImageView image1;
-        ImageView image2;
-        public ViewHolder(View item) {
+        final TextView textHalf;
+        final TextView textTitle1;
+        final TextView textTitle2;
+        final TextView textScore;
+        final ImageView image1;
+        final ImageView image2;
+        ViewHolder(View item) {
             super(item);
             textHalf = item.findViewById(R.id.foulsHalf);
             image1 = item.findViewById(R.id.foulsCommand1Logo);

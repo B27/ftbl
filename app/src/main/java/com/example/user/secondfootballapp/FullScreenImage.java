@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 
 public class FullScreenImage extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(FullScreenImage.class);
+    private final Logger log = LoggerFactory.getLogger(FullScreenImage.class);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +30,8 @@ public class FullScreenImage extends AppCompatActivity {
             Intent intent = getIntent();
             String uri = intent.getStringExtra("player_photo");
 //            button = (ImageButton) findViewById(R.id.fullScreenImgBtn);
-            button = (Button) findViewById(R.id.fullScreenImgBtn);
-            image = (ImageView) findViewById(R.id.fullScreenImg);
+            button = findViewById(R.id.fullScreenImgBtn);
+            image = findViewById(R.id.fullScreenImg);
             URL url = new URL(uri);
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.format(DecodeFormat.PREFER_ARGB_8888);
@@ -44,11 +44,8 @@ public class FullScreenImage extends AppCompatActivity {
                     .apply(requestOptions)
                     .into(image);
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();//??????
-                }
+            button.setOnClickListener(v -> {
+                finish();//??????
             });
 
         }

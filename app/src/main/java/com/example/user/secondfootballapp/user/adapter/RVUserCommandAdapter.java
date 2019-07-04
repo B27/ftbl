@@ -26,10 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RVUserCommandAdapter extends RecyclerView.Adapter<RVUserCommandAdapter.ViewHolder>{
-    Logger log = LoggerFactory.getLogger(UserCommands.class);
+    private final Logger log = LoggerFactory.getLogger(UserCommands.class);
     UserCommands context;
-    PersonalActivity activity;
-    List<PersonTeams> list;
+    private final PersonalActivity activity;
+    private final List<PersonTeams> list;
     public RVUserCommandAdapter (Activity activity, List<PersonTeams> list){
         this.activity = (PersonalActivity) activity;
 //        this.context = context;
@@ -39,8 +39,7 @@ public class RVUserCommandAdapter extends RecyclerView.Adapter<RVUserCommandAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_command, parent, false);
-        RVUserCommandAdapter.ViewHolder holder = new RVUserCommandAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -111,14 +110,14 @@ public class RVUserCommandAdapter extends RecyclerView.Adapter<RVUserCommandAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
-        TextView textTournamentTitle;
-        TextView textCommandTitle;
-        TextView textTournamentDate;
-        TextView textTransfer;
-        TextView textPlayersNum;
-        TextView textStatus;
-        View line;
-        public ViewHolder(View item) {
+        final TextView textTournamentTitle;
+        final TextView textCommandTitle;
+        final TextView textTournamentDate;
+        final TextView textTransfer;
+        final TextView textPlayersNum;
+        final TextView textStatus;
+        final View line;
+        ViewHolder(View item) {
             super(item);
             textTournamentTitle = item.findViewById(R.id.userCommandTournamentTitle);
             textCommandTitle = item.findViewById(R.id.userCommandInfoTitle);

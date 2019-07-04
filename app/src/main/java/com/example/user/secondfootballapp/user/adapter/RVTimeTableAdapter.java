@@ -40,12 +40,12 @@ import java.util.List;
 import q.rorbin.badgeview.QBadgeView;
 
 public class RVTimeTableAdapter extends RecyclerView.Adapter<RVTimeTableAdapter.ViewHolder> {
-    TimeTableFragment context;
-    PersonalActivity activity;
-    private List<ActiveMatch> matches;
+    private final TimeTableFragment context;
+    private final PersonalActivity activity;
+    private final List<ActiveMatch> matches;
     private LeagueInfo leagueInfo;
 
-    Logger log = LoggerFactory.getLogger(TimeTableFragment.class);
+    private final Logger log = LoggerFactory.getLogger(TimeTableFragment.class);
     public RVTimeTableAdapter(Activity activity, TimeTableFragment context, List<ActiveMatch> matches) {
         this.matches = matches;
         this.context = context;
@@ -56,8 +56,7 @@ public class RVTimeTableAdapter extends RecyclerView.Adapter<RVTimeTableAdapter.
     @Override
     public RVTimeTableAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.timetable, parent, false);
-        RVTimeTableAdapter.ViewHolder holder = new RVTimeTableAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -243,25 +242,25 @@ public class RVTimeTableAdapter extends RecyclerView.Adapter<RVTimeTableAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textDate;
-        TextView textTime;
-        TextView textLeague;
-        TextView textLastScore;
-        TextView textPenalty;
-        TextView textStadium;
-        TextView textCommandTitle1;
-        TextView textCommandTitle2;
-        TextView textScore;
-        ImageView image1;
-        ImageView image2;
-        TextView textReferee1;
-        TextView textReferee2;
-        TextView textReferee3;
-        TextView textReferee4;
-        LinearLayout buttonEdit;
-        View line;
+        final TextView textDate;
+        final TextView textTime;
+        final TextView textLeague;
+        final TextView textLastScore;
+        final TextView textPenalty;
+        final TextView textStadium;
+        final TextView textCommandTitle1;
+        final TextView textCommandTitle2;
+        final TextView textScore;
+        final ImageView image1;
+        final ImageView image2;
+        final TextView textReferee1;
+        final TextView textReferee2;
+        final TextView textReferee3;
+        final TextView textReferee4;
+        final LinearLayout buttonEdit;
+        final View line;
 
-        public ViewHolder(View item) {
+        ViewHolder(View item) {
             super(item);
             textDate = item.findViewById(R.id.timetableMatchDate);
             textTime = item.findViewById(R.id.timetableMatchTime);

@@ -3,7 +3,6 @@ package com.example.user.secondfootballapp.user.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
-import androidx.core.app.NavUtils;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,14 +46,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserCommandInfo extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(UserCommandInfo.class);
-    static ProgressDialog mProgressDialog;
+    private final Logger log = LoggerFactory.getLogger(UserCommandInfo.class);
+    private static ProgressDialog mProgressDialog;
     public static List<Player> players;
     public static List<Player> playersInv;
     public static RVUserCommandPlayerAdapter adapter;
     public static RVUserCommandPlayerInvAdapter adapterInv;
-    Team team;
-    League league;
+    private Team team;
+    private League league;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         RecyclerView recyclerViewPlayer;
@@ -131,7 +130,7 @@ public class UserCommandInfo extends AppCompatActivity {
             log.error("ERROR: ", e);
         }
     }
-    public void editTeam() {
+    private void editTeam() {
         List<Player> playerList = new ArrayList<>(players);
         if (playersInv.size()!=0) {
             playerList.addAll(playersInv);
@@ -236,7 +235,7 @@ public class UserCommandInfo extends AppCompatActivity {
             });
 
     }
-    public void showDialog() {
+    private void showDialog() {
 
         if (mProgressDialog != null && !mProgressDialog.isShowing())
             mProgressDialog.show();

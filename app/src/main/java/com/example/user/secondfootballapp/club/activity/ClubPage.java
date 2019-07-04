@@ -30,12 +30,12 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 public class ClubPage extends Fragment {
-    boolean scrollStatus;
-    final int REQUEST_CODE_CLUBCREATE = 276;
+    private boolean scrollStatus;
+    private final int REQUEST_CODE_CLUBCREATE = 276;
     public static RecyclerViewClubAdapter adapter;
-    RecyclerView recyclerView;
-    public static FloatingActionButton fab;
-    NestedScrollView scroller;
+    private RecyclerView recyclerView;
+    private static FloatingActionButton fab;
+    private NestedScrollView scroller;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
@@ -81,7 +81,7 @@ public class ClubPage extends Fragment {
     }
 
 
-    public void HideShowFAB(){
+    private void HideShowFAB(){
         scroller.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 
             if (scrollY > oldScrollY) {

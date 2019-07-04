@@ -33,10 +33,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class RVOwnCommandAdapter extends RecyclerView.Adapter<RVOwnCommandAdapter.ViewHolder>{
-    Logger log = LoggerFactory.getLogger(UserCommands.class);
+    private final Logger log = LoggerFactory.getLogger(UserCommands.class);
     UserCommands context;
-    PersonalActivity activity;
-    List<PersonTeams> list;
+    private final PersonalActivity activity;
+    private final List<PersonTeams> list;
     public RVOwnCommandAdapter (Activity activity, List<PersonTeams> list){
         this.activity = (PersonalActivity) activity;
 //        this.context = context;
@@ -46,8 +46,7 @@ public class RVOwnCommandAdapter extends RecyclerView.Adapter<RVOwnCommandAdapte
     @Override
     public RVOwnCommandAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_command, parent, false);
-        RVOwnCommandAdapter.ViewHolder holder = new RVOwnCommandAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -148,15 +147,15 @@ public class RVOwnCommandAdapter extends RecyclerView.Adapter<RVOwnCommandAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
-        LinearLayout buttonShow;
-        TextView textTournamentTitle;
-        TextView textCommandTitle;
-        TextView textTournamentDate;
-        TextView textTransfer;
-        TextView textPlayersNum;
-        TextView textStatus;
-        View line;
-        public ViewHolder(View item) {
+        final LinearLayout buttonShow;
+        final TextView textTournamentTitle;
+        final TextView textCommandTitle;
+        final TextView textTournamentDate;
+        final TextView textTransfer;
+        final TextView textPlayersNum;
+        final TextView textStatus;
+        final View line;
+        ViewHolder(View item) {
             super(item);
             buttonShow = item.findViewById(R.id.userCommandShow);
             textTournamentTitle = item.findViewById(R.id.userCommandTournamentTitle);

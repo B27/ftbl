@@ -39,10 +39,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class ConfirmProtocol extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(ConfirmProtocol.class);
-    List<PlayerEvent> playerEvents;
-    String clubOne;
-    String clubTwo;
+    private final Logger log = LoggerFactory.getLogger(ConfirmProtocol.class);
+    private List<PlayerEvent> playerEvents;
+    private String clubOne;
+    private String clubTwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +81,7 @@ public class ConfirmProtocol extends AppCompatActivity {
             } catch (NullPointerException e) {
                 playerEvents = new ArrayList<>();
             }
-            imageSave.setOnClickListener(v -> {
-                confirmProtocol(match.getId());
-            });
+            imageSave.setOnClickListener(v -> confirmProtocol(match.getId()));
             fab.setOnClickListener(v -> {
                 List<Event> list = new ArrayList<>();
                 for (PlayerEvent playerEvent : playerEvents) {

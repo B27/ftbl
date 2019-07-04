@@ -35,10 +35,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ShowProtocol extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(com.example.user.secondfootballapp.user.activity.ConfirmProtocol.class);
-    List<PlayerEvent> playerEvents;
-    String clubOne;
-    String clubTwo;
+    private final Logger log = LoggerFactory.getLogger(com.example.user.secondfootballapp.user.activity.ConfirmProtocol.class);
+    private List<PlayerEvent> playerEvents;
+    private String clubOne;
+    private String clubTwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

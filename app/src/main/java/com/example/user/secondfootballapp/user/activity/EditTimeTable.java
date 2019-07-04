@@ -36,9 +36,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class EditTimeTable extends AppCompatActivity {
-    List<String> countReferees;
-    Logger log = LoggerFactory.getLogger(EditTimeTable.class);
-    ActiveMatch match;
+    private List<String> countReferees;
+    private final Logger log = LoggerFactory.getLogger(EditTimeTable.class);
+    private ActiveMatch match;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -354,7 +354,7 @@ public class EditTimeTable extends AppCompatActivity {
                         })
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(s -> saveData(s),
+                        .subscribe(this::saveData,
                                 error -> checkError.checkError(this, error));
 
 //                .subscribe(

@@ -3,8 +3,6 @@ package com.example.user.secondfootballapp;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.user.secondfootballapp.user.activity.EditTimeTable;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,8 +10,6 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
-import okhttp3.ResponseBody;
-import retrofit2.Converter;
 import retrofit2.HttpException;
 
 public class CheckError {

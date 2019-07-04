@@ -43,10 +43,10 @@ import java.util.Locale;
 import q.rorbin.badgeview.QBadgeView;
 
 public class RVMyMatchesAdapter extends RecyclerView.Adapter<RVMyMatchesAdapter.ViewHolder>{
-    MyMatches context;
-    private List<Match> matches;
+    private final MyMatches context;
+    private final List<Match> matches;
     Logger log = LoggerFactory.getLogger(PlayerAddToTeam.class);
-    PersonalActivity activity;
+    private final PersonalActivity activity;
     public RVMyMatchesAdapter(Activity activity, MyMatches context, List<Match> matches){
         this.context =  context;
         this.activity = (PersonalActivity) activity;
@@ -56,8 +56,7 @@ public class RVMyMatchesAdapter extends RecyclerView.Adapter<RVMyMatchesAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.match, parent, false);
-        RVMyMatchesAdapter.ViewHolder holder = new RVMyMatchesAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -65,7 +64,7 @@ public class RVMyMatchesAdapter extends RecyclerView.Adapter<RVMyMatchesAdapter.
         try{
         final Match match = matches.get(position);
 
-        Boolean check = false;
+        boolean check = false;
 
         String str;
         str = match.getDate();
@@ -221,20 +220,20 @@ public class RVMyMatchesAdapter extends RecyclerView.Adapter<RVMyMatchesAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textDate;
-        TextView textTime;
-        TextView textTour;
-        TextView textStadium;
-        TextView textScore;
-        TextView textCommand1;
-        TextView textCommand2;
-        ImageView image1;
-        ImageView image2;
-        Button button;
-        RelativeLayout layout;
-        View line;
-        TextView textPenalty;
-        public ViewHolder(View item) {
+        final TextView textDate;
+        final TextView textTime;
+        final TextView textTour;
+        final TextView textStadium;
+        final TextView textScore;
+        final TextView textCommand1;
+        final TextView textCommand2;
+        final ImageView image1;
+        final ImageView image2;
+        final Button button;
+        final RelativeLayout layout;
+        final View line;
+        final TextView textPenalty;
+        ViewHolder(View item) {
             super(item);
             button = item.findViewById(R.id.myMatchEdit);
             textDate = item.findViewById(R.id.myMatchDate);
@@ -261,13 +260,13 @@ public class RVMyMatchesAdapter extends RecyclerView.Adapter<RVMyMatchesAdapter.
             Calendar cal = Calendar.getInstance();
             cal.setTime(date1);
             if (String.valueOf(cal.get(Calendar.HOUR)).length()==1){
-                dateDOB += "0" + String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                dateDOB += "0" + cal.get(Calendar.HOUR) + ":";
             }
             else {
-                dateDOB += String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                dateDOB += cal.get(Calendar.HOUR) + ":";
             }
             if ((String.valueOf(cal.get(Calendar.MINUTE) + 1).length()==1)){
-                dateDOB += "0" + String.valueOf(cal.get(Calendar.MINUTE) + 1);
+                dateDOB += "0" + (cal.get(Calendar.MINUTE) + 1);
             }
             else{
                 dateDOB += String.valueOf(cal.get(Calendar.MINUTE) + 1);
@@ -281,13 +280,13 @@ public class RVMyMatchesAdapter extends RecyclerView.Adapter<RVMyMatchesAdapter.
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date1);
                 if (String.valueOf(cal.get(Calendar.HOUR)).length()==1){
-                    dateDOB += "0" + String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                    dateDOB += "0" + cal.get(Calendar.HOUR) + ":";
                 }
                 else {
-                    dateDOB += String.valueOf(cal.get(Calendar.HOUR)) + ":";
+                    dateDOB += cal.get(Calendar.HOUR) + ":";
                 }
                 if ((String.valueOf(cal.get(Calendar.MINUTE) + 1).length()==1)){
-                    dateDOB += "0" + String.valueOf(cal.get(Calendar.MINUTE) + 1);
+                    dateDOB += "0" + (cal.get(Calendar.MINUTE) + 1);
                 }
                 else{
                     dateDOB += String.valueOf(cal.get(Calendar.MINUTE) + 1);

@@ -48,15 +48,12 @@ public class ProtocolCommand1 extends AppCompatActivity {
 //            final List<String> countPlayers = new ArrayList<>(match.getPlayersList());
             List<Player> players = new ArrayList<>(team.getPlayers());
 //            RVProtocolCommand1Adapter adapter = new RVProtocolCommand1Adapter(this, players, countPlayers);
-            final RVProtocolCommand1Adapter adapter = new RVProtocolCommand1Adapter(this, players, countPlayers, new RVProtocolCommand1Adapter.ListAdapterListener() {
-                @Override
-                public void onClickSwitch(int position, String personId, Boolean check) {
-                    if (!check){
-                        countPlayers.remove(personId);
-                    }
-                    else{
-                        countPlayers.add(personId);
-                    }
+            final RVProtocolCommand1Adapter adapter = new RVProtocolCommand1Adapter(this, players, countPlayers, (position, personId, check) -> {
+                if (!check){
+                    countPlayers.remove(personId);
+                }
+                else{
+                    countPlayers.add(personId);
                 }
             });
             recyclerView.setAdapter(adapter);

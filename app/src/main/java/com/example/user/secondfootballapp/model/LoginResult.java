@@ -1,6 +1,6 @@
 package com.example.user.secondfootballapp.model;
 
-public class LoginResult {
+class LoginResult {
     private Boolean error;
     private String message;
     private Integer doctorid;

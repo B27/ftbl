@@ -19,10 +19,10 @@ import com.example.user.secondfootballapp.user.activity.ProtocolMatchScore;
 import java.util.HashMap;
 
 public class RVScoreFoulsAdapter1 extends RecyclerView.Adapter<RVScoreFoulsAdapter1.ViewHolder>{
-    ProtocolMatchScore context;
-    private HashMap<Integer, String> halves;
-    private TeamTitleClubLogoMatchEvents playerEvents;
-    private Match match;
+    private final ProtocolMatchScore context;
+    private final HashMap<Integer, String> halves;
+    private final TeamTitleClubLogoMatchEvents playerEvents;
+    private final Match match;
     public RVScoreFoulsAdapter1(Activity context, HashMap<Integer, String> halves,
                                TeamTitleClubLogoMatchEvents playerEvents, Match match){
         this.context = (ProtocolMatchScore) context;
@@ -34,8 +34,7 @@ public class RVScoreFoulsAdapter1 extends RecyclerView.Adapter<RVScoreFoulsAdapt
     @Override
     public RVScoreFoulsAdapter1.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fouls, parent, false);
-        RVScoreFoulsAdapter1.ViewHolder holder = new RVScoreFoulsAdapter1.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -81,13 +80,13 @@ public class RVScoreFoulsAdapter1 extends RecyclerView.Adapter<RVScoreFoulsAdapt
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textHalf;
-        TextView textTitle1;
-        TextView textTitle2;
-        TextView textScore;
-        ImageView image1;
-        ImageView image2;
-        public ViewHolder(View item) {
+        final TextView textHalf;
+        final TextView textTitle1;
+        final TextView textTitle2;
+        final TextView textScore;
+        final ImageView image1;
+        final ImageView image2;
+        ViewHolder(View item) {
             super(item);
             textHalf = item.findViewById(R.id.foulsHalf);
             image1 = item.findViewById(R.id.foulsCommand1Logo);

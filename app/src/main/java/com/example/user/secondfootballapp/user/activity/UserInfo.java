@@ -70,33 +70,33 @@ import static android.Manifest.permission.CAMERA;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class UserInfo extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(UserInfo.class);
-    String token;
-    User user;
+    private final Logger log = LoggerFactory.getLogger(UserInfo.class);
+    private String token;
+    private User user;
     //    public static Button buttonDOB;
-    String uriPic;
-    URL url;
+    private String uriPic;
+    private URL url;
     public static TextView buttonDOB;
-    ImageButton buttonPhoto;
-    ImageButton buttonClose;
-    ImageButton buttonSave;
-    EditText textName;
-    EditText textSurname;
-    EditText textPatronymic;
-    EditText textLogin;
+    private ImageButton buttonPhoto;
+    private ImageButton buttonClose;
+    private ImageButton buttonSave;
+    private EditText textName;
+    private EditText textSurname;
+    private EditText textPatronymic;
+    private EditText textLogin;
     TextView textDOB;
-    Bitmap myBitmap;
-    Uri picUri;
-    Bitmap photo;
-    Person person;
-    Person person1;
+    private Bitmap myBitmap;
+    private Uri picUri;
+    private Bitmap photo;
+    private Person person;
+    private Person person1;
     private ArrayList permissionsToRequest;
-    private ArrayList permissionsRejected = new ArrayList();
-    private ArrayList permissions = new ArrayList();
+    private final ArrayList permissionsRejected = new ArrayList();
+    private final ArrayList permissions = new ArrayList();
 
     private final static int ALL_PERMISSIONS_RESULT = 107;
 
-    boolean press;
+    private boolean press;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -115,48 +115,36 @@ public class UserInfo extends AppCompatActivity {
         buttonClose = findViewById(R.id.userProfileClose);
         buttonSave = findViewById(R.id.userProfileSave);
         textName.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textName.getBackground().clearColorFilter();
-                } else {
-                    textName.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textName.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textName.getBackground().clearColorFilter();
+            } else {
+                textName.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
         textSurname.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textSurname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textSurname.getBackground().clearColorFilter();
-                } else {
-                    textSurname.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textSurname.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textSurname.getBackground().clearColorFilter();
+            } else {
+                textSurname.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
 
         textPatronymic.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textPatronymic.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textPatronymic.getBackground().clearColorFilter();
-                } else {
-                    textPatronymic.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textPatronymic.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textPatronymic.getBackground().clearColorFilter();
+            } else {
+                textPatronymic.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
         textLogin.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textLogin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textLogin.getBackground().clearColorFilter();
-                } else {
-                    textLogin.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textLogin.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textLogin.getBackground().clearColorFilter();
+            } else {
+                textLogin.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
         try {
@@ -202,7 +190,7 @@ public class UserInfo extends AppCompatActivity {
 
 
             try {
-                HashMap<Integer, String> months = new HashMap<Integer, String>();
+                HashMap<Integer, String> months = new HashMap<>();
                 months.put(0, "янв.");
                 months.put(1, "февр.");
                 months.put(2, "марта");
@@ -220,7 +208,7 @@ public class UserInfo extends AppCompatActivity {
 
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date);
-                String dateDOB = String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + " " + months.get(cal.get(Calendar.MONTH)) + " " + String.valueOf(cal.get(Calendar.YEAR));
+                String dateDOB = cal.get(Calendar.DAY_OF_MONTH) + " " + months.get(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR);
                 buttonDOB.setText(dateDOB);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -228,210 +216,199 @@ public class UserInfo extends AppCompatActivity {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        buttonClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //post data
-                String name;
-                String surname;
-                String patronymic;
-                String login;
-                String DOB;
+        buttonClose.setOnClickListener(v -> finish());
+        buttonSave.setOnClickListener(v -> {
+            //post data
+            String name;
+            String surname;
+            String patronymic;
+            String login;
+            String DOB;
+
+            try {
+                name = textName.getText().toString();
+                surname = textSurname.getText().toString();
+                patronymic = textPatronymic.getText().toString();
+                login = textLogin.getText().toString();
+                DOB = (String) buttonDOB.getText();
+                photo = myBitmap;
+                Map<String, RequestBody> map = new HashMap<>();
+                RequestBody request = RequestBody.create(MediaType.parse("text/plain"), name);
+                map.put("name", request);
+                request = RequestBody.create(MediaType.parse("text/plain"), surname);
+                map.put("surname", request);
+                request = RequestBody.create(MediaType.parse("text/plain"), patronymic);
+                map.put("lastname", request);
+                request = RequestBody.create(MediaType.parse("text/plain"), login);
+                map.put("login", request);
+                request = RequestBody.create(MediaType.parse("text/plain"), person.getId());
+                map.put("_id", request);
+                DateFormat format = new SimpleDateFormat("dd MMMM yyyy", new Locale("ru"));
+                try {
+                    Date date = format.parse(DOB);
+                    RequestBody requestDOB = RequestBody.create(MediaType.parse("text/plain"), date.toString());
+                    map.put("birthdate", requestDOB);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 try {
-                    name = textName.getText().toString();
-                    surname = textSurname.getText().toString();
-                    patronymic = textPatronymic.getText().toString();
-                    login = textLogin.getText().toString();
-                    DOB = (String) buttonDOB.getText();
-                    photo = myBitmap;
-                    Map<String, RequestBody> map = new HashMap<>();
-                    RequestBody request = RequestBody.create(MediaType.parse("text/plain"), name);
-                    map.put("name", request);
-                    request = RequestBody.create(MediaType.parse("text/plain"), surname);
-                    map.put("surname", request);
-                    request = RequestBody.create(MediaType.parse("text/plain"), patronymic);
-                    map.put("lastname", request);
-                    request = RequestBody.create(MediaType.parse("text/plain"), login);
-                    map.put("login", request);
-                    request = RequestBody.create(MediaType.parse("text/plain"), person.getId());
-                    map.put("_id", request);
-                    DateFormat format = new SimpleDateFormat("dd MMMM yyyy", new Locale("ru"));
-                    try {
-                        Date date = format.parse(DOB);
-                        RequestBody requestDOB = RequestBody.create(MediaType.parse("text/plain"), date.toString());
-                        map.put("birthdate", requestDOB);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
 
-                    try {
-
-                        if (photo != null) {
-                            //create a file to write bitmap data
-                            File file = new File(getCacheDir(), "photo");
-                            file.createNewFile();
-                            //Convert bitmap to byte array
-                            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                            photo.compress(Bitmap.CompressFormat.JPEG, 80 /*ignored for PNG*/, bos);
-                            byte[] bitmapdata = bos.toByteArray();
-                            //write the bytes in file
-                            FileOutputStream fos = new FileOutputStream(file);
-                            fos.write(bitmapdata);
-                            fos.flush();
-                            fos.close();
-                            //        File file = new File(String.valueOf(PersonalInfo.picUri));
-                            RequestBody requestFile =
-                                    RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                            // MultipartBody.Part is used to send also the actual file name
-                            MultipartBody.Part body =
-                                    MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
-                            Call<EditProfile> call = Controller.getApi().editProfile(token, map, body);
-                            call.enqueue(new Callback<EditProfile>() {
-                                @Override
-                                public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
-                                    log.info("INFO: check response");
-                                    if (response.isSuccessful()) {
-                                        log.info("INFO: response isSuccessful");
-                                        if (response.body() == null) {
-                                            log.error("ERROR: body is null");
-                                        } else {
-//                                            Person person1;
-                                            person1 = response.body().getPerson();
-//                                            person = person1;
-                                            user.setUser(person1);
-//                                            AuthoUser.user.setUser(person1);
-                                            SaveSharedPreference.getObject().setUser(person1);
-                                            SaveSharedPreference.saveObject(user);
-                                            RequestOptions requestOptions = new RequestOptions();
-                                            requestOptions.optionalCircleCrop();
-                                            requestOptions.format(DecodeFormat.PREFER_ARGB_8888);
-                                            RequestOptions.errorOf(R.drawable.ic_logo2);
-                                            requestOptions.override(500, 500);
-                                            requestOptions.priority(Priority.HIGH);
-//                                                Glide.with(UserInfo.this)
-                                            Glide.with(AuthoUser.buttonOpenProfile.getContext())
-                                                    .asBitmap()
-                                                    .load(myBitmap)
-                                                    .apply(requestOptions)
-                                                    .into(AuthoUser.buttonOpenProfile);
-                                            AuthoUser.textName.setText(person1.getName());
-                                            //all is ok
-                                            if (person.getType().equals("player")) {
-                                                Person man1 = new Person();
-                                                for (Person man : PersonalActivity.people) {
-                                                    if (man.getId().equals(person.getId())) {
-                                                        man1 = man;
-                                                    }
-                                                }
-                                                PersonalActivity.people.remove(man1);
-                                                PersonalActivity.people.add(user.getUser());
-                                                PlayersPage.adapter.notifyDataSetChanged();
-                                            }
-                                            String str = "Изменения сохранены.";
-                                            Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
-                                            finish();
-//                        }
-                                        }
+                    if (photo != null) {
+                        //create a file to write bitmap data
+                        File file = new File(getCacheDir(), "photo");
+                        file.createNewFile();
+                        //Convert bitmap to byte array
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        photo.compress(Bitmap.CompressFormat.JPEG, 80 /*ignored for PNG*/, bos);
+                        byte[] bitmapdata = bos.toByteArray();
+                        //write the bytes in file
+                        FileOutputStream fos = new FileOutputStream(file);
+                        fos.write(bitmapdata);
+                        fos.flush();
+                        fos.close();
+                        //        File file = new File(String.valueOf(PersonalInfo.picUri));
+                        RequestBody requestFile =
+                                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                        // MultipartBody.Part is used to send also the actual file name
+                        MultipartBody.Part body =
+                                MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+                        Call<EditProfile> call = Controller.getApi().editProfile(token, map, body);
+                        call.enqueue(new Callback<EditProfile>() {
+                            @Override
+                            public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
+                                log.info("INFO: check response");
+                                if (response.isSuccessful()) {
+                                    log.info("INFO: response isSuccessful");
+                                    if (response.body() == null) {
+                                        log.error("ERROR: body is null");
                                     } else {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                                            String str = "Ошибка! ";
-                                            str += jsonObject.getString("message");
-                                            Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
-                                        } catch (IOException | JSONException e) {
-                                            e.printStackTrace();
+//                                            Person person1;
+                                        person1 = response.body().getPerson();
+//                                            person = person1;
+                                        user.setUser(person1);
+//                                            AuthoUser.user.setUser(person1);
+                                        SaveSharedPreference.getObject().setUser(person1);
+                                        SaveSharedPreference.saveObject(user);
+                                        RequestOptions requestOptions = new RequestOptions();
+                                        requestOptions.optionalCircleCrop();
+                                        requestOptions.format(DecodeFormat.PREFER_ARGB_8888);
+                                        RequestOptions.errorOf(R.drawable.ic_logo2);
+                                        requestOptions.override(500, 500);
+                                        requestOptions.priority(Priority.HIGH);
+//                                                Glide.with(UserInfo.this)
+                                        Glide.with(AuthoUser.buttonOpenProfile.getContext())
+                                                .asBitmap()
+                                                .load(myBitmap)
+                                                .apply(requestOptions)
+                                                .into(AuthoUser.buttonOpenProfile);
+                                        AuthoUser.textName.setText(person1.getName());
+                                        //all is ok
+                                        if (person.getType().equals("player")) {
+                                            Person man1 = new Person();
+                                            for (Person man : PersonalActivity.people) {
+                                                if (man.getId().equals(person.getId())) {
+                                                    man1 = man;
+                                                }
+                                            }
+                                            PersonalActivity.people.remove(man1);
+                                            PersonalActivity.people.add(user.getUser());
+                                            PlayersPage.adapter.notifyDataSetChanged();
                                         }
+                                        String str = "Изменения сохранены.";
+                                        Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
+                                        finish();
+//                        }
+                                    }
+                                } else {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                                        String str = "Ошибка! ";
+                                        str += jsonObject.getString("message");
+                                        Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
+                                    } catch (IOException | JSONException e) {
+                                        e.printStackTrace();
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onFailure(Call<EditProfile> call, Throwable t) {
-                                    log.error("ERROR: ", t);
-                                    Toast.makeText(UserInfo.this, "Ошибка сервера. Изменения не сохранены.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            Call<EditProfile> call = Controller.getApi().editProfile(token, map, null);
-                            call.enqueue(new Callback<EditProfile>() {
-                                @Override
-                                public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
-                                    log.info("INFO: check response");
-                                    if (response.isSuccessful()) {
-                                        log.info("INFO: response isSuccessful");
-                                        if (response.body() == null) {
-                                            log.error("ERROR: body is null");
-                                        } else {
-                                            person1 = response.body().getPerson();
-                                            user.setUser(person1);
+                            @Override
+                            public void onFailure(Call<EditProfile> call, Throwable t) {
+                                log.error("ERROR: ", t);
+                                Toast.makeText(UserInfo.this, "Ошибка сервера. Изменения не сохранены.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        Call<EditProfile> call = Controller.getApi().editProfile(token, map, null);
+                        call.enqueue(new Callback<EditProfile>() {
+                            @Override
+                            public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
+                                log.info("INFO: check response");
+                                if (response.isSuccessful()) {
+                                    log.info("INFO: response isSuccessful");
+                                    if (response.body() == null) {
+                                        log.error("ERROR: body is null");
+                                    } else {
+                                        person1 = response.body().getPerson();
+                                        user.setUser(person1);
 //                                            AuthoUser.user.setUser(person1);
-                                            SaveSharedPreference.getObject().setUser(person1);
-                                            log.error(SaveSharedPreference.getObject().getUser().getName());
-                                            log.error("777777777777777777777777777777777777777777777777777777777777777");
-                                            SaveSharedPreference.editObject(user);
-                                            log.error("777777777777777777777777777777777777777777777777777777777777777");
+                                        SaveSharedPreference.getObject().setUser(person1);
+                                        log.error(SaveSharedPreference.getObject().getUser().getName());
+                                        log.error("777777777777777777777777777777777777777777777777777777777777777");
+                                        SaveSharedPreference.editObject(user);
+                                        log.error("777777777777777777777777777777777777777777777777777777777777777");
 
 //                                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //                                            ft.detach(PersonalActivity.authoUser).attach(PersonalActivity.authoUser).commit();
 //                                            person = person1;
-                                            AuthoUser.textName.setText(person1.getName());
-                                            Person man1 = new Person();
-                                            if (person.getType().equals("player")) {
-                                                for (Person man : PersonalActivity.people) {
-                                                    if (man.getId().equals(person.getId())) {
-                                                        man1 = man;
-                                                    }
+                                        AuthoUser.textName.setText(person1.getName());
+                                        Person man1 = new Person();
+                                        if (person.getType().equals("player")) {
+                                            for (Person man : PersonalActivity.people) {
+                                                if (man.getId().equals(person.getId())) {
+                                                    man1 = man;
                                                 }
-                                                PersonalActivity.people.remove(man1);
-                                                PersonalActivity.people.add(user.getUser());
-                                                PlayersPage.adapter.notifyDataSetChanged();
                                             }
-                                            String str = "Изменения сохранены.";
-                                            Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
-                                            //all is ok
-                                            finish();
+                                            PersonalActivity.people.remove(man1);
+                                            PersonalActivity.people.add(user.getUser());
+                                            PlayersPage.adapter.notifyDataSetChanged();
                                         }
-                                    } else {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                                            String str = "Ошибка! ";
-                                            str += jsonObject.getString("message");
-                                            Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
-                                        } catch (IOException | JSONException e) {
-                                            e.printStackTrace();
-                                        }
+                                        String str = "Изменения сохранены.";
+                                        Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
+                                        //all is ok
+                                        finish();
+                                    }
+                                } else {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                                        String str = "Ошибка! ";
+                                        str += jsonObject.getString("message");
+                                        Toast.makeText(UserInfo.this, str, Toast.LENGTH_LONG).show();
+                                    } catch (IOException | JSONException e) {
+                                        e.printStackTrace();
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onFailure(@NonNull Call<EditProfile> call, Throwable t) {
-                                    log.error("ERROR: ", t);
-                                    Toast.makeText(UserInfo.this, "Ошибка сервера. Изменения не сохранены.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-
-                    } catch (IOException e) {
-                        log.error("ERROR");
+                            @Override
+                            public void onFailure(@NonNull Call<EditProfile> call, Throwable t) {
+                                log.error("ERROR: ", t);
+                                Toast.makeText(UserInfo.this, "Ошибка сервера. Изменения не сохранены.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-                } catch (Exception e) {
-                }
 
-                finish();
+                } catch (IOException e) {
+                    log.error("ERROR");
+                }
+            } catch (Exception e) {
             }
+
+            finish();
         });
-        buttonPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                press = true;
-                startActivityForResult(getPickImageChooserIntent(), 200);
-            }
+        buttonPhoto.setOnClickListener(v -> {
+            press = true;
+            startActivityForResult(getPickImageChooserIntent(), 200);
         });
         permissions.add(CAMERA);
         permissionsToRequest = findUnAskedPermissions(permissions);
@@ -443,18 +420,15 @@ public class UserInfo extends AppCompatActivity {
         }
 
 
-        buttonDOB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonDOB.setTextColor(getResources().getColor(R.color.colorBottomNavigationUnChecked));
-                com.example.user.secondfootballapp.user.activity.DatePicker datePicker1 = new com.example.user.secondfootballapp.user.activity.DatePicker();
-                datePicker1.show(getSupportFragmentManager(), "DatePickerDialogFragment");
-            }
+        buttonDOB.setOnClickListener(v -> {
+            buttonDOB.setTextColor(getResources().getColor(R.color.colorBottomNavigationUnChecked));
+            DatePicker datePicker1 = new DatePicker();
+            datePicker1.show(getSupportFragmentManager(), "DatePickerDialogFragment");
         });
     }
 
 
-    public Intent getPickImageChooserIntent() {
+    private Intent getPickImageChooserIntent() {
 
         // Determine Uri of camera image to save.
         Uri outputFileUri = getCaptureImageOutputUri();
@@ -535,7 +509,7 @@ public class UserInfo extends AppCompatActivity {
                     Bitmap newBitmap = getResizedBitmap(myBitmap, 500);
                     Glide.with(this)
                             .load(newBitmap)
-                            .apply(new RequestOptions()
+                            .apply(RequestOptions
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
                                     .priority(Priority.HIGH))
@@ -558,7 +532,7 @@ public class UserInfo extends AppCompatActivity {
                     Bitmap newBitmap = getResizedBitmap(myBitmap, 500);
                     Glide.with(this)
                             .load(newBitmap)
-                            .apply(new RequestOptions()
+                            .apply(RequestOptions
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
                                     .priority(Priority.HIGH))
@@ -573,7 +547,7 @@ public class UserInfo extends AppCompatActivity {
 
     }
 
-    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+    private Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
 
@@ -588,7 +562,7 @@ public class UserInfo extends AppCompatActivity {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
-    public Uri getPickImageResultUri(Intent data) {
+    private Uri getPickImageResultUri(Intent data) {
         boolean isCamera = true;
 //        if (data != null) {
 //            String action = data.getAction();
@@ -634,7 +608,7 @@ public class UserInfo extends AppCompatActivity {
     }
 
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
 
         for (String perm : wanted) {
             if (!hasPermission(perm)) {
@@ -681,42 +655,38 @@ public class UserInfo extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
-        switch (requestCode) {
+        if (requestCode == ALL_PERMISSIONS_RESULT) {
+            for (Object perms : permissionsToRequest) {
+                if (hasPermission(perms.toString())) {
 
-            case ALL_PERMISSIONS_RESULT:
-                for (Object perms : permissionsToRequest) {
-                    if (hasPermission(perms.toString())) {
+                } else {
 
-                    } else {
-
-                        permissionsRejected.add(perms);
-                    }
+                    permissionsRejected.add(perms);
                 }
+            }
 
-                if (permissionsRejected.size() > 0) {
+            if (permissionsRejected.size() > 0) {
 
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (shouldShowRequestPermissionRationale((String) permissionsRejected.get(0))) {
-                            showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (shouldShowRequestPermissionRationale((String) permissionsRejected.get(0))) {
+                        showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                                                //Log.d("API123", "permisionrejected " + permissionsRejected.size());
+                                            //Log.d("API123", "permisionrejected " + permissionsRejected.size());
 
-                                                requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
-                                            }
+                                            requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
                                         }
-                                    });
-                            return;
-                        }
+                                    }
+                                });
+                        return;
                     }
-
                 }
 
-                break;
+            }
         }
 
     }

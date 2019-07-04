@@ -21,7 +21,7 @@ public class ViewPagerTournamentInfoAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    FragmentManager fm;
+    private final FragmentManager fm;
     public ViewPagerTournamentInfoAdapter(FragmentManager fm) {
         super(fm);
         this.fm = fm;

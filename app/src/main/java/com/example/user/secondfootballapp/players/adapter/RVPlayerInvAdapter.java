@@ -53,9 +53,9 @@ import static android.app.Activity.RESULT_OK;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVPlayerInvAdapter extends RecyclerView.Adapter<RVPlayerInvAdapter.ViewHolder> {
-    private Logger log = LoggerFactory.getLogger(PlayerInv.class);
-    private PlayerInv context;
-    private List<PersonTeams> leagues;
+    private final Logger log = LoggerFactory.getLogger(PlayerInv.class);
+    private final PlayerInv context;
+    private final List<PersonTeams> leagues;
     private String uriPic;
     public RVPlayerInvAdapter(PlayerInv context, List<PersonTeams> leagues){
         this.context =  context;
@@ -65,8 +65,7 @@ public class RVPlayerInvAdapter extends RecyclerView.Adapter<RVPlayerInvAdapter.
     @Override
     public RVPlayerInvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_inv_command, parent, false);
-        RVPlayerInvAdapter.ViewHolder holder = new RVPlayerInvAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -113,14 +112,11 @@ public class RVPlayerInvAdapter extends RecyclerView.Adapter<RVPlayerInvAdapter.
                     .into(holder.image);
 
             final String finalUriPic = uriPic;
-            holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
-                        Intent intent = new Intent(context, FullScreenImage.class);
-                        intent.putExtra("player_photo", finalUriPic);
-                        context.startActivity(intent);
-                    }
+            holder.image.setOnClickListener(v -> {
+                if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                    Intent intent = new Intent(context, FullScreenImage.class);
+                    intent.putExtra("player_photo", finalUriPic);
+                    context.startActivity(intent);
                 }
             });
         } catch (Exception e) {
@@ -148,10 +144,10 @@ public class RVPlayerInvAdapter extends RecyclerView.Adapter<RVPlayerInvAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 //        View card;
-        ImageButton button;
-        ImageView image;
-        TextView textTitle;
-        View line;
+final ImageButton button;
+        final ImageView image;
+        final TextView textTitle;
+        final View line;
         public ViewHolder(View item) {
             super(item);
             image = item.findViewById(R.id.playerInvLogo);
@@ -186,7 +182,6 @@ public class RVPlayerInvAdapter extends RecyclerView.Adapter<RVPlayerInvAdapter.
         request = RequestBody.create(MediaType.parse("text/plain"), team.getId());
         map.put("teamId", request);
         Call<ServerResponse> call = Controller.getApi().addPlayerToTeam(SaveSharedPreference.getObject().getToken(), map);
-        final Team finalTeamLeague = team;
         final League finalLeague = league;
         call.enqueue(new Callback<ServerResponse>() {
             @Override
@@ -196,12 +191,12 @@ public class RVPlayerInvAdapter extends RecyclerView.Adapter<RVPlayerInvAdapter.
                         PersonTeams personTeams = new PersonTeams();
 //                        personTeams.setId("000");
                         personTeams.setLeague(finalLeague.getId());
-                        personTeams.setTeam(finalTeamLeague.getId());
+                        personTeams.setTeam(team.getId());
                         AuthoUser.personOngoingLeagues.add(personTeams);
 
 
                         for (PersonTeams teams : AuthoUser.personOwnCommand){
-                            if (teams.getTeam().equals(finalTeamLeague.getId())){
+                            if (teams.getTeam().equals(team.getId())){
                                 personTeams = teams;
                                 break;
                             }
@@ -214,7 +209,7 @@ public class RVPlayerInvAdapter extends RecyclerView.Adapter<RVPlayerInvAdapter.
                         PersonTeams personTeams2 = new PersonTeams();
                         personTeams2.setId(personTeams.getId());
                         personTeams2.setLeague(finalLeague.getId());
-                        personTeams2.setTeam(finalTeamLeague.getId());
+                        personTeams2.setTeam(team.getId());
                         AuthoUser.personOwnCommand.remove(personTeams);
                         AuthoUser.personOwnCommand.add(personTeams2);
 

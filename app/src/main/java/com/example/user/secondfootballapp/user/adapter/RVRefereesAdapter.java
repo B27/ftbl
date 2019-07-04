@@ -31,9 +31,9 @@ import java.util.List;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVRefereesAdapter extends RecyclerView.Adapter<RVRefereesAdapter.ViewHolder>{
-    RefereeFragment context;
-    PersonalActivity activity;
-    private List<Person> referees;
+    private final RefereeFragment context;
+    private final PersonalActivity activity;
+    private final List<Person> referees;
     public RVRefereesAdapter(Activity activity, RefereeFragment context, List<Person> referees){
         this.context =  context;
         this.referees =  referees;
@@ -43,8 +43,7 @@ public class RVRefereesAdapter extends RecyclerView.Adapter<RVRefereesAdapter.Vi
     @Override
     public RVRefereesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.referee, parent, false);
-        RVRefereesAdapter.ViewHolder holder = new RVRefereesAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -102,11 +101,11 @@ public class RVRefereesAdapter extends RecyclerView.Adapter<RVRefereesAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image;
-        TextView textName;
-        LinearLayout buttonShow;
-        View line;
-        public ViewHolder(View item) {
+        final ImageView image;
+        final TextView textName;
+        final LinearLayout buttonShow;
+        final View line;
+        ViewHolder(View item) {
             super(item);
             image = item.findViewById(R.id.refereePhoto);
             textName = item.findViewById(R.id.refereeName);

@@ -21,9 +21,9 @@ import java.util.List;
 
 
 public class RVTournamentPlayersAdapter extends RecyclerView.Adapter<RVTournamentPlayersAdapter.ViewHolder>{
-    private TournamentPlayersFragment context;
-    private List<Player> players;
-    private List<String> clubs;
+    private final TournamentPlayersFragment context;
+    private final List<Player> players;
+    private final List<String> clubs;
     public RVTournamentPlayersAdapter(TournamentPlayersFragment context, List<Player> players, List<String> clubs){
         this.context = context;
         this.players = players;
@@ -33,8 +33,7 @@ public class RVTournamentPlayersAdapter extends RecyclerView.Adapter<RVTournamen
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tournament_player, parent, false);
-        RVTournamentPlayersAdapter.ViewHolder holder = new RVTournamentPlayersAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -106,14 +105,14 @@ public class RVTournamentPlayersAdapter extends RecyclerView.Adapter<RVTournamen
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textName;
-        TextView textPoint1;
-        TextView textPoint2;
-        TextView textPoint3;
-        TextView textPoint4;
-        ImageView image;
+        final TextView textName;
+        final TextView textPoint1;
+        final TextView textPoint2;
+        final TextView textPoint3;
+        final TextView textPoint4;
+        final ImageView image;
 //        TextView textPoint5;
-        public ViewHolder(View item) {
+ViewHolder(View item) {
             super(item);
             textName = item.findViewById(R.id.tournamentPlayer);
             textPoint1 = item.findViewById(R.id.tournamentPlayerPoint1);

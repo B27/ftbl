@@ -4,10 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-public class AddClub implements Serializable {
+class AddClub implements Serializable {
     @SerializedName("dataClub")
     @Expose
     private DataClub dataClub;

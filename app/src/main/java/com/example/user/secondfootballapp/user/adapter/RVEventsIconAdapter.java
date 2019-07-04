@@ -23,12 +23,12 @@ import java.util.List;
 
 public class RVEventsIconAdapter extends RecyclerView.Adapter<RVEventsIconAdapter.ViewHolder>{
     Logger log = LoggerFactory.getLogger(AddEvent.class);
-    AddEvent context;
-    List<String> list;
-    private List<Boolean> list2;
-    private ListAdapterListener mListener;
+    private final AddEvent context;
+    private final List<String> list;
+    private final List<Boolean> list2;
+    private final ListAdapterListener mListener;
     int selectedPosition;
-    public int[] imgArray ={
+    private final int[] imgArray ={
             R.drawable.ic_con,
             R.drawable.ic_yellow_card,
             R.drawable.ic_red_card,
@@ -49,8 +49,7 @@ public class RVEventsIconAdapter extends RecyclerView.Adapter<RVEventsIconAdapte
     @Override
     public RVEventsIconAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_icon, parent, false);
-        RVEventsIconAdapter.ViewHolder holder = new RVEventsIconAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -65,35 +64,31 @@ public class RVEventsIconAdapter extends RecyclerView.Adapter<RVEventsIconAdapte
         Glide.with(context)
                 .asBitmap()
                 .load(imgArray[position])
-                .apply(new RequestOptions()
+                .apply(RequestOptions
                         .circleCropTransform()
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .priority(Priority.HIGH))
                 .into(holder.badgeView);
 
-        final int p = position;
-        holder.badgeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.badgeView.isVisibleBadge()){
-                    holder.badgeView.visibleBadge(false);
-                    holder.textName.setTextColor(context.getResources().getColor(R.color.colorLightGrayForText));
-                    AddEvent.list2.set(p, false);
-                    mListener.onClickSwitch(100);
-                }
-                else {
-                    holder.textName.setTextColor(context.getResources().getColor(R.color.colorBottomNavigationUnChecked));
-                    holder.badgeView.visibleBadge(true);
-                    for (int i=0; i< list2.size(); i++){
-                        AddEvent.list2.set(i, false);
-                    }
-                    AddEvent.list2.set(p, true);
-
-                    mListener.onClickSwitch(p);
-                }
-
-                notifyDataSetChanged();
+        holder.badgeView.setOnClickListener(v -> {
+            if (holder.badgeView.isVisibleBadge()){
+                holder.badgeView.visibleBadge(false);
+                holder.textName.setTextColor(context.getResources().getColor(R.color.colorLightGrayForText));
+                AddEvent.list2.set(position, false);
+                mListener.onClickSwitch(100);
             }
+            else {
+                holder.textName.setTextColor(context.getResources().getColor(R.color.colorBottomNavigationUnChecked));
+                holder.badgeView.visibleBadge(true);
+                for (int i=0; i< list2.size(); i++){
+                    AddEvent.list2.set(i, false);
+                }
+                AddEvent.list2.set(position, true);
+
+                mListener.onClickSwitch(position);
+            }
+
+            notifyDataSetChanged();
         });
 
     }
@@ -105,14 +100,14 @@ public class RVEventsIconAdapter extends RecyclerView.Adapter<RVEventsIconAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView textName;
-        View itemView;
-        ru.nikartm.support.ImageBadgeView badgeView;
-        public ViewHolder(View item) {
+        final TextView textName;
+        final View itemView;
+        final ru.nikartm.support.ImageBadgeView badgeView;
+        ViewHolder(View item) {
             super(item);
             itemView = item;
-            badgeView = (ru.nikartm.support.ImageBadgeView) item.findViewById(R.id.ibv_icon);
-            textName = (TextView) item.findViewById(R.id.eventTitle);
+            badgeView = item.findViewById(R.id.ibv_icon);
+            textName = item.findViewById(R.id.eventTitle);
 //            itemView.setOnClickListener(this);
 //            itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override

@@ -23,10 +23,10 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 
 public class RVScoreHalfAdapter1 extends RecyclerView.Adapter<RVScoreHalfAdapter1.ViewHolder>{
-    ProtocolMatchScore context;
+    private final ProtocolMatchScore context;
     Logger log = LoggerFactory.getLogger(ProtocolEdit.class);
-    private HashMap<Integer, String> halves;
-    private TeamTitleClubLogoMatchEvents playerEvents;
+    private final HashMap<Integer, String> halves;
+    private final TeamTitleClubLogoMatchEvents playerEvents;
     public RVScoreHalfAdapter1(Activity context, HashMap<Integer, String> halves,
                               TeamTitleClubLogoMatchEvents playerEvents, Match match){
         this.context = (ProtocolMatchScore) context;
@@ -37,8 +37,7 @@ public class RVScoreHalfAdapter1 extends RecyclerView.Adapter<RVScoreHalfAdapter
     @Override
     public RVScoreHalfAdapter1.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.score, parent, false);
-        RVScoreHalfAdapter1.ViewHolder holder = new RVScoreHalfAdapter1.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -91,14 +90,14 @@ public class RVScoreHalfAdapter1 extends RecyclerView.Adapter<RVScoreHalfAdapter
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textHalf;
-        TextView textTitle1;
-        TextView textTitle2;
-        TextView textScore;
-        ImageView image1;
-        ImageView image2;
+        final TextView textHalf;
+        final TextView textTitle1;
+        final TextView textTitle2;
+        final TextView textScore;
+        final ImageView image1;
+        final ImageView image2;
         View line;
-        public ViewHolder(View item) {
+        ViewHolder(View item) {
             super(item);
             textHalf = item.findViewById(R.id.scoreHalf);
             image1 = item.findViewById(R.id.scoreHalfCommand1Logo);

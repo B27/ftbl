@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
-import androidx.core.widget.NestedScrollView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +33,9 @@ import java.net.URL;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class UserClubs extends Fragment {
-    Logger log = LoggerFactory.getLogger(UserClubs.class);
-    String uriPic;
-    FloatingActionButton fab;
+    private final Logger log = LoggerFactory.getLogger(UserClubs.class);
+    private String uriPic;
+    private FloatingActionButton fab;
 
     @Override
     public void onAttach(Context context) {

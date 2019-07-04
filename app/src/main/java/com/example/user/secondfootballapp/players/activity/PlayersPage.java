@@ -9,11 +9,10 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.widget.NestedScrollView;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
+
 import android.text.Html;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -43,20 +42,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class PlayersPage extends Fragment {
-    RecyclerView recyclerView;
-    int count = 0;
-    int offset = 0;
-    int limit = 10;
+    private RecyclerView recyclerView;
+    private int count = 0;
+    private int offset = 0;
+    private final int limit = 10;
     public static RecyclerViewPlayersAdapter adapter;
 //    RecyclerViewPlayersAdapter adapter;
-    Logger log = LoggerFactory.getLogger(PlayersPage.class);
-    SearchView searchView;
-    ProgressBar progressBar;
-    List<Person> result = new ArrayList<>();
-    ProgressDialog mProgressDialog;
-    List<Person> people = new ArrayList<>();
-    List<Person> allPeople = new ArrayList<>();
-    NestedScrollView scroller;
+private final Logger log = LoggerFactory.getLogger(PlayersPage.class);
+    private SearchView searchView;
+    private ProgressBar progressBar;
+    private final List<Person> result = new ArrayList<>();
+    private ProgressDialog mProgressDialog;
+    private final List<Person> people = new ArrayList<>();
+    private final List<Person> allPeople = new ArrayList<>();
+    private NestedScrollView scroller;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 
@@ -131,15 +130,15 @@ public class PlayersPage extends Fragment {
     }
 
     @SuppressLint("CheckResult")
-    public void SearchUsers(String search){
+    private void SearchUsers(String search){
 //        PersonalActivity.people.clear();
         String type = "player";
         Controller.getApi().getAllUsers(type, search, "32575", "0")
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(__ -> showDialog())
-                .doOnTerminate(()->hideDialog())
+                .doOnTerminate(this::hideDialog)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(people -> savePlayers(people),
+                .subscribe(this::savePlayers,
                         error -> {
                             CheckError checkError = new CheckError();
                             checkError.checkError(getActivity(), error);
@@ -161,13 +160,13 @@ public class PlayersPage extends Fragment {
         super.onPause();
     }
 
-    public void showDialog() {
+    private void showDialog() {
 
         if (mProgressDialog != null && !mProgressDialog.isShowing())
             mProgressDialog.show();
     }
 
-    public void hideDialog() {
+    private void hideDialog() {
 
         if (mProgressDialog != null && mProgressDialog.isShowing())
             mProgressDialog.dismiss();
@@ -175,13 +174,13 @@ public class PlayersPage extends Fragment {
 
 
     @SuppressLint("CheckResult")
-    public void getAllPlayers(String limit, String offset) {
+    private void getAllPlayers(String limit, String offset) {
         CheckError checkError = new CheckError();
         String type = "player";
         Controller.getApi().getAllUsers(type, null, limit, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(people -> saveAllPlayers(people),
+                .subscribe(this::saveAllPlayers,
                         error -> checkError.checkError(getActivity(), error)
                 );
     }

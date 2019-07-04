@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NewsPage extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(NewsPage.class);
+    private final Logger log = LoggerFactory.getLogger(NewsPage.class);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,12 +87,7 @@ public class NewsPage extends AppCompatActivity {
                         .into(imageNews);
             }
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+            button.setOnClickListener(v -> finish());
 
         }
         catch (Exception t){

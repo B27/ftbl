@@ -9,9 +9,9 @@ import com.example.user.secondfootballapp.tournament.activity.TournamentPlayersF
 
 import java.util.List;
 
-public class SpinnerPlayersSortAdapter extends BaseAdapter{
-    List<String> item;
-    TournamentPlayersFragment context;
+class SpinnerPlayersSortAdapter extends BaseAdapter{
+    private final List<String> item;
+    private final TournamentPlayersFragment context;
     public SpinnerPlayersSortAdapter(TournamentPlayersFragment context, List<String> item){
         this.context = context;
         this.item = item;

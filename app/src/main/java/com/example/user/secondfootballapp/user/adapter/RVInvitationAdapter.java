@@ -57,10 +57,10 @@ import static com.example.user.secondfootballapp.Controller.BASE_URL;
 import static com.example.user.secondfootballapp.user.activity.AuthoUser.SetInvNum;
 
 public class RVInvitationAdapter extends RecyclerView.Adapter<RVInvitationAdapter.ViewHolder> {
-    Logger log = LoggerFactory.getLogger(InvitationFragment.class);
-    InvitationFragment context;
-    PersonalActivity activity;
-    List<PendingTeamInvite> list;
+    private final Logger log = LoggerFactory.getLogger(InvitationFragment.class);
+    private final InvitationFragment context;
+    private final PersonalActivity activity;
+    private final List<PendingTeamInvite> list;
 
     public RVInvitationAdapter(Activity activity, InvitationFragment context, List<PendingTeamInvite> list) {
 //    public RVInvitationAdapter(Activity activity,  List<PendingTeamInvite> list) {
@@ -73,8 +73,7 @@ public class RVInvitationAdapter extends RecyclerView.Adapter<RVInvitationAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.invitation, parent, false);
-        RVInvitationAdapter.ViewHolder holder = new RVInvitationAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -146,16 +145,13 @@ public class RVInvitationAdapter extends RecyclerView.Adapter<RVInvitationAdapte
             e.printStackTrace();
         }
         final String finalUriPic = uriPic;
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
-                    Intent intent = new Intent(activity, FullScreenImage.class);
+        holder.image.setOnClickListener(v -> {
+            if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                Intent intent = new Intent(activity, FullScreenImage.class);
 //                    Intent intent = new Intent(context, FullScreenImage.class);
-                    intent.putExtra("player_photo", finalUriPic);
-                    activity.startActivity(intent);
+                intent.putExtra("player_photo", finalUriPic);
+                activity.startActivity(intent);
 //                    context.startActivity(intent);
-                }
             }
         });
 
@@ -180,15 +176,15 @@ public class RVInvitationAdapter extends RecyclerView.Adapter<RVInvitationAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView image;
-        TextView textTournamentTitle;
-        TextView textTournamentDate;
-        TextView textCommand;
-        TextView textCoach;
-        Button buttonCancel;
-        Button buttonOk;
+        final ImageView image;
+        final TextView textTournamentTitle;
+        final TextView textTournamentDate;
+        final TextView textCommand;
+        final TextView textCoach;
+        final Button buttonCancel;
+        final Button buttonOk;
 
-        public ViewHolder(View item) {
+        ViewHolder(View item) {
             super(item);
             image = item.findViewById(R.id.userTournamentInvLogo);
             textTournamentTitle = item.findViewById(R.id.invTournamentTitle);
@@ -201,7 +197,7 @@ public class RVInvitationAdapter extends RecyclerView.Adapter<RVInvitationAdapte
     }
 
 
-    public void AcceptRequest(String token, String league, final String team, final String status, final League league1, final int position) {
+    private void AcceptRequest(String token, String league, final String team, final String status, final League league1, final int position) {
         Map<String, RequestBody> map = new HashMap<>();
         RequestBody request = RequestBody.create(MediaType.parse("text/plain"), league);
         map.put("_id", request);

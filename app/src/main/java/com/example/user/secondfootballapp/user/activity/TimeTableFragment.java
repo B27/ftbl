@@ -1,7 +1,6 @@
 package com.example.user.secondfootballapp.user.activity;
 
 import android.annotation.SuppressLint;
-import androidx.paging.PagedList;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,14 +30,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class TimeTableFragment extends Fragment {
-    RVTimeTableAdapter adapter;
-    List<ActiveMatch> matches = new ArrayList<>();
-    NestedScrollView scroller;
-    int count = 0;
-    int limit = 10;
-    int offset = 0;
-    Logger log = LoggerFactory.getLogger(TimeTableFragment.class);
-    LinearLayout layout;
+    private RVTimeTableAdapter adapter;
+    private final List<ActiveMatch> matches = new ArrayList<>();
+    private NestedScrollView scroller;
+    private int count = 0;
+    private final int limit = 10;
+    private int offset = 0;
+    private final Logger log = LoggerFactory.getLogger(TimeTableFragment.class);
+    private LinearLayout layout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +80,7 @@ public class TimeTableFragment extends Fragment {
         Controller.getApi().getActiveMatches(limit, offset, false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(matches -> saveData(matches)
+                .subscribe(this::saveData
                         ,
                         error -> {
                             layout.setVisibility(View.VISIBLE);
@@ -111,13 +110,4 @@ public class TimeTableFragment extends Fragment {
     }
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 }

@@ -17,7 +17,7 @@ import com.example.user.secondfootballapp.R;
 import com.example.user.secondfootballapp.user.activity.UserClubs;
 
 public class RVUserClubInvAdapter extends RecyclerView.Adapter<RVUserClubInvAdapter.ViewHolder>{
-    UserClubs context;
+    private final UserClubs context;
     public RVUserClubInvAdapter(UserClubs context){
         this.context =  context;
     }
@@ -25,35 +25,28 @@ public class RVUserClubInvAdapter extends RecyclerView.Adapter<RVUserClubInvAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_club, parent, false);
-        RVUserClubInvAdapter.ViewHolder holder = new RVUserClubInvAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 //        holder.textTitle.setText();
 //        holder.textCoach.setText();
-        holder.buttonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //post
-                int newPosition = holder.getAdapterPosition();
-                notifyItemRemoved(newPosition);
-            }
+        holder.buttonOk.setOnClickListener(v -> {
+            //post
+            int newPosition = holder.getAdapterPosition();
+            notifyItemRemoved(newPosition);
         });
 
-        holder.buttonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //post
-                int newPosition = holder.getAdapterPosition();
-                notifyItemRemoved(newPosition);
-            }
+        holder.buttonCancel.setOnClickListener(v -> {
+            //post
+            int newPosition = holder.getAdapterPosition();
+            notifyItemRemoved(newPosition);
         });
         Glide.with(context)
                 .asBitmap()
                 .load(R.drawable.ic_con)
-                .apply(new RequestOptions()
+                .apply(RequestOptions
                         .circleCropTransform()
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .priority(Priority.HIGH))
@@ -66,12 +59,12 @@ public class RVUserClubInvAdapter extends RecyclerView.Adapter<RVUserClubInvAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textTitle;
-        ImageView imageLogo;
-        TextView textCoach;
-        Button buttonOk;
-        Button buttonCancel;
-        public ViewHolder(View item) {
+        final TextView textTitle;
+        final ImageView imageLogo;
+        final TextView textCoach;
+        final Button buttonOk;
+        final Button buttonCancel;
+        ViewHolder(View item) {
             super(item);
             imageLogo = (ImageView) item.findViewById(R.id.userClubInvLogo);
             textTitle = (TextView) item.findViewById(R.id.invClubTitle);

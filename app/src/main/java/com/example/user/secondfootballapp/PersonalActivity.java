@@ -57,28 +57,28 @@ import retrofit2.HttpException;
 
 public class PersonalActivity extends AppCompatActivity {
 
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    public static AuthoUser authoUser = new AuthoUser();
+    private final Logger log = LoggerFactory.getLogger(PersonalActivity.class);
+    private static final AuthoUser authoUser = new AuthoUser();
 
-    public static Context contextBase;
+    private static Context contextBase;
     public static List<League> tournaments = new ArrayList<>();
-    public static List<Person> allPlayers = new ArrayList<>();
-    public static List<Person> people = new ArrayList<>();
-    public static List<Person> AllPeople = new ArrayList<>();
+    public static final List<Person> allPlayers = new ArrayList<>();
+    public static final List<Person> people = new ArrayList<>();
+    public static final List<Person> AllPeople = new ArrayList<>();
     public static List<Club> allClubs = new ArrayList<>();
 
-    public static BottomNavigationView navigation;
+    private static BottomNavigationView navigation;
 
-    ProgressDialog mProgressDialog;
-    AdvertisingFragment dialogFragment;
-    static Fragment fragmentMain = new MainPage();
-    Fragment fragmentTournament;
-    Fragment fragmentClub = new ClubPage();
-    Fragment fragmentPlayers = new PlayersPage();
-    public static Fragment fragmentUser = new UserPage();
+    private ProgressDialog mProgressDialog;
+    private AdvertisingFragment dialogFragment;
+    private static final Fragment fragmentMain = new MainPage();
+    private final Fragment fragmentTournament;
+    private final Fragment fragmentClub = new ClubPage();
+    private final Fragment fragmentPlayers = new PlayersPage();
+    public static final Fragment fragmentUser = new UserPage();
     Fragment fragment = (Tournament) getSupportFragmentManager().findFragmentByTag("tornamentTAG");
 
-    FragmentManager fragmentManager = this.getSupportFragmentManager();
+    private final FragmentManager fragmentManager = this.getSupportFragmentManager();
     //    Fragment active = fragmentHome;
     public static Fragment active = fragmentMain;
 
@@ -86,7 +86,7 @@ public class PersonalActivity extends AppCompatActivity {
         fragmentTournament = new TournamentPage(fragmentManager);
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -212,9 +212,7 @@ public class PersonalActivity extends AppCompatActivity {
         single
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(isConnectedToInternet -> {
-                    GetAdvertising("1", "0");
-                });
+                .subscribe(isConnectedToInternet -> GetAdvertising("1", "0"));
     }
 
     @SuppressLint("CheckResult")
@@ -222,7 +220,7 @@ public class PersonalActivity extends AppCompatActivity {
         Controller.getApi().getAdvertising(limit, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(news -> showAds(news)
+                .subscribe(this::showAds
                         ,
                         error -> {
                             CheckError checkError = new CheckError();
@@ -233,7 +231,7 @@ public class PersonalActivity extends AppCompatActivity {
 
     private void showAds(Advertisings news) {
         if (news.getAds().size()!=0) {
-            dialogFragment = new AdvertisingFragment().newInstance();
+            dialogFragment = AdvertisingFragment.newInstance();
             Bundle args = new Bundle();
             args.putSerializable("ADVERTISING", (Serializable) news.getAds());
             dialogFragment.setArguments(args);
@@ -283,25 +281,23 @@ public class PersonalActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(result -> {
-                            SaveSharedPreference.editObject(result);
-                        }
+                .subscribe(SaveSharedPreference::editObject
                         ,
-                        error -> getError(error)
+                        this::getError
                 );
     }
 
 
     @SuppressLint("CheckResult")
-    public void GetAllTournaments() {
+    private void GetAllTournaments() {
         tournaments = new ArrayList<>();
         Controller.getApi().getAllTournaments("32575", "0")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(tournaments1 -> saveData(tournaments1)
+                .subscribe(PersonalActivity::saveData
                         ,
-                        error -> getError(error)
+                        this::getError
                 );
     }
 
@@ -358,7 +354,7 @@ public class PersonalActivity extends AppCompatActivity {
     }
 
     @SuppressLint("CheckResult")
-    public void GetAllPlayers() {
+    private void GetAllPlayers() {
         String type = "player";
         Controller.getApi().getAllUsers(type, null, "32575", "0")
                 .subscribeOn(Schedulers.io())
@@ -368,22 +364,22 @@ public class PersonalActivity extends AppCompatActivity {
                 .retryWhen(throwableObservable -> throwableObservable.take(3).delay(30, TimeUnit.SECONDS))
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(people -> savePlayers(people),
-                        error -> getError(error)
+                .subscribe(this::savePlayers,
+                        this::getError
                 );
     }
 
 
 
     @SuppressLint("CheckResult")
-    public void GetAllClubs() {
+    private void GetAllClubs() {
         allClubs = new ArrayList<>();
         Controller.getApi().getAllClubs()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(clubs -> saveClubs(clubs),
-                        error -> getError(error)
+                .subscribe(this::saveClubs,
+                        this::getError
                 );
     }
 
@@ -396,7 +392,7 @@ public class PersonalActivity extends AppCompatActivity {
 
 
     @SuppressLint("RestrictedApi")
-    public void disableShiftMode(BottomNavigationView view) {
+    private void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
             Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");

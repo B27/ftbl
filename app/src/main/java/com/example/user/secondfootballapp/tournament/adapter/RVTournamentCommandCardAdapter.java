@@ -25,14 +25,14 @@ import java.io.Serializable;
 import java.util.List;
 
 public class RVTournamentCommandCardAdapter extends RecyclerView.Adapter<RVTournamentCommandCardAdapter.ViewHolder> {
-    private TournamentCommandFragment context;
-    private PersonalActivity activity;
+    private final TournamentCommandFragment context;
+    private final PersonalActivity activity;
     //    CommandInfoFragment commandInfoFragment = new CommandInfoFragment();
     Logger log = LoggerFactory.getLogger(PersonalActivity.class);
 
-    private List<Team> teams;
-    private String group;
-    private LeagueInfo leagueInfo;
+    private final List<Team> teams;
+    private final String group;
+    private final LeagueInfo leagueInfo;
     public RVTournamentCommandCardAdapter(Activity activity, TournamentCommandFragment context, List<Team> teams, String group,
                                           LeagueInfo leagueInfo) {
         this.activity = (PersonalActivity) activity;
@@ -48,8 +48,7 @@ public class RVTournamentCommandCardAdapter extends RecyclerView.Adapter<RVTourn
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.tournament_info_command, parent, false);
-        RVTournamentCommandCardAdapter.ViewHolder holder = new RVTournamentCommandCardAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -58,17 +57,14 @@ public class RVTournamentCommandCardAdapter extends RecyclerView.Adapter<RVTourn
         holder.textNum.setText(str);
         str = teams.get(position).getName();
         holder.btnTitle.setText(str);
-        holder.btnTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity, CommandInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("TOURNAMENTMATCHCOMMANDINFO", teams.get(position));
-                bundle.putSerializable("TOURNAMENTMATCHCOMMANDINFOMATCHES", (Serializable) leagueInfo.getMatches());
-                intent.putExtras( bundle);
-                activity.startActivity(intent);
+        holder.btnTitle.setOnClickListener(v -> {
+            Intent intent = new Intent(activity, CommandInfoActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("TOURNAMENTMATCHCOMMANDINFO", teams.get(position));
+            bundle.putSerializable("TOURNAMENTMATCHCOMMANDINFOMATCHES", (Serializable) leagueInfo.getMatches());
+            intent.putExtras( bundle);
+            activity.startActivity(intent);
 
-            }
         });
         int count;
         count = teams.get(position).getDraws() + teams.get(position).getWins() + teams.get(position).getLosses();
@@ -87,13 +83,13 @@ public class RVTournamentCommandCardAdapter extends RecyclerView.Adapter<RVTourn
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textNum;
+        final TextView textNum;
         //        TextView textTitle;
-        TextView btnTitle;
-        TextView textGame;
-        TextView textDifference;
-        TextView textPoint;
-        public ViewHolder(View item) {
+        final TextView btnTitle;
+        final TextView textGame;
+        final TextView textDifference;
+        final TextView textPoint;
+        ViewHolder(View item) {
             super(item);
             textNum = item.findViewById(R.id.commandNum);
             btnTitle = item.findViewById(R.id.commandTitle);

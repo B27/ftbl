@@ -36,16 +36,16 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PlayerAddToTeam extends AppCompatActivity {
     Logger log = LoggerFactory.getLogger(PlayerAddToTeam.class);
-    RVPlayerAddToTeamAdapter adapter;
-    ProgressDialog mProgressDialog;
-    ProgressBar progressBar;
-    NestedScrollView scroller;
-    List<Person> people = new ArrayList<>();
-    List<Person> allPeople = new ArrayList<>();
-    List<Person> result = new ArrayList<>();
-    int count = 0;
-    int offset = 0;
-    int limit = 10;
+    private RVPlayerAddToTeamAdapter adapter;
+    private ProgressDialog mProgressDialog;
+    private ProgressBar progressBar;
+    private NestedScrollView scroller;
+    private final List<Person> people = new ArrayList<>();
+    private final List<Person> allPeople = new ArrayList<>();
+    private final List<Person> result = new ArrayList<>();
+    private int count = 0;
+    private int offset = 0;
+    private final int limit = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mProgressDialog = new ProgressDialog(this, R.style.MyProgressDialogTheme);
@@ -113,14 +113,14 @@ public class PlayerAddToTeam extends AppCompatActivity {
     }
 
     @SuppressLint("CheckResult")
-    public void SearchUsers(String search) {
+    private void SearchUsers(String search) {
         String type = "player";
         Controller.getApi().getAllUsers(type, search, "32575", "0")
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(__ -> showDialog())
-                .doOnTerminate(()->hideDialog())
+                .doOnTerminate(this::hideDialog)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(people -> savePlayers(people),
+                .subscribe(this::savePlayers,
                         error -> {
                             CheckError checkError = new CheckError();
                             checkError.checkError(this, error);
@@ -149,13 +149,13 @@ public class PlayerAddToTeam extends AppCompatActivity {
     }
 
     @SuppressLint("CheckResult")
-    public void getAllPlayers(String limit, String offset) {
+    private void getAllPlayers(String limit, String offset) {
         CheckError checkError = new CheckError();
         String type = "player";
         Controller.getApi().getAllUsers(type, null, limit, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(people -> saveAllPlayers(people),
+                .subscribe(this::saveAllPlayers,
                         error -> checkError.checkError(this, error)
                 );
     }
@@ -169,13 +169,13 @@ public class PlayerAddToTeam extends AppCompatActivity {
         adapter.dataChanged(list);
     }
 
-    public void showDialog() {
+    private void showDialog() {
 
         if (mProgressDialog != null && !mProgressDialog.isShowing())
             mProgressDialog.show();
     }
 
-    public void hideDialog() {
+    private void hideDialog() {
 
         if (mProgressDialog != null && mProgressDialog.isShowing())
             mProgressDialog.dismiss();

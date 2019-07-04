@@ -47,20 +47,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProtocolEdit extends AppCompatActivity {
-    public static List<Integer> items;
-    public NestedScrollView scroller;
-    Logger log = LoggerFactory.getLogger(ProtocolEdit.class);
-    final int REQUEST_CODE_PROTOCOLTEAM = 286;
-    final int REQUEST_CODE_PROTOCOLTREFEREE = 296;
-    final int REQUEST_CODE_PROTOCOLEVENTS = 276;
-    List<String> players;
-    List<String> referees;
-    List<Event> events;
-    List<PlayerEvent> playerEvents;
-    Match match;
-    int matchOldPosition;
-    String clubOne;
-    String clubTwo;
+    private static List<Integer> items;
+    private NestedScrollView scroller;
+    private final Logger log = LoggerFactory.getLogger(ProtocolEdit.class);
+    private final int REQUEST_CODE_PROTOCOLTEAM = 286;
+    private final int REQUEST_CODE_PROTOCOLTREFEREE = 296;
+    private final int REQUEST_CODE_PROTOCOLEVENTS = 276;
+    private List<String> players;
+    private List<String> referees;
+    private List<Event> events;
+    private List<PlayerEvent> playerEvents;
+    private Match match;
+    private int matchOldPosition;
+    private String clubOne;
+    private String clubTwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,16 +147,13 @@ public class ProtocolEdit extends AppCompatActivity {
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_PROTOCOLTEAM);
             });
-            buttonShowCommand1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ProtocolEdit.this, ProtocolCommand1.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("PROTOCOLTEAMPLAYERS", team1);
-                    bundle.putStringArrayList("PROTOCOLTEAMMATCH", (ArrayList<String>) players);
-                    intent.putExtras(bundle);
-                    startActivityForResult(intent, REQUEST_CODE_PROTOCOLTEAM);
-                }
+            buttonShowCommand1.setOnClickListener(v -> {
+                Intent intent = new Intent(ProtocolEdit.this, ProtocolCommand1.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("PROTOCOLTEAMPLAYERS", team1);
+                bundle.putStringArrayList("PROTOCOLTEAMMATCH", (ArrayList<String>) players);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, REQUEST_CODE_PROTOCOLTEAM);
             });
 
             buttonEvents.setOnClickListener(v -> {
@@ -273,7 +270,7 @@ public class ProtocolEdit extends AppCompatActivity {
     }
 
     private Boolean checkProtocol(){
-        Boolean check = false;
+        boolean check = false;
         for (PlayerEvent playerEvent : playerEvents){
             if (players.contains(playerEvent.getPerson().getId())){
                 check = true;

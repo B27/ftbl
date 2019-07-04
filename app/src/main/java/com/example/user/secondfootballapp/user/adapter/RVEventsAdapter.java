@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class RVEventsAdapter extends RecyclerView.Adapter<RVEventsAdapter.ViewHolder>{
-    MatchEvents context;
+    private final MatchEvents context;
     Logger log = LoggerFactory.getLogger(MatchEvents.class);
-    private List<PlayerEvent> playerEvents;
+    private final List<PlayerEvent> playerEvents;
     public RVEventsAdapter(Activity context, List<PlayerEvent> playerEvents){
         this.context = (MatchEvents) context;
         this.playerEvents = playerEvents;
@@ -33,8 +33,7 @@ public class RVEventsAdapter extends RecyclerView.Adapter<RVEventsAdapter.ViewHo
     @Override
     public RVEventsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.events, parent, false);
-        RVEventsAdapter.ViewHolder holder = new RVEventsAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -88,18 +87,18 @@ public class RVEventsAdapter extends RecyclerView.Adapter<RVEventsAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textTime;
-        TextView textName;
-        TextView textEvent;
-        ImageView image;
-        View line;
-        public ViewHolder(View item) {
+        final TextView textTime;
+        final TextView textName;
+        final TextView textEvent;
+        final ImageView image;
+        final View line;
+        ViewHolder(View item) {
             super(item);
-            textTime = (TextView) item.findViewById(R.id.eventTime);
-            textName = (TextView) item.findViewById(R.id.eventPlayerName);
-            textEvent = (TextView) item.findViewById(R.id.eventPlayerEvent);
-            image = (ImageView) item.findViewById(R.id.eventCommandLogo);
-            line = (View) item.findViewById(R.id.eventLine);
+            textTime = item.findViewById(R.id.eventTime);
+            textName = item.findViewById(R.id.eventPlayerName);
+            textEvent = item.findViewById(R.id.eventPlayerEvent);
+            image = item.findViewById(R.id.eventCommandLogo);
+            line = item.findViewById(R.id.eventLine);
         }
     }
 }

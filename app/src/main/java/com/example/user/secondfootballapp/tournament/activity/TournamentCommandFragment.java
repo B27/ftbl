@@ -33,8 +33,8 @@ import java.util.List;
 
 public class TournamentCommandFragment extends Fragment{
     Logger log = LoggerFactory.getLogger(TournamentTimeTableFragment.class);
-    boolean scrollStatus;
-    FloatingActionButton fab;
+    private boolean scrollStatus;
+    private FloatingActionButton fab;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
@@ -101,21 +101,18 @@ public class TournamentCommandFragment extends Fragment{
 
 
 
-        scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        scroller.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 
-                if (scrollY > oldScrollY) {
+            if (scrollY > oldScrollY) {
 //                    PersonalActivity.navigation.animate().translationY(PersonalActivity.navigation.getHeight());
 
-                }
-                if (scrollY < oldScrollY) {
+            }
+            if (scrollY < oldScrollY) {
 //                    PersonalActivity.navigation.animate().translationY(0);
-                    scrollStatus = false;
-                }
-                if (scrollY == ( v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() )) {
-                    scrollStatus = true;
-                }
+                scrollStatus = false;
+            }
+            if (scrollY == ( v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() )) {
+                scrollStatus = true;
             }
         });
 
@@ -148,14 +145,4 @@ public class TournamentCommandFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-//        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-        super.onDestroy();
-    }
 }

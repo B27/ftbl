@@ -54,11 +54,11 @@ import retrofit2.Response;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVPlayerAddToTeamAdapter extends RecyclerView.Adapter<RVPlayerAddToTeamAdapter.ViewHolder> {
-    Logger log = LoggerFactory.getLogger(PlayerAddToTeam.class);
-    List<Person> allPlayers;
-    League league;
-    PlayerAddToTeam context;
-    Team team;
+    private final Logger log = LoggerFactory.getLogger(PlayerAddToTeam.class);
+    private final List<Person> allPlayers;
+    private final League league;
+    private final PlayerAddToTeam context;
+    private final Team team;
 
     public RVPlayerAddToTeamAdapter(Activity context, List<Person> allPlayers, Team team, League league) {
         this.allPlayers = allPlayers;
@@ -71,8 +71,7 @@ public class RVPlayerAddToTeamAdapter extends RecyclerView.Adapter<RVPlayerAddTo
     @Override
     public RVPlayerAddToTeamAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_add, parent, false);
-        RVPlayerAddToTeamAdapter.ViewHolder holder = new RVPlayerAddToTeamAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -102,16 +101,13 @@ public class RVPlayerAddToTeamAdapter extends RecyclerView.Adapter<RVPlayerAddTo
                         .apply(requestOptions)
                         .into(holder.imageLogo);
                 final String finalUriPic = uriPic;
-                holder.imageLogo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
-                            Intent intent = new Intent(context, FullScreenImage.class);
-                            intent.putExtra("player_photo", finalUriPic);
-                            context.startActivity(intent);
-                        }
-
+                holder.imageLogo.setOnClickListener(v -> {
+                    if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                        Intent intent = new Intent(context, FullScreenImage.class);
+                        intent.putExtra("player_photo", finalUriPic);
+                        context.startActivity(intent);
                     }
+
                 });
             } catch (MalformedURLException e) {
                 RequestOptions requestOptions = new RequestOptions();
@@ -144,13 +140,13 @@ public class RVPlayerAddToTeamAdapter extends RecyclerView.Adapter<RVPlayerAddTo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageLogo;
-        ImageButton button;
-        TextView textName;
-        TextView textDOB;
-        View line;
+        final ImageView imageLogo;
+        final ImageButton button;
+        final TextView textName;
+        final TextView textDOB;
+        final View line;
 
-        public ViewHolder(View item) {
+        ViewHolder(View item) {
             super(item);
             line = item.findViewById(R.id.playersAddToTeamLine);
             imageLogo = item.findViewById(R.id.playerAddToTeamLogo);
@@ -160,7 +156,7 @@ public class RVPlayerAddToTeamAdapter extends RecyclerView.Adapter<RVPlayerAddTo
         }
     }
 
-    public void addPlayer(final String personId, League league, final Team team) {
+    private void addPlayer(final String personId, League league, final Team team) {
         Map<String, RequestBody> map = new HashMap<>();
         RequestBody request = RequestBody.create(MediaType.parse("text/plain"), personId);
         map.put("playerId", request);
@@ -170,7 +166,6 @@ public class RVPlayerAddToTeamAdapter extends RecyclerView.Adapter<RVPlayerAddTo
         map.put("teamId", request);
         Call<ServerResponse> call = Controller.getApi().addPlayerToTeam(SaveSharedPreference.getObject().getToken(), map);
         log.info("INFO: load and parse json-file");
-        final Team finalTeamLeague = team;
         final League finalLeague = league;
         call.enqueue(new Callback<ServerResponse>() {
             @Override
@@ -183,12 +178,12 @@ public class RVPlayerAddToTeamAdapter extends RecyclerView.Adapter<RVPlayerAddTo
                     } else {
                         PersonTeams personTeams = new PersonTeams();
                         personTeams.setLeague(finalLeague.getId());
-                        personTeams.setTeam(finalTeamLeague.getId());
+                        personTeams.setTeam(team.getId());
                         AuthoUser.personOngoingLeagues.add(personTeams);
 
 
                         for (PersonTeams teams : AuthoUser.personOwnCommand) {
-                            if (teams.getTeam().equals(finalTeamLeague.getId())) {
+                            if (teams.getTeam().equals(team.getId())) {
                                 personTeams = teams;
                                 break;
                             }
@@ -203,7 +198,7 @@ public class RVPlayerAddToTeamAdapter extends RecyclerView.Adapter<RVPlayerAddTo
                         PersonTeams personTeams2 = new PersonTeams();
                         personTeams2.setId(personTeams.getId());
                         personTeams2.setLeague(finalLeague.getId());
-                        personTeams2.setTeam(finalTeamLeague.getId());
+                        personTeams2.setTeam(team.getId());
 //                        AuthoUser.personOwnCommand.remove(personTeams);
 
 //                        for (League league1 : PersonalActivity.tournaments){

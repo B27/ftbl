@@ -3,7 +3,6 @@ package com.example.user.secondfootballapp.user.adapter;
 import android.app.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,9 +31,9 @@ import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVProtocolEditAdapter extends RecyclerView.Adapter<RVProtocolEditAdapter.ViewHolder> {
     Logger log = LoggerFactory.getLogger(ProtocolEdit.class);
-    private ProtocolEventsEdit context;
-    private List<PlayerEvent> playerEvents;
-    private ListAdapterListener mListener;
+    private final ProtocolEventsEdit context;
+    private final List<PlayerEvent> playerEvents;
+    private final ListAdapterListener mListener;
 
     //    private List<Event> events;
 //    private Match match;
@@ -56,8 +55,7 @@ public class RVProtocolEditAdapter extends RecyclerView.Adapter<RVProtocolEditAd
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.protocol, parent, false);
-        RVProtocolEditAdapter.ViewHolder holder = new RVProtocolEditAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -145,14 +143,11 @@ public class RVProtocolEditAdapter extends RecyclerView.Adapter<RVProtocolEditAd
                     .apply(requestOptions)
                     .into(holder.image);
         }
-        holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //post
+        holder.buttonDelete.setOnClickListener(v -> {
+            //post
 //                int newPosition = holder.getAdapterPosition();
 //                notifyItemRemoved(newPosition);
-                mListener.onClickSwitch(position);
-            }
+            mListener.onClickSwitch(position);
         });
 //        holder.text.setText(event.getEventType());
         String str;
@@ -180,11 +175,8 @@ public class RVProtocolEditAdapter extends RecyclerView.Adapter<RVProtocolEditAd
                 break;
         }
         holder.text.setText(str);
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.layout.setOnClickListener(v -> {
 
-            }
         });
 //        if (position==(events.size()-1)){
         if (position == (playerEvents.size() - 1)) {
@@ -199,13 +191,13 @@ public class RVProtocolEditAdapter extends RecyclerView.Adapter<RVProtocolEditAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image;
-        TextView text;
-        ImageButton buttonDelete;
-        View line;
-        LinearLayout layout;
+        final ImageView image;
+        final TextView text;
+        final ImageButton buttonDelete;
+        final View line;
+        final LinearLayout layout;
 
-        public ViewHolder(View item) {
+        ViewHolder(View item) {
             super(item);
             text = item.findViewById(R.id.protocolEvent);
             image = item.findViewById(R.id.protocolEventCommandLogo);

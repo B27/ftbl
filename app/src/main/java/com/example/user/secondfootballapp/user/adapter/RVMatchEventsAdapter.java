@@ -22,9 +22,9 @@ import java.util.List;
 
 public class RVMatchEventsAdapter extends RecyclerView.Adapter<RVMatchEventsAdapter.ViewHolder>{
     Logger log = LoggerFactory.getLogger(MatchEvents.class);
-    MatchEvents context;
-    private HashMap<Integer, String> halves;
-    private List<PlayerEvent> playerAllEvents;
+    private final MatchEvents context;
+    private final HashMap<Integer, String> halves;
+    private final List<PlayerEvent> playerAllEvents;
     public RVMatchEventsAdapter(Activity context, HashMap<Integer, String> halves, List<PlayerEvent> playerAllEvents){
         this.context = (MatchEvents) context;
         this.halves = halves;
@@ -34,8 +34,7 @@ public class RVMatchEventsAdapter extends RecyclerView.Adapter<RVMatchEventsAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.half_events, parent, false);
-        RVMatchEventsAdapter.ViewHolder holder = new RVMatchEventsAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -60,9 +59,9 @@ public class RVMatchEventsAdapter extends RecyclerView.Adapter<RVMatchEventsAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textHalf;
-        RecyclerView recyclerView;
-        public ViewHolder(View item) {
+        final TextView textHalf;
+        final RecyclerView recyclerView;
+        ViewHolder(View item) {
             super(item);
             textHalf = item.findViewById(R.id.matchEventsHalf);
             recyclerView = item.findViewById(R.id.recyclerViewHalfEvents);

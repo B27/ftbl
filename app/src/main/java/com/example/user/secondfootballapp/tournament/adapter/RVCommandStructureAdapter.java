@@ -23,7 +23,7 @@ import java.util.List;
 
 public class RVCommandStructureAdapter extends RecyclerView.Adapter<RVCommandStructureAdapter.ViewHolder> {
     Logger log = LoggerFactory.getLogger(CommandInfoActivity.class);
-    private List<Player> players;
+    private final List<Player> players;
     public RVCommandStructureAdapter(List<Player> players){
         this.players = players;
     }
@@ -31,8 +31,7 @@ public class RVCommandStructureAdapter extends RecyclerView.Adapter<RVCommandStr
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.command_structure, parent, false);
-        RVCommandStructureAdapter.ViewHolder holder = new RVCommandStructureAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -86,14 +85,14 @@ public class RVCommandStructureAdapter extends RecyclerView.Adapter<RVCommandStr
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-        TextView textName;
+        final TextView textName;
 //        TextView textPoint1;
-        TextView textPoint2;
-        TextView textPoint3;
-        TextView textPoint4;
-        TextView textPoint5;
-        LinearLayout linearLayout;
-        public ViewHolder(View item) {
+final TextView textPoint2;
+        final TextView textPoint3;
+        final TextView textPoint4;
+        final TextView textPoint5;
+        final LinearLayout linearLayout;
+        ViewHolder(View item) {
             super(item);
             textName = item.findViewById(R.id.commandPlayer);
 //            textPoint1 = item.findViewById(R.id.commandPlayerPoint1);

@@ -58,15 +58,15 @@ import retrofit2.Response;
 import static android.Manifest.permission.CAMERA;
 
 public class UserEditClub extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(UserEditClub.class);
-    ImageButton buttonLogo;
-    Bitmap myBitmap;
+    private final Logger log = LoggerFactory.getLogger(UserEditClub.class);
+    private ImageButton buttonLogo;
+    private Bitmap myBitmap;
     Bitmap photo;
-    Uri picUri;
-    Club club1;
+    private Uri picUri;
+    private Club club1;
     private ArrayList permissionsToRequest;
-    private ArrayList permissionsRejected = new ArrayList();
-    private ArrayList permissions = new ArrayList();
+    private final ArrayList permissionsRejected = new ArrayList();
+    private final ArrayList permissions = new ArrayList();
 
     private final static int ALL_PERMISSIONS_RESULT = 107;
 
@@ -111,10 +111,8 @@ public class UserEditClub extends AppCompatActivity {
             editDesc.setOnTouchListener((v, event) -> {
                 if (v.getId() == R.id.userEditClubDesc) {
                     v.getParent().requestDisallowInterceptTouchEvent(true);
-                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                        case MotionEvent.ACTION_UP:
-                            v.getParent().requestDisallowInterceptTouchEvent(false);
-                            break;
+                    if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
                     }
                 }
                 return false;
@@ -175,7 +173,7 @@ public class UserEditClub extends AppCompatActivity {
     }
 
 
-    public void editClub(String token, Map<String, RequestBody> map, final MultipartBody.Part body) {
+    private void editClub(String token, Map<String, RequestBody> map, final MultipartBody.Part body) {
         Call<DataClub> call = Controller.getApi().editClub(token, map, body);
         call.enqueue(new Callback<DataClub>() {
             @Override
@@ -217,7 +215,7 @@ public class UserEditClub extends AppCompatActivity {
 }
 
 
-    public Intent getPickImageChooserIntent() {
+    private Intent getPickImageChooserIntent() {
 
         // Determine Uri of camera image to save.
         Uri outputFileUri = getCaptureImageOutputUri();
@@ -302,7 +300,7 @@ public class UserEditClub extends AppCompatActivity {
 //                    buttonPhoto.setImageBitmap(myBitmap);
                     Glide.with(this)
                             .load(myBitmap)
-                            .apply(new RequestOptions()
+                            .apply(RequestOptions
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
                                     .priority(Priority.HIGH))
@@ -324,7 +322,7 @@ public class UserEditClub extends AppCompatActivity {
                     myBitmap = getResizedBitmap(myBitmap, 500);
                     Glide.with(this)
                             .load(myBitmap)
-                            .apply(new RequestOptions()
+                            .apply(RequestOptions
                                     .circleCropTransform()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
                                     .priority(Priority.HIGH))
@@ -367,7 +365,7 @@ public class UserEditClub extends AppCompatActivity {
 
     }
 
-    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+    private Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
 
@@ -382,7 +380,7 @@ public class UserEditClub extends AppCompatActivity {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
-    public Uri getPickImageResultUri(Intent data) {
+    private Uri getPickImageResultUri(Intent data) {
         boolean isCamera = true;
 //        if (data != null) {
 //            String action = data.getAction();
@@ -428,7 +426,7 @@ public class UserEditClub extends AppCompatActivity {
     }
 
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
 
         for (String perm : wanted) {
             if (!hasPermission(perm)) {
@@ -477,42 +475,38 @@ public class UserEditClub extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
 
-        switch (requestCode) {
+        if (requestCode == ALL_PERMISSIONS_RESULT) {
+            for (Object perms : permissionsToRequest) {
+                if (hasPermission(perms.toString())) {
 
-            case ALL_PERMISSIONS_RESULT:
-                for (Object perms : permissionsToRequest) {
-                    if (hasPermission(perms.toString())) {
+                } else {
 
-                    } else {
-
-                        permissionsRejected.add(perms);
-                    }
+                    permissionsRejected.add(perms);
                 }
+            }
 
-                if (permissionsRejected.size() > 0) {
+            if (permissionsRejected.size() > 0) {
 
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (shouldShowRequestPermissionRationale((String) permissionsRejected.get(0))) {
-                            showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (shouldShowRequestPermissionRationale((String) permissionsRejected.get(0))) {
+                        showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                                                //Log.d("API123", "permisionrejected " + permissionsRejected.size());
+                                            //Log.d("API123", "permisionrejected " + permissionsRejected.size());
 
-                                                requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
-                                            }
+                                            requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
                                         }
-                                    });
-                            return;
-                        }
+                                    }
+                                });
+                        return;
                     }
-
                 }
 
-                break;
+            }
         }
 
     }

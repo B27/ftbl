@@ -11,12 +11,9 @@ import com.example.user.secondfootballapp.model.EditCommandResponse;
 import com.example.user.secondfootballapp.model.EditProfile;
 import com.example.user.secondfootballapp.model.EditProtocolBody;
 import com.example.user.secondfootballapp.model.GetLeagueInfo;
-import com.example.user.secondfootballapp.model.League;
 import com.example.user.secondfootballapp.model.Matches;
 import com.example.user.secondfootballapp.model.News;
-import com.example.user.secondfootballapp.model.News_;
 import com.example.user.secondfootballapp.model.People;
-import com.example.user.secondfootballapp.model.Person;
 import com.example.user.secondfootballapp.model.RefereeRequestList;
 import com.example.user.secondfootballapp.model.ServerResponse;
 import com.example.user.secondfootballapp.model.SetRefereeList;
@@ -25,7 +22,6 @@ import com.example.user.secondfootballapp.model.Team;
 import com.example.user.secondfootballapp.model.Tournaments;
 import com.example.user.secondfootballapp.model.User;
 
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -89,7 +85,7 @@ public interface FootballApi {
 
     //get coming matches
     @GET("/api/matches/upcoming")
-    Observable<ActiveMatches> getСommingMatches();
+    Observable<ActiveMatches> getComingMatches();
 
 
 

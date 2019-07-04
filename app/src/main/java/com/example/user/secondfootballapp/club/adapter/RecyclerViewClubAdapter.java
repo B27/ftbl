@@ -33,10 +33,10 @@ import java.util.List;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RecyclerViewClubAdapter extends RecyclerView.Adapter<RecyclerViewClubAdapter.ViewHolder>{
-    Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    List<com.example.user.secondfootballapp.model.Club> allClubs;
-    ClubPage context;
-    PersonalActivity activity;
+    private final Logger log = LoggerFactory.getLogger(PersonalActivity.class);
+    private final List<com.example.user.secondfootballapp.model.Club> allClubs;
+    private final ClubPage context;
+    private final PersonalActivity activity;
     public RecyclerViewClubAdapter(Activity activity, ClubPage context,  List<com.example.user.secondfootballapp.model.Club> allClubs){
         this.allClubs = allClubs;
         this.activity = (PersonalActivity) activity;
@@ -46,8 +46,7 @@ public class RecyclerViewClubAdapter extends RecyclerView.Adapter<RecyclerViewCl
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.club, parent, false);
-        RecyclerViewClubAdapter.ViewHolder holder = new RecyclerViewClubAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -72,16 +71,13 @@ public class RecyclerViewClubAdapter extends RecyclerView.Adapter<RecyclerViewCl
                         .apply(requestOptions)
                         .into(holder.imageLogo);
                 final String finalUriPic = uriPic;
-                holder.imageLogo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
-                            Intent intent = new Intent(activity, FullScreenImage.class);
-                            intent.putExtra("player_photo", finalUriPic);
-                            context.startActivity(intent);
-                        }
-
+                holder.imageLogo.setOnClickListener(v -> {
+                    if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                        Intent intent = new Intent(activity, FullScreenImage.class);
+                        intent.putExtra("player_photo", finalUriPic);
+                        context.startActivity(intent);
                     }
+
                 });
             } catch (MalformedURLException e) {
                 Glide.with(activity)
@@ -116,11 +112,11 @@ public class RecyclerViewClubAdapter extends RecyclerView.Adapter<RecyclerViewCl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        View line;
-        ImageView imageLogo;
-        TextView textTitle;
-        LinearLayout buttonShow;
-        public ViewHolder(View item) {
+        final View line;
+        final ImageView imageLogo;
+        final TextView textTitle;
+        final LinearLayout buttonShow;
+        ViewHolder(View item) {
             super(item);
             line = item.findViewById(R.id.clubLine);
             imageLogo = item.findViewById(R.id.clubLogo);

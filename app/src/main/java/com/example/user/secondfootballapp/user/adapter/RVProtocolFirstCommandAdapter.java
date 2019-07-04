@@ -20,10 +20,10 @@ import com.example.user.secondfootballapp.user.activity.StructureCommand1;
 import java.util.List;
 
 public class RVProtocolFirstCommandAdapter extends RecyclerView.Adapter<RVProtocolFirstCommandAdapter.ViewHolder>{
-    StructureCommand1 context;
-    private List<String> listId;
-    private List<Player> players;
-    private List<Person> personList;
+    private final StructureCommand1 context;
+    private final List<String> listId;
+    private final List<Player> players;
+    private final List<Person> personList;
     public RVProtocolFirstCommandAdapter(Activity context, List<String> listId, List<Player> players, List<Person> personList){
         this.context = (StructureCommand1) context;
         this.listId = listId;
@@ -34,8 +34,7 @@ public class RVProtocolFirstCommandAdapter extends RecyclerView.Adapter<RVProtoc
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_first_command, parent, false);
-        RVProtocolFirstCommandAdapter.ViewHolder holder = new RVProtocolFirstCommandAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -77,11 +76,11 @@ public class RVProtocolFirstCommandAdapter extends RecyclerView.Adapter<RVProtoc
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textNum;
-        TextView textName;
-        ImageView image;
-        View line;
-        public ViewHolder(View item) {
+        final TextView textNum;
+        final TextView textName;
+        final ImageView image;
+        final View line;
+        ViewHolder(View item) {
             super(item);
             textNum = item.findViewById(R.id.playerCommandFirstNum);
             textName = item.findViewById(R.id.playerCommandFirstName);

@@ -37,10 +37,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class TournamentPlayersFragment extends Fragment {
-    Logger log = LoggerFactory.getLogger(TournamentTimeTableFragment.class);
-    boolean scrollStatus;
-    List<Player> playerList = new ArrayList<>();
-    RVTournamentPlayersAdapter adapter;
+    private final Logger log = LoggerFactory.getLogger(TournamentTimeTableFragment.class);
+    private boolean scrollStatus;
+    private final List<Player> playerList = new ArrayList<>();
+    private RVTournamentPlayersAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class TournamentPlayersFragment extends Fragment {
         RelativeLayout layout1;
         final FloatingActionButton fab;
         NestedScrollView scroller;
-        List<String> categories = new ArrayList<String>();
+        List<String> categories = new ArrayList<>();
         categories.add("по проведенным матчам");
         categories.add("по забитым мячам");
         categories.add("по количеству ЖК");
@@ -160,24 +160,21 @@ public class TournamentPlayersFragment extends Fragment {
         });
 
 
-        scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        scroller.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 
-                if (scrollY > oldScrollY) {
+            if (scrollY > oldScrollY) {
 //                    log.info("INFO: RecyclerView scrolled: scroll down!");
 
-                }
-                if (scrollY < oldScrollY) {
+            }
+            if (scrollY < oldScrollY) {
 //                    log.info("INFO: RecyclerView scrolled: scroll up!");
-                    scrollStatus = false;
-                }
+                scrollStatus = false;
+            }
 
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+            if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
 //                    log.info("INFO: RecyclerView scrolled: bottom scroll!");
-                    scrollStatus = true;
+                scrollStatus = true;
 //                    fab.hide();
-                }
             }
         });
 
@@ -213,10 +210,6 @@ public class TournamentPlayersFragment extends Fragment {
             }
         });
         return view;
-    }
-
-    public void SrollListener() {
-
     }
 
     @Override

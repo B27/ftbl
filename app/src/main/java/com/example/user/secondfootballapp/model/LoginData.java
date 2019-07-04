@@ -1,6 +1,6 @@
 package com.example.user.secondfootballapp.model;
 
-public class LoginData {
+class LoginData {
     private String login;
     private String password;
     private String type;

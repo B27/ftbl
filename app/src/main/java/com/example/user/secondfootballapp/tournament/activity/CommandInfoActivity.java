@@ -23,9 +23,9 @@ import java.util.List;
 
 
 public class CommandInfoActivity extends AppCompatActivity {
-    Team team;
-    List<Match>  matchList;
-    FloatingActionButton fab;
+    private Team team;
+    private List<Match>  matchList;
+    private FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +54,7 @@ public class CommandInfoActivity extends AppCompatActivity {
         textView = findViewById(R.id.commandInfoTitle);
         fab = findViewById(R.id.commandInfoButton);
         dialogFragment = new AbbreviationDialogFragment();
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogFragment.show(getSupportFragmentManager(), "abbrev2");
-            }
-        });
+        fab.setOnClickListener(v -> dialogFragment.show(getSupportFragmentManager(), "abbrev2"));
         buttonBack.setOnClickListener(v -> finish());
         String str;
         str = team.getName();
@@ -131,7 +126,7 @@ public class CommandInfoActivity extends AppCompatActivity {
         }
     }
 
-    TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+    private final TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             animateFab(tab.getPosition());
@@ -148,7 +143,7 @@ public class CommandInfoActivity extends AppCompatActivity {
         }
     };
 
-    ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+    private final ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

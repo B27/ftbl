@@ -21,9 +21,9 @@ import com.example.user.secondfootballapp.model.News_;
 import java.util.List;
 
 public class RecyclerViewMainNewsAdapter extends RecyclerView.Adapter<RecyclerViewMainNewsAdapter.ViewHolder> {
-    private List<News_> news;
-    private NewsAndAds context;
-    private PersonalActivity activity;
+    private final List<News_> news;
+    private final NewsAndAds context;
+    private final PersonalActivity activity;
     public RecyclerViewMainNewsAdapter(Activity activity, NewsAndAds context, List<News_> news){
         this.news = news;
         this.activity = (PersonalActivity) activity;
@@ -33,8 +33,7 @@ public class RecyclerViewMainNewsAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news, parent, false);
-        RecyclerViewMainNewsAdapter.ViewHolder holder = new RecyclerViewMainNewsAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -72,11 +71,11 @@ public class RecyclerViewMainNewsAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textDate;
-        TextView textTitle;
-        LinearLayout imageButtonShow;
-        View line;
-        public ViewHolder(View itemView) {
+        final TextView textDate;
+        final TextView textTitle;
+        final LinearLayout imageButtonShow;
+        final View line;
+        ViewHolder(View itemView) {
             super(itemView);
             textDate = itemView.findViewById(R.id.newsDate);
             textTitle = itemView.findViewById(R.id.newsTitle);

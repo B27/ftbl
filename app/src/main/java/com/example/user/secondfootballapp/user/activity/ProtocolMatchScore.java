@@ -26,9 +26,9 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class ProtocolMatchScore extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(ProtocolMatchScore.class);
-    HashMap<Integer, String> halves;
-    SetImage setImage = new SetImage();
+    private final Logger log = LoggerFactory.getLogger(ProtocolMatchScore.class);
+    private HashMap<Integer, String> halves;
+    private final SetImage setImage = new SetImage();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         RecyclerView recyclerViewFouls;
@@ -63,7 +63,7 @@ public class ProtocolMatchScore extends AppCompatActivity {
             RVScoreHalfAdapter1 adapter1 = new RVScoreHalfAdapter1(this, halves, playerEvents, match);
             recyclerViewScore.setAdapter(adapter1);
 
-            Boolean containsFouls = false;
+            boolean containsFouls = false;
             try {
                 for (PlayerEvent playerEv1 : playerEvents.getPlayerEvents()){
                     if (playerEv1.getEvent().getEventType().equals("foul")){

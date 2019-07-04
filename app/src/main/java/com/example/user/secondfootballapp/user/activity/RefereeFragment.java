@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RefereeFragment extends Fragment{
-    Logger log = LoggerFactory.getLogger(RefereeFragment.class);
+    private final Logger log = LoggerFactory.getLogger(RefereeFragment.class);
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
         RecyclerView recyclerView;

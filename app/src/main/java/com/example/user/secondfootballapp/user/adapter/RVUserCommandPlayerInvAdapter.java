@@ -32,8 +32,8 @@ import java.util.List;
 import static com.example.user.secondfootballapp.Controller.BASE_URL;
 
 public class RVUserCommandPlayerInvAdapter extends RecyclerView.Adapter<RVUserCommandPlayerInvAdapter.ViewHolder>{
-    UserCommandInfo context;
-    List<Player> players;
+    private final UserCommandInfo context;
+    private final List<Player> players;
     public RVUserCommandPlayerInvAdapter (UserCommandInfo context, List<Player> players){
         this.context = context;
         this.players = players;
@@ -43,8 +43,7 @@ public class RVUserCommandPlayerInvAdapter extends RecyclerView.Adapter<RVUserCo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.command_player_inv
                 , parent, false);
-        RVUserCommandPlayerInvAdapter.ViewHolder holder = new RVUserCommandPlayerInvAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -79,14 +78,11 @@ public class RVUserCommandPlayerInvAdapter extends RecyclerView.Adapter<RVUserCo
                     .apply(requestOptions)
                     .into(holder.image);
             final String finalUriPic = uriPic;
-            holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
-                        Intent intent = new Intent(context, FullScreenImage.class);
-                        intent.putExtra("player_photo", finalUriPic);
-                        context.startActivity(intent);
-                    }
+            holder.image.setOnClickListener(v -> {
+                if (finalUriPic.contains(".jpg") || finalUriPic.contains(".jpeg") || finalUriPic.contains(".png")) {
+                    Intent intent = new Intent(context, FullScreenImage.class);
+                    intent.putExtra("player_photo", finalUriPic);
+                    context.startActivity(intent);
                 }
             });
         } catch (MalformedURLException e) {
@@ -113,12 +109,12 @@ public class RVUserCommandPlayerInvAdapter extends RecyclerView.Adapter<RVUserCo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textNum;
-        ImageView image;
-        TextView textName;
-        ImageButton buttonDelete;
-        View line;
-        public ViewHolder(View item) {
+        final TextView textNum;
+        final ImageView image;
+        final TextView textName;
+        final ImageButton buttonDelete;
+        final View line;
+        ViewHolder(View item) {
             super(item);
             textNum = item.findViewById(R.id.userCommandPlayerInvTextNum);
             image = item.findViewById(R.id.userCommandPlayerInvLogo);

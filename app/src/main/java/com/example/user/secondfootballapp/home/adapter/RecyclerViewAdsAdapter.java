@@ -17,9 +17,9 @@ import com.example.user.secondfootballapp.model.Announce;
 import java.util.List;
 
 public class RecyclerViewAdsAdapter extends RecyclerView.Adapter<RecyclerViewAdsAdapter.ViewHolder> {
-    private List<Announce> ads;
-    private AdsPage context;
-    private PersonalActivity activity;
+    private final List<Announce> ads;
+    private final AdsPage context;
+    private final PersonalActivity activity;
     public RecyclerViewAdsAdapter(Activity activity, AdsPage context, List<Announce> ads){
         this.ads = ads;
         this.activity = (PersonalActivity) activity;
@@ -30,8 +30,7 @@ public class RecyclerViewAdsAdapter extends RecyclerView.Adapter<RecyclerViewAds
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ads, parent, false);
-        RecyclerViewAdsAdapter.ViewHolder holder = new RecyclerViewAdsAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -52,10 +51,10 @@ public class RecyclerViewAdsAdapter extends RecyclerView.Adapter<RecyclerViewAds
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textTitle;
-        TextView textDate;
-        View line;
-        public ViewHolder(View item) {
+        final TextView textTitle;
+        final TextView textDate;
+        final View line;
+        ViewHolder(View item) {
             super(item);
             textDate = item.findViewById(R.id.adsDate);
             textTitle = item.findViewById(R.id.adsTitle);

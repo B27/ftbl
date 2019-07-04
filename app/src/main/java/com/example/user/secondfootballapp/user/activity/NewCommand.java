@@ -45,15 +45,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NewCommand extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(NewCommand.class);
-    List<Club> allClubs = new ArrayList<>();
-    List<League> allTournaments = new ArrayList<>();
-    Spinner spinnerTournament;
-    Club itemClub;
-    League itemTournament;
-    Spinner spinnerClubs;
-    Team team;
-    EditText textTitle;
+    private final Logger log = LoggerFactory.getLogger(NewCommand.class);
+    private final List<Club> allClubs = new ArrayList<>();
+    private final List<League> allTournaments = new ArrayList<>();
+    private Spinner spinnerTournament;
+    private Club itemClub;
+    private League itemTournament;
+    private Spinner spinnerClubs;
+    private Team team;
+    private EditText textTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,26 +122,18 @@ public class NewCommand extends AppCompatActivity {
             }
         });
         textTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-        textTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    textTitle.getBackground().clearColorFilter();
-                } else {
-                    textTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
-                }
+        textTitle.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                textTitle.getBackground().clearColorFilter();
+            } else {
+                textTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
-        imageClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        imageClose.setOnClickListener(v -> finish());
         imageSave.setOnClickListener(v -> CreateNewCommand());
     }
 
-    public void CreateNewCommand() {
+    private void CreateNewCommand() {
         League league = new League();
         String name = String.valueOf(textTitle.getText());
         Map<String, RequestBody> map = new HashMap<>();

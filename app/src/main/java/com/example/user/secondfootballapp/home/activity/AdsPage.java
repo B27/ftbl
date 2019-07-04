@@ -30,14 +30,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class AdsPage extends Fragment {
-    Logger log = LoggerFactory.getLogger(AdsPage.class);
-    List<Announce> allNews = new ArrayList<>();
-    RecyclerView recyclerView;
-    NestedScrollView scroller;
-    RecyclerViewAdsAdapter adapter;
-    int count = 0;
-    int limit = 5;
-    int offset = 0;
+    private final Logger log = LoggerFactory.getLogger(AdsPage.class);
+    private final List<Announce> allNews = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private NestedScrollView scroller;
+    private RecyclerViewAdsAdapter adapter;
+    private int count = 0;
+    private final int limit = 5;
+    private int offset = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,12 +83,12 @@ public class AdsPage extends Fragment {
     }
 
     @SuppressLint("CheckResult")
-    public void GetAllAds(String limit, String offset) {
+    private void GetAllAds(String limit, String offset) {
         Controller.getApi().getAllAnnounce(limit, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(matches -> saveData(matches)
+                .subscribe(this::saveData
                         ,
                         error -> {
                             CheckError checkError = new CheckError();

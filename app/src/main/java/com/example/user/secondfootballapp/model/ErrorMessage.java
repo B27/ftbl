@@ -2,8 +2,9 @@ package com.example.user.secondfootballapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ErrorMessage {
+class ErrorMessage {
     @SerializedName("message")
+    private
     String message;
 
     public String getMessage() {

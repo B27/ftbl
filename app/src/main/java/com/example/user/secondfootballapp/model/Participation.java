@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Participation implements Serializable {
+class Participation implements Serializable {
 
     @SerializedName("_id")
     @Expose

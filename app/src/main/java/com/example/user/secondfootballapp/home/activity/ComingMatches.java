@@ -28,11 +28,11 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class ComingMatches extends Fragment {
-    Logger log = LoggerFactory.getLogger(ComingMatches.class);
-    LinearLayout layout;
-    RVComingMatchesAdapter adapter;
-    List<ActiveMatch> matches;
+class ComingMatches extends Fragment {
+    private final Logger log = LoggerFactory.getLogger(ComingMatches.class);
+    private LinearLayout layout;
+    private RVComingMatchesAdapter adapter;
+    private List<ActiveMatch> matches;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view;
@@ -70,10 +70,10 @@ public class ComingMatches extends Fragment {
 }
     @SuppressLint("CheckResult")
     private void getActiveMatches() {
-        Controller.getApi().getСommingMatches()
+        Controller.getApi().getComingMatches()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(matches -> saveData(matches)
+                .subscribe(this::saveData
                         ,
                         error -> {
                             layout.setVisibility(View.VISIBLE);

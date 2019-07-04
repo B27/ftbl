@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -37,17 +37,17 @@ import java.util.List;
 import java.util.Objects;
 
 public class ProtocolEventsEdit extends AppCompatActivity {
-    Logger log = LoggerFactory.getLogger(ProtocolEventsEdit.class);
-    List<Integer> items;
-    NestedScrollView scroller;
-    CoordinatorLayout coordinatorLayout;
-    AppBarLayout appBarLayout;
-    AppBarLayout.Behavior behavior;
-    final int REQUEST_CODE_ADDEVENT = 246;
-    RVProtocolEditAdapter adapter;
-    List<Event> events;
-    List<PlayerEvent> playerEvents;
-    Match match;
+    private final Logger log = LoggerFactory.getLogger(ProtocolEventsEdit.class);
+    private List<Integer> items;
+    private NestedScrollView scroller;
+    private CoordinatorLayout coordinatorLayout;
+    private AppBarLayout appBarLayout;
+    private AppBarLayout.Behavior behavior;
+    private final int REQUEST_CODE_ADDEVENT = 246;
+    private RVProtocolEditAdapter adapter;
+    private List<Event> events;
+    private List<PlayerEvent> playerEvents;
+    private Match match;
 
 
     @Override
@@ -77,7 +77,7 @@ public class ProtocolEventsEdit extends AppCompatActivity {
         try {
             Intent arguments = getIntent();
             playerEvents = (List<PlayerEvent>) Objects.requireNonNull(arguments.getExtras()).getSerializable("PROTOCOLEVENTS");
-            final List<String> countPlayers = Objects.requireNonNull(arguments.getExtras()).getStringArrayList("PROTOCOLTEAMMATCH");
+            final ArrayList<String> countPlayers = Objects.requireNonNull(arguments.getExtras()).getStringArrayList("PROTOCOLTEAMMATCH");
             match = (Match) Objects.requireNonNull(arguments.getExtras()).getSerializable("PROTOCOLMATCH");
             events = new ArrayList<>(match.getEvents());
             if (playerEvents.size() != 0) {
@@ -101,7 +101,7 @@ public class ProtocolEventsEdit extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(ProtocolEventsEdit.this, AddEvent.class);
                     Bundle bundle = new Bundle();
-                    bundle.putStringArrayList("PROTOCOLCOUNTPLAYERS", (ArrayList<String>) countPlayers);
+                    bundle.putStringArrayList("PROTOCOLCOUNTPLAYERS", countPlayers);
                     intent.putExtras(bundle);
                     startActivityForResult(intent, REQUEST_CODE_ADDEVENT);
                 }

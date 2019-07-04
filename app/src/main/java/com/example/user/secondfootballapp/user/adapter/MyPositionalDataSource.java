@@ -8,7 +8,7 @@ import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 
-public class MyPositionalDataSource extends PositionalDataSource<Match> {
+class MyPositionalDataSource extends PositionalDataSource<Match> {
 
     private final List<Match> matches;
 

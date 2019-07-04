@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OngoingTournamentFragment extends Fragment{
-    Logger log = LoggerFactory.getLogger(OngoingTournamentFragment.class);
-    public static RVOngoingTournamentAdapter adapter;
+    private final Logger log = LoggerFactory.getLogger(OngoingTournamentFragment.class);
+    private static RVOngoingTournamentAdapter adapter;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view;

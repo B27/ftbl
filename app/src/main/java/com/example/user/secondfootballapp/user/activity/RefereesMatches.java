@@ -37,15 +37,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class RefereesMatches extends AppCompatActivity {
-    List<RefereeRequestList> refereeRequestLists;
-    RVRefereesMatchesAdapter adapter;
-    LinearLayout layout;
-    Logger log = LoggerFactory.getLogger(RefereesMatches.class);
-    List<ActiveMatch> matches = new ArrayList<>();
-    NestedScrollView scroller;
-    int count = 0;
-    int limit = 5;
-    int offset = 0;
+    private List<RefereeRequestList> refereeRequestLists;
+    private RVRefereesMatchesAdapter adapter;
+    private LinearLayout layout;
+    private final Logger log = LoggerFactory.getLogger(RefereesMatches.class);
+    private final List<ActiveMatch> matches = new ArrayList<>();
+    private NestedScrollView scroller;
+    private int count = 0;
+    private final int limit = 5;
+    private int offset = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         RecyclerView recyclerView;
@@ -108,7 +108,7 @@ public class RefereesMatches extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(matches -> saveData(matches)
+                .subscribe(this::saveData
                         ,
                         error -> {
                             layout.setVisibility(View.VISIBLE);

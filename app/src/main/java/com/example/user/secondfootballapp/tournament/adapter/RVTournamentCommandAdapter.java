@@ -25,11 +25,11 @@ import java.util.List;
 public class RVTournamentCommandAdapter extends RecyclerView.Adapter<RVTournamentCommandAdapter.ViewHolder>{
     Logger log = LoggerFactory.getLogger(PersonalActivity.class);
 
-    private TournamentCommandFragment context;
-    private PersonalActivity activity;
-    private List<String> groups;
-    private List<Team> teams;
-    private LeagueInfo leagueInfo;
+    private final TournamentCommandFragment context;
+    private final PersonalActivity activity;
+    private final List<String> groups;
+    private final List<Team> teams;
+    private final LeagueInfo leagueInfo;
 
     public RVTournamentCommandAdapter(Activity activity, TournamentCommandFragment context, List<String> groups, List<Team> teams
     ,LeagueInfo leagueInfo){
@@ -45,8 +45,7 @@ public class RVTournamentCommandAdapter extends RecyclerView.Adapter<RVTournamen
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.tournament_info_tab_command_card, parent, false);
-        RVTournamentCommandAdapter.ViewHolder holder = new RVTournamentCommandAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -72,16 +71,16 @@ public class RVTournamentCommandAdapter extends RecyclerView.Adapter<RVTournamen
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textGroupTitle;
-        View cardView;
-        RecyclerView recyclerView;
-        View line;
-        public ViewHolder(View item) {
+        final TextView textGroupTitle;
+        final View cardView;
+        final RecyclerView recyclerView;
+        final View line;
+        ViewHolder(View item) {
             super(item);
-            textGroupTitle = (TextView) item.findViewById(R.id.groupTitle);
-            cardView = (View) item.findViewById(R.id.cv);
-            recyclerView = (RecyclerView) item.findViewById(R.id.tournamentInfoTabCommandCard);
-            line = (View) item.findViewById(R.id.tournamentCommandCardLine);
+            textGroupTitle = item.findViewById(R.id.groupTitle);
+            cardView = item.findViewById(R.id.cv);
+            recyclerView = item.findViewById(R.id.tournamentInfoTabCommandCard);
+            line = item.findViewById(R.id.tournamentCommandCardLine);
         }
     }
 }

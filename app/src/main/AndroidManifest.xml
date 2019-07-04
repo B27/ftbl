@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.user.secondfootballapp">
+    package="baikal.web.footballapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -29,7 +29,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".SplashScreenActivity"
+            android:name="baikal.web.footballapp.SplashScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/SplashScreenTheme"
             android:screenOrientation="portrait">
@@ -40,93 +40,93 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PersonalActivity"
+            android:name="baikal.web.footballapp.PersonalActivity"
             android:label="@string/title_activity_personal"
             android:windowSoftInputMode="adjustPan"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".home.activity.NewsPage"
+        <activity android:name="baikal.web.footballapp.home.activity.NewsPage"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".tournament.activity.CommandInfoActivity"
+            android:name="baikal.web.footballapp.tournament.activity.CommandInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_command_info"
             android:theme="@style/FullscreenTheme"
             android:screenOrientation="portrait"/>
-        <activity android:name=".FullScreenImage"
+        <activity android:name="baikal.web.footballapp.FullScreenImage"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.UserInfo"
+            android:name="baikal.web.footballapp.user.activity.UserInfo"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.NewCommand"
+        <activity android:name="baikal.web.footballapp.user.activity.NewCommand"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.UserCommandInfo"
+        <activity android:name="baikal.web.footballapp.user.activity.UserCommandInfo"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.UserEditClub"
+        <activity android:name="baikal.web.footballapp.user.activity.UserEditClub"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.RefereesMatches"
+        <activity android:name="baikal.web.footballapp.user.activity.RefereesMatches"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.EditTimeTable"
+        <activity android:name="baikal.web.footballapp.user.activity.EditTimeTable"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.ProtocolEdit"
+        <activity android:name="baikal.web.footballapp.user.activity.ProtocolEdit"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.ProtocolEventsEdit"
+        <activity android:name="baikal.web.footballapp.user.activity.ProtocolEventsEdit"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.ResponsiblePersons"
+        <activity android:name="baikal.web.footballapp.user.activity.ResponsiblePersons"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.ProtocolMatchScore"
+        <activity android:name="baikal.web.footballapp.user.activity.ProtocolMatchScore"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.ProtocolScore"
+        <activity android:name="baikal.web.footballapp.user.activity.ProtocolScore"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.ProtocolCommand1"
+        <activity android:name="baikal.web.footballapp.user.activity.ProtocolCommand1"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".players.activity.PlayerInv"
+        <activity android:name="baikal.web.footballapp.players.activity.PlayerInv"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".club.activity.NewClub"
+            android:name="baikal.web.footballapp.club.activity.NewClub"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.RegistrationUser"
+            android:name="baikal.web.footballapp.user.activity.RegistrationUser"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.ConfirmProtocol"
+        <activity android:name="baikal.web.footballapp.user.activity.ConfirmProtocol"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.StructureCommand1"
+        <activity android:name="baikal.web.footballapp.user.activity.StructureCommand1"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.MatchResponsiblePersons"
+        <activity android:name="baikal.web.footballapp.user.activity.MatchResponsiblePersons"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.MatchEvents"
+        <activity android:name="baikal.web.footballapp.user.activity.MatchEvents"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.AddEvent"
+        <activity android:name="baikal.web.footballapp.user.activity.AddEvent"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.PlayerAddToTeam"
+        <activity android:name="baikal.web.footballapp.user.activity.PlayerAddToTeam"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".tournament.activity.ShowProtocol"
+        <activity android:name="baikal.web.footballapp.tournament.activity.ShowProtocol"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
     </application>

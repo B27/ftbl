@@ -4,25 +4,31 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Typeface;
-
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.fragment.app.Fragment;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.view.MenuItem;
-
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import baikal.web.footballapp.club.activity.ClubPage;
-import baikal.web.footballapp.controller.BottomNavigationViewHelper;
 import baikal.web.footballapp.controller.CustomTypefaceSpan;
 import baikal.web.footballapp.home.activity.MainPage;
 import baikal.web.footballapp.model.Advertisings;
@@ -37,19 +43,6 @@ import baikal.web.footballapp.tournament.activity.Tournament;
 import baikal.web.footballapp.tournament.activity.TournamentPage;
 import baikal.web.footballapp.user.activity.AuthoUser;
 import baikal.web.footballapp.user.activity.UserPage;
-import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -57,90 +50,91 @@ import retrofit2.HttpException;
 
 public class PersonalActivity extends AppCompatActivity {
 
-    private final Logger log = LoggerFactory.getLogger(PersonalActivity.class);
-    private static final AuthoUser authoUser = new AuthoUser();
-
-    private static Context contextBase;
-    public static List<League> tournaments = new ArrayList<>();
     public static final List<Person> allPlayers = new ArrayList<>();
     public static final List<Person> people = new ArrayList<>();
     public static final List<Person> AllPeople = new ArrayList<>();
-    public static List<Club> allClubs = new ArrayList<>();
-
-    private static BottomNavigationView navigation;
-
-    private ProgressDialog mProgressDialog;
-    private AdvertisingFragment dialogFragment;
+    public static final Fragment fragmentUser = new UserPage();
+    private static final AuthoUser authoUser = new AuthoUser();
     private static final Fragment fragmentMain = new MainPage();
+    public static List<League> tournaments = new ArrayList<>();
+    public static List<Club> allClubs = new ArrayList<>();
+    //    Fragment active = fragmentHome;
+    public static Fragment active = fragmentMain;
+    private static Context contextBase;
+    private static BottomNavigationView bottomNavigationView;
+    private final Logger log = LoggerFactory.getLogger(PersonalActivity.class);
     private final Fragment fragmentTournament;
     private final Fragment fragmentClub = new ClubPage();
     private final Fragment fragmentPlayers = new PlayersPage();
-    public static final Fragment fragmentUser = new UserPage();
-    Fragment fragment = (Tournament) getSupportFragmentManager().findFragmentByTag("tornamentTAG");
-
     private final FragmentManager fragmentManager = this.getSupportFragmentManager();
-    //    Fragment active = fragmentHome;
-    public static Fragment active = fragmentMain;
+
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId()) {
+                        case R.id.navigation_home:
+                            fragmentManager.beginTransaction().hide(active).show(fragmentMain).commit();
+                            active = fragmentMain;
+                            return true;
+                        case R.id.navigation_tournament:
+                            fragmentManager.beginTransaction().hide(active).show(fragmentTournament).commit();
+                            active = fragmentTournament;
+                            return true;
+                        case R.id.navigation_club:
+                            fragmentManager.beginTransaction().hide(active).show(fragmentClub).commit();
+                            active = fragmentClub;
+                            return true;
+                        case R.id.navigation_players:
+                            fragmentManager.beginTransaction().hide(active).show(fragmentPlayers).commit();
+                            active = fragmentPlayers;
+                            return true;
+                        case R.id.navigation_user:
+                            //                    if (!UserPage.auth){
+                            //                        fragmentManager.beginTransaction().hide(active).show(fragmentUser).addToBackStack(null).commit();
+                            //                        active = fragmentUser;
+                            //                    }
+                            //                    else{
+                            //                        fragmentManager.beginTransaction().hide(active).show(UserPage.authoUser).addToBackStack(null).commit();
+                            //                        active = UserPage.authoUser;
+                            //                    }
+
+                            if (SaveSharedPreference.getLoggedStatus(getApplicationContext())) {
+                                log.error("ЗАРЕГАН");
+                                log.error("-------------");
+                                log.error(SaveSharedPreference.getObject().getToken());
+                                log.error("-------------");
+                                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                                ft.detach(authoUser).attach(authoUser).commit();
+                                //                        fragmentManager.beginTransaction().hide(active).show(UserPage.authoUser).addToBackStack(null).commit();
+                                fragmentManager.beginTransaction().hide(active).show(authoUser).addToBackStack(null).commit();
+                                //                        active = UserPage.authoUser;
+                                active = authoUser;
+                            } else {
+                                log.error("НЕ ЗАРЕГАН");
+                                fragmentManager.beginTransaction().hide(active).show(fragmentUser).addToBackStack(null).commit();
+                                active = fragmentUser;
+                            }
+                            return true;
+                    }
+                    return false;
+                }
+            };
+
+    Fragment fragment = (Tournament) getSupportFragmentManager().findFragmentByTag("tornamentTAG");
+    private ProgressDialog mProgressDialog;
+    private AdvertisingFragment dialogFragment;
 
     public PersonalActivity() {
         fragmentTournament = new TournamentPage(fragmentManager);
     }
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    fragmentManager.beginTransaction().hide(active).show(fragmentMain).commit();
-                    active = fragmentMain;
-                    return true;
-                case R.id.navigation_tournament:
-                    fragmentManager.beginTransaction().hide(active).show(fragmentTournament).commit();
-                    active = fragmentTournament;
-                    return true;
-                case R.id.navigation_club:
-                    fragmentManager.beginTransaction().hide(active).show(fragmentClub).commit();
-                    active = fragmentClub;
-                    return true;
-                case R.id.navigation_players:
-                    fragmentManager.beginTransaction().hide(active).show(fragmentPlayers).commit();
-                    active = fragmentPlayers;
-                    return true;
-                case R.id.navigation_user:
-//                    if (!UserPage.auth){
-//                        fragmentManager.beginTransaction().hide(active).show(fragmentUser).addToBackStack(null).commit();
-//                        active = fragmentUser;
-//                    }
-//                    else{
-//                        fragmentManager.beginTransaction().hide(active).show(UserPage.authoUser).addToBackStack(null).commit();
-//                        active = UserPage.authoUser;
-//                    }
-
-                    if (SaveSharedPreference.getLoggedStatus(getApplicationContext())) {
-                        log.error("ЗАРЕГАН");
-                        log.error("-------------");
-                        log.error(SaveSharedPreference.getObject().getToken());
-                        log.error("-------------");
-                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                        ft.detach(authoUser).attach(authoUser).commit();
-//                        fragmentManager.beginTransaction().hide(active).show(UserPage.authoUser).addToBackStack(null).commit();
-                        fragmentManager.beginTransaction().hide(active).show(authoUser).addToBackStack(null).commit();
-//                        active = UserPage.authoUser;
-                        active = authoUser;
-                    } else {
-                        log.error("НЕ ЗАРЕГАН");
-                        fragmentManager.beginTransaction().hide(active).show(fragmentUser).addToBackStack(null).commit();
-                        active = fragmentUser;
-                    }
-                    return true;
-            }
-            return false;
-        }
-    };
-
+    public static void saveData(Tournaments tournaments1) {
+        tournaments.clear();
+        tournaments.addAll(tournaments1.getLeagues());
+//        TournamentPage.adapter.dataChanged(tournaments1.getLeagues());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,10 +154,9 @@ public class PersonalActivity extends AppCompatActivity {
 
 
         try {
-            navigation = findViewById(R.id.navigation);
+            bottomNavigationView = findViewById(R.id.bottom_navigation_view);
             //            BottomNavigationViewHelper helper = new BottomNavigationViewHelper();
-//            BottomNavigationViewHelper.disableShiftMode(navigation);
-            disableShiftMode(navigation);
+//            BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
         } catch (Exception e) {
             log.error("ERROR: ", e);
@@ -175,21 +168,19 @@ public class PersonalActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.pageContainer, fragmentPlayers, "4").hide(fragmentPlayers).commit();
         fragmentManager.beginTransaction().add(R.id.pageContainer, fragmentUser, "5").hide(fragmentUser).commit();
         fragmentManager.beginTransaction().add(R.id.pageContainer, authoUser, "6").hide(authoUser).commit();
-        navigation.getChildAt(0);
-        BottomNavigationViewHelper.removeShiftMode(navigation);
+        bottomNavigationView.getChildAt(0);
         //set font
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/manrope_regular.otf");
         CustomTypefaceSpan typefaceSpan = new CustomTypefaceSpan("", tf);
-        for (int i = 0; i < navigation.getMenu().size(); i++) {
-            MenuItem menuItem = navigation.getMenu().getItem(i);
+        for (int i = 0; i < bottomNavigationView.getMenu().size(); i++) {
+            MenuItem menuItem = bottomNavigationView.getMenu().getItem(i);
             SpannableStringBuilder spannableTitle = new SpannableStringBuilder(menuItem.getTitle());
             spannableTitle.setSpan(typefaceSpan, 0, spannableTitle.length(), 0);
             menuItem.setTitle(spannableTitle);
         }
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -230,7 +221,7 @@ public class PersonalActivity extends AppCompatActivity {
     }
 
     private void showAds(Advertisings news) {
-        if (news.getAds().size()!=0) {
+        if (news.getAds().size() != 0) {
             dialogFragment = AdvertisingFragment.newInstance();
             Bundle args = new Bundle();
             args.putSerializable("ADVERTISING", (Serializable) news.getAds());
@@ -238,8 +229,6 @@ public class PersonalActivity extends AppCompatActivity {
             dialogFragment.show(this.getSupportFragmentManager(), "dialogFragment");
         }
     }
-
-
 
     @SuppressLint("CheckResult")
     private void checkConnection() {
@@ -250,25 +239,22 @@ public class PersonalActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(isConnected -> {
                     // isConnected can be true or false
-                    if (isConnected){
+                    if (isConnected) {
                         showSnack();
-                    }else {
+                    } else {
                         String str = "Отсутствует интернет соединение";
                         showToast(str);
                     }
                 });
     }
 
-
-
-
     private void showSnack() {
-            //all tournaments
-            GetAllTournaments();
-            //all players
-            GetAllPlayers();
-            //all clubs
-            GetAllClubs();
+        //all tournaments
+        GetAllTournaments();
+        //all players
+        GetAllPlayers();
+        //all clubs
+        GetAllClubs();
         if (SaveSharedPreference.getLoggedStatus(getApplicationContext())) {
             log.error("REFRESH USER");
             RefreshUser();
@@ -286,7 +272,6 @@ public class PersonalActivity extends AppCompatActivity {
                         this::getError
                 );
     }
-
 
     @SuppressLint("CheckResult")
     private void GetAllTournaments() {
@@ -336,12 +321,6 @@ public class PersonalActivity extends AppCompatActivity {
 
     }
 
-    public static void saveData(Tournaments tournaments1) {
-        tournaments.clear();
-        tournaments.addAll(tournaments1.getLeagues());
-//        TournamentPage.adapter.dataChanged(tournaments1.getLeagues());
-    }
-
     private void savePlayers(People people1) {
         people.clear();
         AllPeople.clear();
@@ -370,7 +349,6 @@ public class PersonalActivity extends AppCompatActivity {
     }
 
 
-
     @SuppressLint("CheckResult")
     private void GetAllClubs() {
         allClubs = new ArrayList<>();
@@ -388,33 +366,6 @@ public class PersonalActivity extends AppCompatActivity {
         allClubs.addAll(clubs.getClubs());
         ClubPage.adapter.dataChanged(clubs.getClubs());
 //        ClubPage.adapter.notifyDataSetChanged();
-    }
-
-
-    @SuppressLint("RestrictedApi")
-    private void disableShiftMode(BottomNavigationView view) {
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
-        try {
-            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
-            shiftingMode.setAccessible(true);
-            shiftingMode.setBoolean(menuView, false);
-            shiftingMode.setAccessible(false);
-            for (int i = 0; i < menuView.getChildCount(); i++) {
-                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
-                //noinspection RestrictedApi
-                /* TODO: after migrate to AndroidX is commented
-                item.setShiftingMode(false);
-                */
-                item.setPadding(0, 25, 0, 0);
-                // set once again checked value, so view will be updated
-                //noinspection RestrictedApi
-                item.setChecked(item.getItemData().isChecked());
-            }
-        } catch (NoSuchFieldException e) {
-            log.error("ERROR: BNVHelper. Unable to get shift mode field", e);
-        } catch (IllegalAccessException e) {
-            log.error("ERROR: BNVHelper. Unable to change value of shift mode", e);
-        }
     }
 
     private void showToast(String str) {

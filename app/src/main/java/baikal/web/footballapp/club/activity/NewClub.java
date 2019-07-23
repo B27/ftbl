@@ -11,27 +11,21 @@ import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
-import baikal.web.footballapp.Controller;
-import baikal.web.footballapp.R;
-import baikal.web.footballapp.SaveSharedPreference;
-import baikal.web.footballapp.model.Club;
-import baikal.web.footballapp.model.DataClub;
-import baikal.web.footballapp.model.Person;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +41,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import baikal.web.footballapp.Controller;
+import baikal.web.footballapp.R;
+import baikal.web.footballapp.SaveSharedPreference;
+import baikal.web.footballapp.model.Club;
+import baikal.web.footballapp.model.DataClub;
+import baikal.web.footballapp.model.Person;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -57,16 +57,17 @@ import retrofit2.Response;
 import static android.Manifest.permission.CAMERA;
 
 public class NewClub extends AppCompatActivity {
+    private final static int ALL_PERMISSIONS_RESULT = 107;
     private final Logger log = LoggerFactory.getLogger(NewClub.class);
+    private final ArrayList permissionsRejected = new ArrayList();
+    private final ArrayList permissions = new ArrayList();
     private Bitmap myBitmap;
     private Uri picUri;
     private ImageButton buttonLogo;
     private ArrayList permissionsToRequest;
-    private final ArrayList permissionsRejected = new ArrayList();
-    private final ArrayList permissions = new ArrayList();
-    private final static int ALL_PERMISSIONS_RESULT = 107;
     private EditText textDesc;
     private EditText textTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ImageButton imageClose;
@@ -80,16 +81,15 @@ public class NewClub extends AppCompatActivity {
         textTitle = findViewById(R.id.createClubTitle);
 //        textDesc.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
         textDesc.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus){
+            if (hasFocus) {
                 textDesc.getBackground().clearColorFilter();
             }
         });
         textTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
         textTitle.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus){
+            if (hasFocus) {
                 textTitle.getBackground().clearColorFilter();
-            }
-            else {
+            } else {
                 textTitle.getBackground().setColorFilter(getResources().getColor(R.color.colorLightGray), PorterDuff.Mode.SRC_IN);
             }
         });
@@ -118,20 +118,21 @@ public class NewClub extends AppCompatActivity {
         }
     }
 
-    private Boolean check(){
+    private Boolean check() {
         boolean check = false;
         String title = textTitle.getText().toString();
         String desc = textDesc.getText().toString();
         Boolean count = false;
-        if (!desc.equals("") && !title.equals("") && myBitmap != null){
+        if (!desc.equals("") && !title.equals("") && myBitmap != null) {
             check = true;
-        }else {
+        } else {
             Toast.makeText(this, "Введите название клуба, описание и логотип.", Toast.LENGTH_SHORT).show();
         }
 
         return check;
     }
-    private void createClub(){
+
+    private void createClub() {
         //session check
 //        try{
         String title = textTitle.getText().toString();
@@ -175,22 +176,20 @@ public class NewClub extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         log.info("INFO: response isSuccessful");
                         if (response.body() != null) {
-                            try{
-                                Club club =  response.body().getResultClub();
+                            try {
+                                Club club = response.body().getResultClub();
                                 Intent intent = new Intent();
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("CREATECLUBRESULT", club);
                                 intent.putExtras(bundle);
                                 setResult(RESULT_OK, intent);
                                 finish();
-                            }
-                            catch (Exception t) {
+                            } catch (Exception t) {
                                 log.error("ERROR: ", t);
                             }
 //                        }
                         }
-                    }
-                    else {
+                    } else {
                         try {
                             JSONObject jsonObject = new JSONObject(response.errorBody().string());
                             String str = "Ошибка! ";
@@ -303,9 +302,11 @@ public class NewClub extends AppCompatActivity {
                                     .priority(Priority.HIGH))
 //                            .load(picUri)
                             .into(buttonLogo);
-                } catch (IOException e) {e.printStackTrace(); }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
-                if (data != null && data.getExtras() != null){
+                if (data != null && data.getExtras() != null) {
 //                    bitmap = (Bitmap) data.getExtras().get("data");
 
                     bitmap = (Bitmap) data.getExtras().get("data");
@@ -425,26 +426,16 @@ public class NewClub extends AppCompatActivity {
             }
 
             if (permissionsRejected.size() > 0) {
-
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (shouldShowRequestPermissionRationale((String) permissionsRejected.get(0))) {
                         showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                (dialog, which) -> {
+                                    //Log.d("API123", "permisionrejected " + permissionsRejected.size());
 
-                                            //Log.d("API123", "permisionrejected " + permissionsRejected.size());
-
-                                            requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
-                                        }
-                                    }
+                                    requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
                                 });
-                        return;
                     }
                 }
-
             }
         }
 

@@ -162,12 +162,13 @@ public class PersonalActivity extends AppCompatActivity {
             log.error("ERROR: ", e);
         }
 //        fragmentManager.beginTransaction().add(R.id.pageContainer, fragmentHome, "1").commit();
-        fragmentManager.beginTransaction().add(R.id.pageContainer, fragmentMain, "1").commit();
-        fragmentManager.beginTransaction().add(R.id.pageContainer, fragmentTournament, "2").hide(fragmentTournament).commit();
-        fragmentManager.beginTransaction().add(R.id.pageContainer, fragmentClub, "3").hide(fragmentClub).commit();
-        fragmentManager.beginTransaction().add(R.id.pageContainer, fragmentPlayers, "4").hide(fragmentPlayers).commit();
-        fragmentManager.beginTransaction().add(R.id.pageContainer, fragmentUser, "5").hide(fragmentUser).commit();
-        fragmentManager.beginTransaction().add(R.id.pageContainer, authoUser, "6").hide(authoUser).commit();
+        fragmentManager.beginTransaction().setReorderingAllowed(true)
+                .add(R.id.pageContainer, fragmentMain, "1")
+                .add(R.id.pageContainer, fragmentTournament, "2").hide(fragmentTournament)
+                .add(R.id.pageContainer, fragmentClub, "3").hide(fragmentClub)
+                .add(R.id.pageContainer, fragmentPlayers, "4").hide(fragmentPlayers)
+                .add(R.id.pageContainer, fragmentUser, "5").hide(fragmentUser)
+                .add(R.id.pageContainer, authoUser, "6").hide(authoUser).commit();
         bottomNavigationView.getChildAt(0);
         //set font
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/manrope_regular.otf");

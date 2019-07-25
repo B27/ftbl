@@ -58,15 +58,21 @@ public class NewsAndAds extends Fragment {
         relativeLayoutAds  = view.findViewById(R.id.mainPageAdsLayout);
         final Button btnNews = view.findViewById(R.id.showAllNews);
         final Button btnAds = view.findViewById(R.id.showAllAds);
-        fragmentManager.beginTransaction().add(R.id.pageContainer, homePage).add(R.id.pageContainer, adsPage).hide(homePage).hide(adsPage).commit();
+      //  fragmentManager.beginTransaction().add(R.id.pageContainer, homePage).add(R.id.pageContainer, adsPage).hide(homePage).hide(adsPage).commit();
         btnNews.setOnClickListener(v -> {
             //show all news
-            fragmentManager.beginTransaction().hide(PersonalActivity.active).show( homePage).commit();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.pageContainer, new HomePage())
+                    .addToBackStack(null)
+                    .commit();
             PersonalActivity.active = homePage;
         });
         btnAds.setOnClickListener(v -> {
             //show all ads
-            fragmentManager.beginTransaction().hide(PersonalActivity.active).show( adsPage).commit();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.pageContainer, new AdsPage())
+                    .addToBackStack(null)
+                    .commit();
             PersonalActivity.active = adsPage;
         });
         try{

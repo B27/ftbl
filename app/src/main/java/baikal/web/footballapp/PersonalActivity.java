@@ -75,19 +75,19 @@ public class PersonalActivity extends AppCompatActivity {
 
                     switch (item.getItemId()) {
                         case R.id.navigation_home:
-                            fragmentManager.beginTransaction().hide(active).show(fragmentMain).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new MainPage()).commit();
                             active = fragmentMain;
                             return true;
                         case R.id.navigation_tournament:
-                            fragmentManager.beginTransaction().hide(active).show(fragmentTournament).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, fragmentTournament).commit();
                             active = fragmentTournament;
                             return true;
                         case R.id.navigation_club:
-                            fragmentManager.beginTransaction().hide(active).show(fragmentClub).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new ClubPage()).commit();
                             active = fragmentClub;
                             return true;
                         case R.id.navigation_players:
-                            fragmentManager.beginTransaction().hide(active).show(fragmentPlayers).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new PlayersPage()).commit();
                             active = fragmentPlayers;
                             return true;
                         case R.id.navigation_user:
@@ -141,6 +141,7 @@ public class PersonalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
 
+        FragmentManager.enableDebugLogging(true);
 
         mProgressDialog = new ProgressDialog(this);
 
@@ -162,14 +163,18 @@ public class PersonalActivity extends AppCompatActivity {
             log.error("ERROR: ", e);
         }
 //        fragmentManager.beginTransaction().add(R.id.pageContainer, fragmentHome, "1").commit();
+
+
         fragmentManager.beginTransaction().setReorderingAllowed(true)
                 .add(R.id.pageContainer, fragmentMain, "1")
-                .add(R.id.pageContainer, fragmentTournament, "2").hide(fragmentTournament)
-                .add(R.id.pageContainer, fragmentClub, "3").hide(fragmentClub)
-                .add(R.id.pageContainer, fragmentPlayers, "4").hide(fragmentPlayers)
-                .add(R.id.pageContainer, fragmentUser, "5").hide(fragmentUser)
-                .add(R.id.pageContainer, authoUser, "6").hide(authoUser).commit();
-        bottomNavigationView.getChildAt(0);
+//                .add(R.id.pageContainer, fragmentTournament, "2").hide(fragmentTournament)
+//                .add(R.id.pageContainer, fragmentClub, "3").hide(fragmentClub)
+//                .add(R.id.pageContainer, fragmentPlayers, "4").hide(fragmentPlayers)
+//                .add(R.id.pageContainer, fragmentUser, "5").hide(fragmentUser)
+//                .add(R.id.pageContainer, authoUser, "6").hide(authoUser)
+                .commit();
+
+       // bottomNavigationView.getChildAt(0);
         //set font
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/manrope_regular.otf");
         CustomTypefaceSpan typefaceSpan = new CustomTypefaceSpan("", tf);
@@ -183,20 +188,20 @@ public class PersonalActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    @Override
-    public void onBackPressed() {
-
-        int count = getSupportFragmentManager().getBackStackEntryCount();
-
-        if (count == 0) {
-            super.onBackPressed();
-            //additional code
-            finish();
-        } else {
-            getSupportFragmentManager().popBackStack();
-        }
-
-    }
+//    @Override
+//    public void onBackPressed() {
+//
+//        int count = getSupportFragmentManager().getBackStackEntryCount();
+//
+//        if (count == 0) {
+//            super.onBackPressed();
+//            //additional code
+//            finish();
+//        } else {
+//            getSupportFragmentManager().popBackStack();
+//        }
+//
+//    }
 
     @SuppressLint("CheckResult")
     private void checkConnectionSingle() {

@@ -22,6 +22,7 @@ public class Controller {
     public static FootballApi getApi() {
 
         OkHttpClient client = new OkHttpClient.Builder()
+//                .addInterceptor(chain -> )
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)

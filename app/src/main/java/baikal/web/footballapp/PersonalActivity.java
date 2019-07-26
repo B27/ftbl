@@ -13,7 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,6 +44,7 @@ import baikal.web.footballapp.tournament.activity.Tournament;
 import baikal.web.footballapp.tournament.activity.TournamentPage;
 import baikal.web.footballapp.user.activity.AuthoUser;
 import baikal.web.footballapp.user.activity.UserPage;
+import baikal.web.footballapp.viewmodel.MainViewModel;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -75,19 +77,19 @@ public class PersonalActivity extends AppCompatActivity {
 
                     switch (item.getItemId()) {
                         case R.id.navigation_home:
-                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new MainPage()).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new MainPage()).addToBackStack(null).commit();
                             active = fragmentMain;
                             return true;
                         case R.id.navigation_tournament:
-                            fragmentManager.beginTransaction().replace(R.id.pageContainer, fragmentTournament).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, fragmentTournament).addToBackStack(null).commit();
                             active = fragmentTournament;
                             return true;
                         case R.id.navigation_club:
-                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new ClubPage()).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new ClubPage()).addToBackStack(null).commit();
                             active = fragmentClub;
                             return true;
                         case R.id.navigation_players:
-                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new PlayersPage()).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new PlayersPage()).addToBackStack(null).commit();
                             active = fragmentPlayers;
                             return true;
                         case R.id.navigation_user:
@@ -101,19 +103,19 @@ public class PersonalActivity extends AppCompatActivity {
                             //                    }
 
                             if (SaveSharedPreference.getLoggedStatus(getApplicationContext())) {
-                                log.error("ЗАРЕГАН");
-                                log.error("-------------");
-                                log.error(SaveSharedPreference.getObject().getToken());
-                                log.error("-------------");
-                                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                                ft.detach(authoUser).attach(authoUser).commit();
+                                log.debug("ЗАРЕГАН");
+                                log.debug("-------------");
+                                log.debug(SaveSharedPreference.getObject().getToken());
+                                log.debug("-------------");
+//                                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                                //     ft.detach(authoUser).attach(authoUser).commit();
                                 //                        fragmentManager.beginTransaction().hide(active).show(UserPage.authoUser).addToBackStack(null).commit();
-                                fragmentManager.beginTransaction().hide(active).show(authoUser).addToBackStack(null).commit();
+                                fragmentManager.beginTransaction().replace(R.id.pageContainer, new AuthoUser()).addToBackStack(null).commit();
                                 //                        active = UserPage.authoUser;
                                 active = authoUser;
                             } else {
                                 log.error("НЕ ЗАРЕГАН");
-                                fragmentManager.beginTransaction().hide(active).show(fragmentUser).addToBackStack(null).commit();
+                                fragmentManager.beginTransaction().replace(R.id.pageContainer, new UserPage()).addToBackStack(null).commit();
                                 active = fragmentUser;
                             }
                             return true;
@@ -140,6 +142,8 @@ public class PersonalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
+
+        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         FragmentManager.enableDebugLogging(true);
 
@@ -174,7 +178,7 @@ public class PersonalActivity extends AppCompatActivity {
 //                .add(R.id.pageContainer, authoUser, "6").hide(authoUser)
                 .commit();
 
-       // bottomNavigationView.getChildAt(0);
+        // bottomNavigationView.getChildAt(0);
         //set font
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/manrope_regular.otf");
         CustomTypefaceSpan typefaceSpan = new CustomTypefaceSpan("", tf);

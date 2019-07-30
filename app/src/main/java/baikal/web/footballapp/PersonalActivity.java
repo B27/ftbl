@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -13,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
@@ -40,7 +40,6 @@ import baikal.web.footballapp.model.People;
 import baikal.web.footballapp.model.Person;
 import baikal.web.footballapp.model.Tournaments;
 import baikal.web.footballapp.players.activity.PlayersPage;
-import baikal.web.footballapp.tournament.activity.Tournament;
 import baikal.web.footballapp.tournament.activity.TournamentPage;
 import baikal.web.footballapp.user.activity.AuthoUser;
 import baikal.web.footballapp.user.activity.UserPage;
@@ -51,11 +50,15 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
 
 public class PersonalActivity extends AppCompatActivity {
-
     public static final List<Person> allPlayers = new ArrayList<>();
     public static final List<Person> people = new ArrayList<>();
     public static final List<Person> AllPeople = new ArrayList<>();
     public static final Fragment fragmentUser = new UserPage();
+    private static final String MAIN = "MAIN_PAGE";
+    private static final String TOURNAMENT = "TOURNAMENT_PAGE";
+    private static final String CLUB = "CLUB_PAGE";
+    private static final String PLAYERS = "PLAYERS_PAGE";
+    private static final String USER = "USER_PAGE";
     private static final AuthoUser authoUser = new AuthoUser();
     private static final Fragment fragmentMain = new MainPage();
     public static List<League> tournaments = new ArrayList<>();
@@ -77,19 +80,19 @@ public class PersonalActivity extends AppCompatActivity {
 
                     switch (item.getItemId()) {
                         case R.id.navigation_home:
-                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new MainPage()).addToBackStack(null).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new MainPage()).addToBackStack(MAIN).commit();
                             active = fragmentMain;
                             return true;
                         case R.id.navigation_tournament:
-                            fragmentManager.beginTransaction().replace(R.id.pageContainer, fragmentTournament).addToBackStack(null).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, fragmentTournament).addToBackStack(TOURNAMENT).commit();
                             active = fragmentTournament;
                             return true;
                         case R.id.navigation_club:
-                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new ClubPage()).addToBackStack(null).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new ClubPage()).addToBackStack(CLUB).commit();
                             active = fragmentClub;
                             return true;
                         case R.id.navigation_players:
-                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new PlayersPage()).addToBackStack(null).commit();
+                            fragmentManager.beginTransaction().replace(R.id.pageContainer, new PlayersPage()).addToBackStack(PLAYERS).commit();
                             active = fragmentPlayers;
                             return true;
                         case R.id.navigation_user:
@@ -110,12 +113,12 @@ public class PersonalActivity extends AppCompatActivity {
 //                                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                                 //     ft.detach(authoUser).attach(authoUser).commit();
                                 //                        fragmentManager.beginTransaction().hide(active).show(UserPage.authoUser).addToBackStack(null).commit();
-                                fragmentManager.beginTransaction().replace(R.id.pageContainer, new AuthoUser()).addToBackStack(null).commit();
+                                fragmentManager.beginTransaction().replace(R.id.pageContainer, new AuthoUser()).addToBackStack(USER).commit();
                                 //                        active = UserPage.authoUser;
                                 active = authoUser;
                             } else {
                                 log.error("НЕ ЗАРЕГАН");
-                                fragmentManager.beginTransaction().replace(R.id.pageContainer, new UserPage()).addToBackStack(null).commit();
+                                fragmentManager.beginTransaction().replace(R.id.pageContainer, new UserPage()).addToBackStack(USER).commit();
                                 active = fragmentUser;
                             }
                             return true;
@@ -124,7 +127,6 @@ public class PersonalActivity extends AppCompatActivity {
                 }
             };
 
-    Fragment fragment = (Tournament) getSupportFragmentManager().findFragmentByTag("tornamentTAG");
     private ProgressDialog mProgressDialog;
     private AdvertisingFragment dialogFragment;
 
@@ -145,7 +147,7 @@ public class PersonalActivity extends AppCompatActivity {
 
         MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        FragmentManager.enableDebugLogging(true);
+        //     FragmentManager.enableDebugLogging(true);
 
         mProgressDialog = new ProgressDialog(this);
 
@@ -192,20 +194,42 @@ public class PersonalActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-//    @Override
-//    public void onBackPressed() {
-//
-//        int count = getSupportFragmentManager().getBackStackEntryCount();
-//
-//        if (count == 0) {
-//            super.onBackPressed();
-//            //additional code
-//            finish();
-//        } else {
-//            getSupportFragmentManager().popBackStack();
-//        }
-//
-//    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        Log.d("PersonalActivity", "back stack entry count " + count);
+
+        if (count > 0) {
+            FragmentManager.BackStackEntry backStackEntry = getSupportFragmentManager().getBackStackEntryAt(count - 1);
+            String transactionName = backStackEntry.getName();
+
+            if (transactionName != null) {
+                int itemNum = 0;
+                switch (transactionName) {
+                    case MAIN:
+                        itemNum = 0;
+                        break;
+                    case TOURNAMENT:
+                        itemNum = 1;
+                        break;
+                    case CLUB:
+                        itemNum = 2;
+                        break;
+                    case PLAYERS:
+                        itemNum = 3;
+                        break;
+                    case USER:
+                        itemNum = 4;
+                        break;
+                }
+                bottomNavigationView.getMenu().getItem(itemNum).setChecked(true);
+            }
+        } else if (count == 0) {
+            bottomNavigationView.getMenu().getItem(0).setChecked(true);
+        }
+
+    }
 
     @SuppressLint("CheckResult")
     private void checkConnectionSingle() {

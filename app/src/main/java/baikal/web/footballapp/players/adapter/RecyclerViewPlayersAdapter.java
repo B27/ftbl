@@ -105,7 +105,12 @@ public class RecyclerViewPlayersAdapter extends RecyclerView.Adapter<RecyclerVie
                 bundle.putSerializable("PLAYERINFO", person);
                 player.setArguments(bundle);
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.pageContainer, player).hide(PersonalActivity.active).show(player).commit();
+                fragmentManager.beginTransaction()
+                        .add(R.id.pageContainer, player)
+                        .hide(PersonalActivity.active)
+                        .show(player)
+                        .addToBackStack(null)
+                        .commit();
                 PersonalActivity.active = player;
             });
             if (position == (allPlayers.size() - 1)) {

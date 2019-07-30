@@ -134,7 +134,7 @@ public class TournamentPage extends Fragment {
         }catch (Exception e){
             log.error("ERROR: ", e);
         }
-        fragmentManager.beginTransaction().hide(PersonalActivity.active).show(tournament).commit();
+        fragmentManager.beginTransaction().hide(PersonalActivity.active).show(tournament).addToBackStack(null).commit();
         PersonalActivity.active = tournament;
         progressBarHide();
     }

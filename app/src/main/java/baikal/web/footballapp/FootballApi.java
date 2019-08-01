@@ -44,7 +44,7 @@ import retrofit2.http.Query;
 public interface FootballApi {
     //get all news
     @GET("/api/news")
-    Observable<News> getAllNews(@Query("limit") String limit, @Query("offset") String offset);
+    Call<News> getAllNews(@Query("limit") String limit, @Query("offset") String offset);
 
 
     //get all news

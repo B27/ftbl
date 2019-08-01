@@ -18,7 +18,7 @@ import baikal.web.footballapp.CheckError;
 import baikal.web.footballapp.Controller;
 import baikal.web.footballapp.PersonalActivity;
 import baikal.web.footballapp.R;
-import baikal.web.footballapp.home.activity.NewsPage;
+import baikal.web.footballapp.home.activity.FullscreenNewsActivity;
 import baikal.web.footballapp.model.GetLeagueInfo;
 import baikal.web.footballapp.model.League;
 import baikal.web.footballapp.model.LeagueInfo;
@@ -41,7 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 public class TournamentPage extends Fragment {
     private static RecyclerViewTournamentAdapter adapter;
     public static final List<Person> referees = new ArrayList<>();
-    private final Logger log = LoggerFactory.getLogger(NewsPage.class);
+    private final Logger log = LoggerFactory.getLogger(FullscreenNewsActivity.class);
     private RecyclerView recyclerView;
     private final FragmentManager fragmentManager;
     private ProgressBar progressBar;

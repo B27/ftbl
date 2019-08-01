@@ -29,8 +29,8 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class HomePage extends Fragment {
-    Logger log = LoggerFactory.getLogger(HomePage.class);
+public class NewsFragment extends Fragment {
+    Logger log = LoggerFactory.getLogger(NewsFragment.class);
     private final List<News_> allNews = new ArrayList<>();
     private RecyclerView recyclerView;
     private NestedScrollView scroller;
@@ -48,7 +48,7 @@ public class HomePage extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         try {
-            adapter = new RecyclerViewHomeAdapter(getActivity(),HomePage.this , allNews);
+            adapter = new RecyclerViewHomeAdapter(getActivity(), NewsFragment.this , allNews);
             recyclerView.setAdapter(adapter);
         }catch (Exception e){}
         scroller.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
@@ -57,7 +57,7 @@ public class HomePage extends Fragment {
                 int temp = limit*offset;
                 if (temp<=count) {
                     String str = String.valueOf(temp);
-                    GetAllNews("5", str);
+//                    GetAllNews("5", str);
                 }
             }
         });
@@ -74,31 +74,31 @@ public class HomePage extends Fragment {
                 .subscribe(isConnected -> {
                     // isConnected can be true or false
                     if (isConnected){
-                        GetAllNews("5", "0");
+//                        GetAllNews("5", "0");
                     }
                 });
     }
 
-    @SuppressLint("CheckResult")
-    private void GetAllNews(String limit, String offset){
-        Controller.getApi().getAllNews(limit, offset)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
-                .subscribe(this::saveData
-                        ,
-                        error -> {
-                            CheckError checkError = new CheckError();
-                            checkError.checkError(getActivity(), error);
-                        }
-                );
-
-    }
-
-    private void saveData(News matches) {
-        count = matches.getCount();
-        allNews.addAll(allNews.size(), matches.getNews());
-        List<News_> list = new ArrayList<>(allNews);
-        adapter.dataChanged(list);
-    }
+//    @SuppressLint("CheckResult")
+//    private void GetAllNews(String limit, String offset){
+//        Controller.getApi().getAllNews(limit, offset)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .repeatWhen(completed -> completed.delay(5, TimeUnit.MINUTES))
+//                .subscribe(this::saveData
+//                        ,
+//                        error -> {
+//                            CheckError checkError = new CheckError();
+//                            checkError.checkError(getActivity(), error);
+//                        }
+//                );
+//
+//    }
+//
+//    private void saveData(News matches) {
+//        count = matches.getCount();
+//        allNews.addAll(allNews.size(), matches.getNews());
+//        List<News_> list = new ArrayList<>(allNews);
+//        adapter.dataChanged(list);
+//    }
 }

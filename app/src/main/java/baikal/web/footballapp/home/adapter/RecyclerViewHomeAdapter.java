@@ -14,17 +14,17 @@ import android.widget.TextView;
 import baikal.web.footballapp.DateToString;
 import baikal.web.footballapp.PersonalActivity;
 import baikal.web.footballapp.R;
-import baikal.web.footballapp.home.activity.HomePage;
-import baikal.web.footballapp.home.activity.NewsPage;
+import baikal.web.footballapp.home.activity.NewsFragment;
+import baikal.web.footballapp.home.activity.FullscreenNewsActivity;
 import baikal.web.footballapp.model.News_;
 
 import java.util.List;
 
 public class RecyclerViewHomeAdapter extends RecyclerView.Adapter<RecyclerViewHomeAdapter.ViewHolder> {
     private final List<News_> news;
-    private final HomePage context;
+    private final NewsFragment context;
     private final PersonalActivity activity;
-    public RecyclerViewHomeAdapter(Activity activity, HomePage context, List<News_> news){
+    public RecyclerViewHomeAdapter(Activity activity, NewsFragment context, List<News_> news){
         this.news = news;
         this.activity = (PersonalActivity) activity;
         this.context = context;
@@ -44,7 +44,7 @@ public class RecyclerViewHomeAdapter extends RecyclerView.Adapter<RecyclerViewHo
         str = news.get(position).getCreatedAt();
         holder.textDate.setText(dateToString.ChangeDate(str));
         holder.imageButtonShow.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, NewsPage.class);
+            Intent intent = new Intent(activity, FullscreenNewsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("NEWS" ,news.get(position));
             intent.putExtras(bundle);

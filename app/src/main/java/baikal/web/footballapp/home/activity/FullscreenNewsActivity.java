@@ -27,8 +27,8 @@ import baikal.web.footballapp.model.News_;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NewsPage extends AppCompatActivity {
-    private final Logger log = LoggerFactory.getLogger(NewsPage.class);
+public class FullscreenNewsActivity extends AppCompatActivity {
+    private final Logger log = LoggerFactory.getLogger(FullscreenNewsActivity.class);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

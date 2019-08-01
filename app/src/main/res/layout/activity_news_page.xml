@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:scrollbars="vertical"
-    tools:context=".home.activity.NewsPage">
+    tools:context=".home.activity.FullscreenNewsActivity">
     <!--android:background="@color/colorLightGray"-->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,7 @@ import baikal.web.footballapp.DateToString;
 import baikal.web.footballapp.PersonalActivity;
 import baikal.web.footballapp.R;
 import baikal.web.footballapp.home.activity.NewsAndAds;
-import baikal.web.footballapp.home.activity.NewsPage;
+import baikal.web.footballapp.home.activity.FullscreenNewsActivity;
 import baikal.web.footballapp.model.News_;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class RecyclerViewMainNewsAdapter extends RecyclerView.Adapter<RecyclerVi
         str = news.get(position).getCreatedAt();
         holder.textDate.setText(dateToString.ChangeDate(str));
         holder.imageButtonShow.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, NewsPage.class);
+            Intent intent = new Intent(activity, FullscreenNewsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("NEWS" ,news.get(position));
             intent.putExtras(bundle);
@@ -73,7 +74,7 @@ public class RecyclerViewMainNewsAdapter extends RecyclerView.Adapter<RecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         final TextView textDate;
         final TextView textTitle;
-        final LinearLayout imageButtonShow;
+        final ConstraintLayout imageButtonShow;
         final View line;
         ViewHolder(View itemView) {
             super(itemView);

@@ -145,8 +145,6 @@ public class PersonalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
 
-        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
         //     FragmentManager.enableDebugLogging(true);
 
         mProgressDialog = new ProgressDialog(this);

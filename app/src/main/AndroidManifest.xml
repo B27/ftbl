@@ -45,7 +45,7 @@
             android:windowSoftInputMode="adjustPan"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name="baikal.web.footballapp.home.activity.NewsPage"
+        <activity android:name="baikal.web.footballapp.home.activity.FullscreenNewsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity

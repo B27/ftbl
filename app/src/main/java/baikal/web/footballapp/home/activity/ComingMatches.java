@@ -28,7 +28,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-class ComingMatches extends Fragment {
+public class ComingMatches extends Fragment {
     private final Logger log = LoggerFactory.getLogger(ComingMatches.class);
     private LinearLayout layout;
     private RVComingMatchesAdapter adapter;

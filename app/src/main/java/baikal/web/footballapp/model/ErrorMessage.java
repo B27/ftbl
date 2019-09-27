@@ -2,7 +2,7 @@ package baikal.web.footballapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-class ErrorMessage {
+public class ErrorMessage {
     @SerializedName("message")
     private
     String message;

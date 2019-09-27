@@ -37,7 +37,7 @@ import java.util.List;
 
 import static android.Manifest.permission.CAMERA;
 
-class PersonalInfo extends Fragment {
+public class PersonalInfo extends Fragment {
     public static TextView textDOB;
     private static ImageButton buttonPhoto;
     public static Bitmap myBitmap;

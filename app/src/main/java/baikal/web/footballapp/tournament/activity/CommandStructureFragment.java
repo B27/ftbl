@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Collections;
 import java.util.List;
 
-class CommandStructureFragment extends Fragment {
+public class CommandStructureFragment extends Fragment {
     Logger log = LoggerFactory.getLogger(PersonalActivity.class);
 
     @Override

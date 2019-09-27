@@ -44,78 +44,11 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:background">@color/colorWhite</item>
     </style>
-    <style name="LogIn" parent="AppTheme">
-        <item name="android:padding">5dp</item>
-        <item name="android:layout_margin">3dp</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:layout_width">182dp</item>
-        <item name="android:layout_height">45dp</item>
-    </style>
 
-    <style name="MainPageButton" parent="AppTheme">
-        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:textColor">@color/colorNewsBackground</item>
-    </style>
-    <style name="RegButton" parent="AppTheme">
-        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
-        <item name="android:padding">3dp</item>
-        <item name="android:textSize">10sp</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:layout_width">182dp</item>
-        <item name="android:layout_height">45dp</item>
-        <item name="android:textColor">@color/colorRegButtonText</item>
-    </style>
-
-    <style name="TournamentInfoGridContent" parent="AppTheme">
-        <item name="android:layout_width">120dp</item>
-        <item name="android:layout_height">140dp</item>
-        <item name="android:layout_margin">10dp</item>
-        <item name="android:background">@color/colorWhite</item>
-    </style>
-
-    <style name="TournamentInfoGridImg" parent="AppTheme">
-        <item name="android:layout_width">62dp</item>
-        <item name="android:layout_height">62dp</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:paddingTop">7dp</item>
-    </style>
-
-    <style name="TournamentInfoGridTextLayout" parent="AppTheme">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">68dp</item>
-        <item name="android:layout_margin">4dp</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:layout_alignParentStart">true</item>
-        <item name="android:background">@color/colorTornamentInfoGray</item>
-    </style>
-
-    <style name="TournamentInfoGridText" parent="AppTheme">
-        <item name="android:textColor">@color/colorDarkGray</item>
-        <item name="android:textSize">10sp</item>
-        <item name="android:layout_marginBottom">30dp</item>
-        <item name="android:layout_alignParentTop">true</item>
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="TournamentInfoGridTextDesc">
-        <item name="android:textColor">@color/colorGray</item>
-        <item name="android:textSize">7sp</item>
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_width">97dp</item>
-        <item name="android:layout_height">36dp</item>
-    </style>
     <style name="DrawerTextStyle" parent="AppTheme">
         <item name="android:textSize">15sp</item>
     </style>
-    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
-    </style>
+
     <style name="MyEditText" parent="@android:style/TextAppearance">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
@@ -123,18 +56,6 @@
         <item name="android:textColorHint">@color/colorLightGrayForText</item>
         <item name="android:layout_marginBottom">20sp</item>
         <item name="android:fontFamily">@font/manrope_regular</item>
-    </style>
-    <style name="EditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">@color/colorPrimaryDark</item>
-        <item name="colorControlActivated">@color/colorDarkBlue</item>
-        <item name="colorControlHighlight">@color/colorDarkGray</item>
-    </style>
-    <style name="TournamentFilterText" parent="AppTheme">
-        <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>
-        <!--<item name="android:fontFamily">@font/rubik_regular</item>-->
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="FullscreenTheme" parent="AppTheme">
@@ -161,9 +82,6 @@
         <item name="android:textSize">11sp</item>
     </style>
 
-    <style name="MySpinner" parent="AppTheme">
-        <item name="android:textSize">14sp</item>
-    </style>
     <style name="SpinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
         <item name="android:background">@color/colorWhite</item>
         <item name="android:textColor">@color/colorBottomNavigationUnChecked</item>

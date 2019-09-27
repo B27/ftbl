@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-class TournamentTimeTableFragment extends Fragment {
+public class TournamentTimeTableFragment extends Fragment {
     private final Logger log = LoggerFactory.getLogger(TournamentTimeTableFragment.class);
     private boolean scrollStatus;
 

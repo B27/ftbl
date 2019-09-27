@@ -8,6 +8,11 @@ public class EditCommand {
     @SerializedName("_id")
     private
     String id;
+    @SerializedName("teamId")
+    private String teamId;
+    @SerializedName("players")
+    private
+    List<Player> players;
 
     public String getId() {
         return id;
@@ -17,10 +22,6 @@ public class EditCommand {
         this.id = id;
     }
 
-    @SerializedName("teamId")
-    private
-    String teamId;
-
     public String getTeamId() {
         return teamId;
     }
@@ -28,10 +29,6 @@ public class EditCommand {
     public void setTeamId(String teamId) {
         this.teamId = teamId;
     }
-
-    @SerializedName("players")
-    private
-    List<Player> players;
 
     public List<Player> getPlayers() {
         return players;

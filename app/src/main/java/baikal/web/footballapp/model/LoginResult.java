@@ -1,6 +1,6 @@
 package baikal.web.footballapp.model;
 
-class LoginResult {
+public class LoginResult {
     private Boolean error;
     private String message;
     private Integer doctorid;
@@ -19,8 +19,7 @@ class LoginResult {
      *
      * @param error
      * The error
-     */
-    public void setError(Boolean error) {
+     */    public void setError(Boolean error) {
         this.error = error;
     }
 
